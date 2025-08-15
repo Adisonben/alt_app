@@ -1,44 +1,186 @@
 #:import utils kivy.utils
 
-<Button>
-    font_size: 32
-    background_normal: ''
-    background_color: utils.get_color_from_hex('#ff58ffff')
-    size_hint: .3,.3
+# <Button>
+#     font_size: 32
+#     background_normal: ''
+#     background_color: utils.get_color_from_hex('#ff58ffff')
+#     size_hint: .3,.3
 
-<TextInput>
-    background_color: utils.get_color_from_hex('#ffffffff')
+# <TextInput>
+#     background_color: utils.get_color_from_hex('#ffffffff')
 
-<Label>
-    font_size: 32
+# <Label>
+#     font_size: 32
 
 <MyGridLayout>
-    canvas.before:
-        Color:
-            rgba: utils.get_color_from_hex('#b0ffffff')
-        Rectangle:
-            pos: self.pos
-            size: self.size
+    # canvas.before:
+    #     Color:
+    #         rgba: utils.get_color_from_hex('#b0ffffff')
+    #     Rectangle:
+    #         pos: self.pos
+    #         size: self.size
 
     BoxLayout:
         orientation:'vertical'
         size: root.width, root.height
 
-        Label:
-            id: name_label
-            text: "What is your name?"
-            font_size: 32
-
         TextInput:
-            id: name_input
-            multiline: False
-            size_hint: (1, .5)
+            id: calc_input
+            text: '0'
+            halign: "right"
+            font_size: 65
+            size_hint: (1,.15)
 
-        Button:
-            size_hint: (1, .5)
-            font_size: 32
-            text: "Submit"
-            on_press: root.press()
+        GridLayout:
+            cols: 4
+            rows: 5
+
+            #row 1
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '%'
+                on_press: callback_function
+
+            Button:
+                id: clear
+                size_hint: (.2,.2)
+                font_size: 32
+                text: 'C'
+                on_press: root.clear()
+            
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: u"\u00AB"
+                on_press: root.remove()
+                
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '/'
+                on_press: root.math_sign("/")
+
+            #row 2
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '7'
+                background_color: (157/255, 157/255, 157/255, 1)
+                on_press: root.button_press(7)
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '8'
+                on_press: root.button_press(8)
+                background_color: (157/255, 157/255, 157/255, 1)
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '9'
+                on_press: root.button_press(9)
+                background_color: (157/255, 157/255, 157/255, 1)
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: 'X'
+                on_press: root.math_sign("*")
+
+            #row 3
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '4'
+                on_press: root.button_press(4)
+                background_color: (157/255, 157/255, 157/255, 1)
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '5'
+                on_press: root.button_press(5)
+                background_color: (157/255, 157/255, 157/255, 1)
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '6'
+                on_press: root.button_press(6)
+                background_color: (157/255, 157/255, 157/255, 1)
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '-'
+                on_press: root.math_sign("-")
+
+            #row 4
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '1'
+                on_press: root.button_press(1)
+                background_color: (157/255, 157/255, 157/255, 1)
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '2'
+                on_press: root.button_press(2)
+                background_color: (157/255, 157/255, 157/255, 1)
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '3'
+                on_press: root.button_press(3)
+                background_color: (157/255, 157/255, 157/255, 1)
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '+'
+                on_press: root.math_sign("+")
+
+            
+            #row 5
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '+/-'
+                background_color: (157/255, 157/255, 157/255, 1)
+                on_press: root.pos_neg()
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '0'
+                background_color: (157/255, 157/255, 157/255, 1)
+                on_press: root.button_press(0)
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '.'
+                background_color: (157/255, 157/255, 157/255, 1)
+                on_press: root.dot()
+            Button:
+                size_hint: (.2,.2)
+                font_size: 32
+                text: '='
+                on_press: root.equals()
+
+    # BoxLayout:
+    #     orientation:'vertical'
+    #     size: root.width, root.height
+
+    #     Label:
+    #         id: name_label
+    #         text: "What is your name?"
+    #         font_size: 32
+
+    #     TextInput:
+    #         id: name_input
+    #         multiline: False
+    #         size_hint: (1, .5)
+
+    #     Button:
+    #         size_hint: (1, .5)
+    #         font_size: 32
+    #         text: "Submit"
+    #         on_press: root.press()
     # FloatLayout:
     #     size: root.width, root.height
 
