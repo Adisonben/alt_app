@@ -8,6 +8,9 @@
 
 2. ติดตั้ง lib อื่น ๆ :  `pip install -r requirements.txt`
 
-3. ติดตั้ง KivyMD lib :  
-    - `cd KivyMD`
-    - `pip install .`
+
+Note:
+Also you can install manually from sources. Just clone the project and run pip:
+- `git clone https://github.com/kivymd/KivyMD.git --depth 1`
+- `cd KivyMD`
+- `pip install`
