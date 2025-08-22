@@ -1,0 +1,71 @@
+MDScreen:
+    MDBoxLayout:
+        orientation: "vertical"
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: 50
+            padding: 10, 5, 10, 5
+
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            
+            BoxLayout:
+                orientation: "vertical"
+                size: root.width, root.height
+
+                MDLabel:
+                    text: "IP Address"
+                    role: "small"
+                MDLabel:
+                    text: "192.168.1.0"
+                    role: "small"
+                    theme_text_color: "Custom"
+                    text_color: "green"
+                    
+
+            MDLabel:
+                text: "ALT Iddrives"
+                halign: "center"
+                font_style: "Title"
+                
+
+            BoxLayout:
+                orientation: "vertical"
+                size: root.width, root.height
+
+                MDLabel:
+                    text: "Status"
+                    role: "small"
+                    halign: "right"
+
+                MDLabel:
+                    text: "Online"
+                    role: "small"
+                    halign: "right"
+                    theme_text_color: "Custom"
+                    text_color: "green"
+
+
+        MDScreenManager:
+            # md_bg_color: app.theme_cls.primaryColor
+            id: screen_manager
+
+            Home:
+                name: "home"
+            Authing:
+                name: "authing"
+            AuthResult:
+                name: "authresult"
+            Breathing:
+                name: "breathing"
+            TestResult:
+                name: "testresult"
+            ShowError:
+                name: "showerror"

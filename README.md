@@ -6,4 +6,8 @@
     - Windows cmd `venv\Scripts\activate.bat`
     - freeze lib `pip freeze > requirements.txt`
 
-2. ติดตั้ง lib อื่น ๆ  `pip install -r requirements.txt`
+2. ติดตั้ง lib อื่น ๆ :  `pip install -r requirements.txt`
+
+3. ติดตั้ง KivyMD lib :  
+    - `cd KivyMD`
+    - `pip install .`

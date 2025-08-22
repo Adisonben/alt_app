@@ -1,0 +1,92 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+<Home>:
+    
+    md_bg_color: get_color_from_hex("#e8fffeff")
+
+    FloatLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        
+        MDBoxLayout:
+            orientation: "vertical"
+            #md_bg_color: get_color_from_hex("#b1b1b1ff")
+            pos_hint: {"center_x": .5, "center_y": .5}
+            size_hint_y: None
+            height: 280
+            spacing: 10
+
+            MDBoxLayout:
+                orientation: "vertical"
+                padding: 0,0,0,20
+                spacing: 30
+                adaptive_height: True
+
+                Label:
+                    markup: True
+                    text: '[b]พร้อมสำหรับการทดสอบ[/b]'
+                    halign: "center"
+                    font_name: "Sarabun"
+                    font_size: 50
+                    color: (0,0,0,1)
+
+                MDLabel:
+                    text: "Ready for Alcohol Breath Test"
+                    font_style: "Title"
+                    font_name: "Sarabun"
+                    adaptive_height: True
+                    font_size: 32
+                    halign: "center"
+    
+            MDBoxLayout:
+                orientation: "vertical"
+                padding: 5,20,0,0
+                spacing: 15
+                size: root.width, 100
+                adaptive_height: True
+
+                MDButton:
+                    style: "filled"
+                    size_hint: None, None
+                    size: root.width/2, 100
+                    pos_hint: {"center_x": .5}
+                    theme_bg_color: "Custom"
+                    md_bg_color: get_color_from_hex("#0e6effff")
+                    on_release: 
+                        app.root.ids.screen_manager.current = "authing"
+                        root.manager.transition.direction = "left"
+
+                    # MDButtonIcon:
+                    #     icon: "plus"
+                    #     pos_hint: {"center_x": .3, "center_y": .5}
+                    #     font_size: 40
+                    
+                    MDButtonText:
+                        text: "Start Test"
+                        font_style: "Headline"
+                        role: "medium"
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                    
+            MDBoxLayout:
+                orientation: "vertical"
+                padding: 5,20,0,0
+                spacing: 15
+                adaptive_height: True
+
+                Label:
+                    text: 'กดปุ่มเพื่อเริ่มการทดสอบแอลกอฮอล์'
+                    halign: "center"
+                    font_style: "Headline"
+                    font_name: "Sarabun"
+                    font_size: 25
+                    color: (0,0,0,.5)
+
+                MDLabel:
+                    text: "Touch the button to start alcohol breath test"
+                    font_style: "Label"
+                    font_name: "Sarabun"
+                    adaptive_height: True
+                    font_size: 25
+                    halign: "center"
+                    theme_text_color: "Custom"
+                    text_color: (0,0,0,.5)
