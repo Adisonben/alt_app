@@ -59,6 +59,18 @@
                     font_name: "Sarabun"
                     font_size: 20
                     color: (0,0,0,.5)
+        
+        MDButton:
+            style: "filled"
+            pos_hint: {"center_x": .5}
+            theme_bg_color: "Custom"
+            md_bg_color: get_color_from_hex("#01e1ffff")
+            on_release: 
+                app.root.ids.screen_manager.current = "breathing"
+                root.manager.transition.direction = "left"
+            MDButtonText:
+                text: "Next"
+                pos_hint: {"center_x": .5, "center_y": .5}
 
         MDBoxLayout:
             id: result_box_fail

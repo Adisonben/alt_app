@@ -36,12 +36,11 @@ class Authing(MDScreen):
         if args and args[0] == "Pass":
             self.ids.result_box_pass.opacity = 1
             self.ids.result_box_pass.disabled = False
-            Clock.schedule_once(self.start_timer, 4)
+            Clock.schedule_once(lambda dt: setattr(self.manager, "current", "breathing"), 4)
         else:
             self.ids.result_box_fail.opacity = 1
             self.ids.result_box_fail.disabled = False
             Clock.schedule_once(self.start_timer, 4)
-
         # # show result box
         # self.ids.result_box.opacity = 1
         # self.ids.result_box.disabled = False

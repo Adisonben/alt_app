@@ -1,0 +1,120 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+<Breathing>:
+    md_bg_color: get_color_from_hex("#e8fffeff")
+    # on_kv_post: root.start_timer()
+
+    FloatLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        
+        MDBoxLayout:
+            orientation: "vertical"
+            #md_bg_color: get_color_from_hex("#b1b1b1ff")
+            pos_hint: {"center_x": .5, "center_y": .3}
+            size_hint_y: None
+            height: 280
+            spacing: 10
+
+            MDBoxLayout:
+                orientation: "vertical"
+                padding: 0,0,0,50
+                spacing: 30
+                adaptive_height: True
+                
+                MDIconButton:
+                    icon: 'weather-windy'
+                    style: "filled"
+                    theme_font_size: "Custom"
+                    font_size: "60sp"
+                    radius: [self.height / 2, ]
+                    size_hint: None, None
+                    size: "150dp", "150dp"
+                    pos_hint: {'center_x': .5}
+                    theme_bg_color: "Custom"
+                    md_bg_color: "blue"
+                    theme_icon_color: "Custom"
+                    icon_color: "white"
+                # Image:
+                #     source: "assets/fingerprint.png"
+                #     size_hint: None, None
+                #     size: 100, 100
+                #     pos_hint: {"center_x": .5}
+
+
+            MDBoxLayout:
+                orientation: "vertical"
+                spacing: 30
+                adaptive_height: True
+
+                Label:
+                    markup: True
+                    text: 'กรุณาเป่าลมหายใจ '
+                    halign: "center"
+                    font_name: "Sarabun"
+                    font_size: 50
+                    color: (0,0,0,1)
+
+                MDLabel:
+                    text: "Please blow into the device"
+                    font_style: "Title"
+                    font_name: "Sarabun"
+                    adaptive_height: True
+                    font_size: 32
+                    halign: "center"
+                
+                MDCard:
+                    style: "elevated"
+                    padding: 20
+                    size_hint: None, None
+                    size: "500dp", "200dp"
+                    pos_hint: {'center_x': .5}
+                    orientation: "vertical"
+
+                    Label:
+                        text: 'คำแนะนำ Instructions'
+                        halign: "center"
+                        font_style: "Headline"
+                        font_name: "Sarabun"
+                        font_size: 20
+                        color: (0,0,0,1)
+
+                    Label:
+                        text: '1. หยิบหลอดจากช่องเก็บหลอด (Pick up the straw.)'
+                        halign: "left"
+                        valign: "middle"
+                        font_name: "Sarabun"
+                        size_hint_x: 1
+                        font_size: 20
+                        color: (0,0,0,1)
+                        text_size: self.width, None   # <-- required for halign to work
+                    Label:
+                        text: '2. เป่าลมออกอย่างแรงและต่อเนื่อง (Blow hard and continuously)'
+                        halign: "left"
+                        valign: "middle"
+                        font_name: "Sarabun"
+                        size_hint_x: 1
+                        font_size: 20
+                        color: (0,0,0,1)
+                        text_size: self.width, None   # <-- required for halign to work
+                    Label:
+                        text: "3. อย่าหยุดจนกว่าจะได้ยินเสียงสัญญาณ (Don't stop until you hear the beep)"
+                        halign: "left"
+                        valign: "middle"
+                        font_name: "Sarabun"
+                        size_hint_x: 1
+                        font_size: 20
+                        color: (0,0,0,1)
+                        text_size: self.width, None   # <-- required for halign to work
+
+            MDButton:
+                style: "filled"
+                pos_hint: {"center_x": .5}
+                theme_bg_color: "Custom"
+                md_bg_color: get_color_from_hex("#01e1ffff")
+                on_release: 
+                    app.root.ids.screen_manager.current = "testresult"
+                    root.manager.transition.direction = "left"
+                MDButtonText:
+                    text: "Next"
+                    pos_hint: {"center_x": .5, "center_y": .5}

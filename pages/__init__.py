@@ -1,6 +1,6 @@
 from .home import Home
 from .authing import Authing
-from .auth_result import AuthResult
+from .prepare_result import PrepareResult
 from .breathing import Breathing
 from .test_result import TestResult
 from .show_error import ShowError
@@ -8,7 +8,7 @@ from .show_error import ShowError
 __all__ = [
     "Home",
     "Authing",
-    "AuthResult",
+    "PrepareResult",
     "Breathing",
     "TestResult",
     "ShowError"

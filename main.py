@@ -4,7 +4,7 @@ from kivy.core.text import LabelBase
 from kivy.uix.screenmanager import ScreenManager
 
 # Import pages
-from pages import Home, Authing, AuthResult, Breathing, TestResult, ShowError
+from pages import Home, Authing, PrepareResult, Breathing, TestResult, ShowError
 
 LabelBase.register(name="Sarabun", fn_regular="fonts/THSarabunNew.ttf")
 
@@ -15,7 +15,7 @@ class MainApp(MDApp):
 
         # Load all KV files from kv/ folder
         Builder.load_file("styles/home.kv")
-        Builder.load_file("styles/auth_result.kv")
+        Builder.load_file("styles/prepare_result.kv")
         Builder.load_file("styles/authing.kv")
         Builder.load_file("styles/breathing.kv")
         Builder.load_file("styles/test_result.kv")

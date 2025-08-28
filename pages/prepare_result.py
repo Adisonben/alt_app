@@ -1,6 +1,6 @@
 from kivymd.uix.screen import MDScreen
 
-class AuthResult(MDScreen):
+class PrepareResult(MDScreen):
     # def on_enter(self):
     #     print("Page1 is now visible")
 
