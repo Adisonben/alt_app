@@ -1,9 +1,26 @@
 from kivymd.uix.screen import MDScreen
 from kivy.animation import Animation
 from kivy.clock import Clock
-from kivymd.uix.label import MDLabel
+from functions.fingerprint import scan_fingerprint
+
+# def scan_fingerprint(callback):
+#     # จำลอง hardware ใช้เวลา 2 วิ
+#     Clock.schedule_once(lambda dt: callback(True), 2)
+
 
 class Authing(MDScreen):
+    def on_enter(self):
+        print("Start fingerprint scan...")
+        scan_fingerprint(self.on_fingerprint_done)
+
+    def on_fingerprint_done(self, success):
+        if success:
+            self.manager.current = "breathing"
+        else:
+            self.manager.current = "home"
+
+
+
     def start_heartbeat(self, widget):
         # Scale up
         anim_up = Animation(size=(110, 110), duration=0.5, t="out_quad")

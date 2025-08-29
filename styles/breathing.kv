@@ -29,7 +29,7 @@
                     font_size: "60sp"
                     radius: [self.height / 2, ]
                     size_hint: None, None
-                    size: "150dp", "150dp"
+                    size: "100dp", "100dp"
                     pos_hint: {'center_x': .5}
                     theme_bg_color: "Custom"
                     md_bg_color: "blue"
@@ -107,14 +107,14 @@
                         color: (0,0,0,1)
                         text_size: self.width, None   # <-- required for halign to work
 
-            MDButton:
-                style: "filled"
-                pos_hint: {"center_x": .5}
-                theme_bg_color: "Custom"
-                md_bg_color: get_color_from_hex("#01e1ffff")
-                on_release: 
-                    app.root.ids.screen_manager.current = "testresult"
-                    root.manager.transition.direction = "left"
-                MDButtonText:
-                    text: "Next"
-                    pos_hint: {"center_x": .5, "center_y": .5}
+            # MDButton:
+            #     style: "filled"
+            #     pos_hint: {"center_x": .5}
+            #     theme_bg_color: "Custom"
+            #     md_bg_color: get_color_from_hex("#01e1ffff")
+            #     on_release: 
+            #         app.root.ids.screen_manager.current = "testresult"
+            #         root.manager.transition.direction = "left"
+            #     MDButtonText:
+            #         text: "Next"
+            #         pos_hint: {"center_x": .5, "center_y": .5}

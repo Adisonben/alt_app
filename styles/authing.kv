@@ -60,17 +60,17 @@
                     font_size: 20
                     color: (0,0,0,.5)
         
-        MDButton:
-            style: "filled"
-            pos_hint: {"center_x": .5}
-            theme_bg_color: "Custom"
-            md_bg_color: get_color_from_hex("#01e1ffff")
-            on_release: 
-                app.root.ids.screen_manager.current = "breathing"
-                root.manager.transition.direction = "left"
-            MDButtonText:
-                text: "Next"
-                pos_hint: {"center_x": .5, "center_y": .5}
+        # MDButton:
+        #     style: "filled"
+        #     pos_hint: {"center_x": .5}
+        #     theme_bg_color: "Custom"
+        #     md_bg_color: get_color_from_hex("#01e1ffff")
+        #     on_release: 
+        #         app.root.ids.screen_manager.current = "breathing"
+        #         root.manager.transition.direction = "left"
+        #     MDButtonText:
+        #         text: "Next"
+        #         pos_hint: {"center_x": .5, "center_y": .5}
 
         MDBoxLayout:
             id: result_box_fail
@@ -103,19 +103,6 @@
                     theme_icon_color: "Custom"
                     icon_color: "white"
 
-                # MDIcon:
-                #     icon: "alpha-x-circle"
-                #     pos_hint: {"center_x": .5}
-                #     font_size: "180sp"
-                #     halign: "center"
-
-                # Image:
-                #     source: "assets/fingerprint.png"
-                #     size_hint: None, None
-                #     size: 100, 100
-                #     pos_hint: {"center_x": .5}
-                #     on_kv_post: root.start_heartbeat(self)
-
 
             MDBoxLayout:
                 orientation: "vertical"
@@ -145,34 +132,6 @@
                     font_name: "Sarabun"
                     font_size: 20
                     color: (0,0,0,.5)
-
-            # MDButton:
-            #     style: "filled"
-            #     size_hint: None, None
-            #     pos_hint: {"center_x": .5}
-            #     theme_bg_color: "Custom"
-            #     md_bg_color: get_color_from_hex("#0e6effff")
-            #     on_release: 
-            #         root.start_timer()
-                
-            #     MDButtonText:
-            #         text: "Back to Authing"
-            #         pos_hint: {"center_x": .5, "center_y": .5}
-                    
-            # MDButton:
-            #     style: "filled"
-            #     pos_hint: {"center_x": .5}
-            #     theme_bg_color: "Custom"
-            #     md_bg_color: get_color_from_hex("#0e6effff")
-            #     on_release: 
-            #         app.root.ids.screen_manager.current = "home"
-            #         root.manager.transition.direction = "left"
-                
-            #     MDButtonText:
-            #         text: "Home"
-            #         font_style: "Headline"
-            #         role: "medium"
-            #         pos_hint: {"center_x": .5, "center_y": .5}
 
         MDBoxLayout:
             id: result_box_pass
@@ -225,20 +184,7 @@
                     adaptive_height: True
                     font_size: 32
                     halign: "center"
-            # MDButton:
-            #     style: "filled"
-            #     pos_hint: {"center_x": .5}
-            #     theme_bg_color: "Custom"
-            #     md_bg_color: get_color_from_hex("#0e6effff")
-            #     on_release: 
-            #         app.root.ids.screen_manager.current = "home"
-            #         root.manager.transition.direction = "left"
-                
-            #     MDButtonText:
-            #         text: "Home"
-            #         font_style: "Headline"
-            #         role: "medium"
-            #         pos_hint: {"center_x": .5, "center_y": .5}
+
 
         MDButton:
             style: "filled"
