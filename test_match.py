@@ -24,7 +24,7 @@ def main():
     check(sgfplib.Create(), "CreateSGFPMObject")
 
     # 2) Init (ระบุรุ่นตรง ๆ)
-    check(sgfplib.Init(SGFDxDeviceName.SG_DEV_FDU05), "Init")
+    check(sgfplib.Init(SGFDxDeviceName.SG_DEV_AUTO), "Init")
 
     # 3) OpenDevice (ห้ามลืม)
     check(sgfplib.OpenDevice(0), "OpenDevice")
