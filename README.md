@@ -11,7 +11,9 @@
 - `sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_202/bin/javac 1`
 
 # Install SecuGen sdk for pi5 arm32 os
-- cd to 'FDx_SDK_PRO_LINUX_PI_armv7l_3_8_8/lib/pi' and `make uninstall install`
+- cd to 'FDx_SDK_PRO_LINUX_PI_armv7l_3_8_8/lib/pi'
+- `sudo cp libpysgfplib.so.1.0.1.fdu05_rename libpysgfplib.so | sudo ldconfig` หรือ `sudo ln -sf libpysgfplib.so.1.0.1.fdu03_rename libpysgfplib.so`
+- `sudo cd ../...make uninstall install`
 
 # installation
 1. สร้าง Virtual Environment (venv) ` python -m venv venv ` และ activate
