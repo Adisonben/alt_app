@@ -53,7 +53,7 @@ class Authing(MDScreen):
         if args and args[0] == "Pass":
             self.ids.result_box_pass.opacity = 1
             self.ids.result_box_pass.disabled = False
-            Clock.schedule_once(lambda dt: setattr(self.manager, "current", "breathing"), 4)
+            Clock.schedule_once(lambda dt: setattr(self.manager, "current", "breathing"), 1)
         else:
             self.ids.result_box_fail.opacity = 1
             self.ids.result_box_fail.disabled = False
@@ -61,3 +61,15 @@ class Authing(MDScreen):
         # # show result box
         # self.ids.result_box.opacity = 1
         # self.ids.result_box.disabled = False
+
+    def on_leave(self):
+        # Reset the state when leaving the screen
+        # Hide result boxes
+        self.ids.result_box_pass.opacity = 0
+        self.ids.result_box_pass.disabled = True
+        self.ids.result_box_fail.opacity = 0
+        self.ids.result_box_fail.disabled = True
+        
+        # Show fingerprint box (initial state)
+        self.ids.fingerprint_box.opacity = 1
+        self.ids.fingerprint_box.disabled = False
