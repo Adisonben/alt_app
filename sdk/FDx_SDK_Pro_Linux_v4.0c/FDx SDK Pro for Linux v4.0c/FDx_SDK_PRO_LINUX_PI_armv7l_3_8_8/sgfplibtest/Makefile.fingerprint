@@ -12,8 +12,8 @@ INCPATH = -I./ -I../include
 LIBS = -L../lib/$(PORT)
 
 # SecuGen SDK libraries for Hamster Pro 20 (FDU08)
-# Note: Use -lusb-1.0 for modern Linux systems
-SGLIBS = -lsgfplib -lsgnfiq -lsgimage -lsgfpamx -lsgfdu08 -lusb-1.0 -lpthread
+# Note: SDK uses legacy libusb-0.1 API, install with: sudo apt install libusb-dev
+SGLIBS = -lsgfplib -lsgnfiq -lsgimage -lsgfpamx -lsgfdu08 -lusb -lpthread
 
 # Output directory
 BINDIR = ../bin/$(PORT)
