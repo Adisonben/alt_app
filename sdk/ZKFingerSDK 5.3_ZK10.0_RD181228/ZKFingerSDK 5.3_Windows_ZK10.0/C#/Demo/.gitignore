@@ -1,0 +1,14 @@
+# window files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# vs version
+*.suo
+
+
+# debug files
+obj
+
+# release files
+
