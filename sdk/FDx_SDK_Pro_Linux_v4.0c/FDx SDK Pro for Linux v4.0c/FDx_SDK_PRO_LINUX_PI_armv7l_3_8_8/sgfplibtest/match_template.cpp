@@ -26,7 +26,7 @@ int main(int argc, char **argv)
     // Check command line arguments
     if (argc != 3)
     {
-        fprintf(stderr, "Usage: %s <base64_template1> <base64_template2>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <template_file1> <template_file2>\n", argv[0]);
         fprintf(stderr, "Returns: 1 (match) or 0 (no match) to stdout\n");
         return 1;
     }
@@ -79,29 +79,49 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    // Decode Base64 template 1
-    templateSize1 = templateSizeMax;
-    err = sgfplib->TextToByte((LPTSTR)argv[1], templateBuffer1, &templateSize1);
-    if (err != SGFDX_ERROR_NONE)
+    // Load Template 1 from file
+    FILE *fp1 = fopen(argv[1], "rb");
+    if (!fp1)
     {
-        fprintf(stderr, "ERROR: Failed to decode Base64 template 1. Error: %ld\n", err);
+        fprintf(stderr, "ERROR: Unable to open template file 1: %s\n", argv[1]);
         free(templateBuffer1);
         free(templateBuffer2);
         DestroySGFPMObject(sgfplib);
         return 1;
     }
+    templateSize1 = fread(templateBuffer1, 1, templateSizeMax, fp1);
+    fclose(fp1);
+    if (templateSize1 == 0)
+    {
+        fprintf(stderr, "ERROR: Failed to read template 1 from %s\n", argv[1]);
+        free(templateBuffer1);
+        free(templateBuffer2);
+        DestroySGFPMObject(sgfplib);
+        return 1;
+    }
+    fprintf(stderr, "Loaded %ld bytes from %s\n", templateSize1, argv[1]);
 
-    // Decode Base64 template 2
-    templateSize2 = templateSizeMax;
-    err = sgfplib->TextToByte((LPTSTR)argv[2], templateBuffer2, &templateSize2);
-    if (err != SGFDX_ERROR_NONE)
+    // Load Template 2 from file
+    FILE *fp2 = fopen(argv[2], "rb");
+    if (!fp2)
     {
-        fprintf(stderr, "ERROR: Failed to decode Base64 template 2. Error: %ld\n", err);
+        fprintf(stderr, "ERROR: Unable to open template file 2: %s\n", argv[2]);
         free(templateBuffer1);
         free(templateBuffer2);
         DestroySGFPMObject(sgfplib);
         return 1;
     }
+    templateSize2 = fread(templateBuffer2, 1, templateSizeMax, fp2);
+    fclose(fp2);
+    if (templateSize2 == 0)
+    {
+        fprintf(stderr, "ERROR: Failed to read template 2 from %s\n", argv[2]);
+        free(templateBuffer1);
+        free(templateBuffer2);
+        DestroySGFPMObject(sgfplib);
+        return 1;
+    }
+    fprintf(stderr, "Loaded %ld bytes from %s\n", templateSize2, argv[2]);
 
     // Match templates using NORMAL security level
     err = sgfplib->MatchTemplate(templateBuffer1, templateBuffer2, SL_NORMAL, &matched);
