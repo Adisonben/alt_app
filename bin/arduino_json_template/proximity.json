@@ -1,0 +1,10 @@
+{
+  "session": "984165165",
+  "status": "OK",
+  "cmd": "proximity",
+  "results": [
+    {
+      "state": "EXIST/STOCK"
+    }
+  ]
+}

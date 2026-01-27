@@ -1,0 +1,11 @@
+{
+  "session": "16519851",
+  "status": "OK",
+  "_status_": "OK/FAIL",
+  "cmd": "reaction",
+  "results": [
+    {
+      "value": "0.73"
+    }
+  ]
+}
