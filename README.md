@@ -1,5 +1,18 @@
 ### ALT kiosk application
 
+# System requirement
+- java 1.8.0_65
+- libusb-0.1-4
+
+# install java on pi5 arm 32 os
+- [Download java sdk](https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html)
+- `sudo tar -xvzf jdk-8u202-linux-arm64-vfp-hflt.tar.gz -C /usr/lib`
+- `sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk1.8.0_202/bin/java 1`
+- `sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk1.8.0_202/bin/javac 1`
+
+# Install SecuGen sdk for pi5 arm32 os
+- cd to 'FDx_SDK_PRO_LINUX_PI_armv7l_3_8_8/lib/pi' and `make uninstall install`
+
 # installation
 1. สร้าง Virtual Environment (venv) ` python -m venv venv ` และ activate
     - Linux / macOS / Raspberry Pi	`source venv/bin/activate`
@@ -7,7 +20,6 @@
     - freeze lib `pip freeze > requirements.txt`
 
 2. ติดตั้ง lib อื่น ๆ :  `pip install -r requirements.txt`
-
 
 Note:
 Also you can install manually from sources. Just clone the project and run pip:

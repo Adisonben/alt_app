@@ -1,5 +1,10 @@
 from kivy.clock import Clock
-import serial
+try:
+    import serial
+except Exception:
+    # serial (pyserial) may not be available in the dev environment.
+    # Make module importable and let runtime functions use a simulated path.
+    serial = None
 import threading
 import time
 
@@ -25,7 +30,8 @@ def measure_alcohol(callback):
 def prepare(ser):
     try:
         while True:
-            if ser.in_waiting:  # Check if data available
+            # only attempt to read from serial if a serial object is provided
+            if ser is not None and getattr(ser, "in_waiting", False):  # Check if data available
                 data = ser.readline().decode("utf-8", errors="ignore").strip()
                 print("Received:", data)
                 if "STANBY" in data.upper():
@@ -35,7 +41,8 @@ def prepare(ser):
                     send_command(ser, "$START")
             time.sleep(0.1)
         return True
-    except serial.SerialException as e:
+    except Exception as e:
+        # serial may not be available or other I/O error occurred
         print(f"Error: {e}")
         return False
 
