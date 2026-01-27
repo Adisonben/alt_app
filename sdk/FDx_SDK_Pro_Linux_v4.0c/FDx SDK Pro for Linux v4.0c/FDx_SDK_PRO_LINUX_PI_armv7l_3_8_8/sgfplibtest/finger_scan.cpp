@@ -1,6 +1,7 @@
 /*************************************************************
  * File: finger_scan.cpp
  * Description: Fingerprint scan and output raw template
+ * Usage: ./finger_scan [timeout_ms]
  * Based on SecuGen SDK example
  *************************************************************/
 
@@ -29,6 +30,11 @@ int main(int argc, char **argv)
     BYTE *templateBuffer;
     SGDeviceInfoParam deviceInfo;
     SGFingerInfo fingerInfo;
+
+    // Parse timeout argument (default: 10000ms)
+    DWORD timeout = 10000;
+    if (argc > 1)
+        timeout = (DWORD)atol(argv[1]);
 
     err = CreateSGFPMObject(&sgfplib);
     if (!sgfplib)
@@ -67,20 +73,18 @@ int main(int argc, char **argv)
 
     sgfplib->SetLedOn(true);
 
-    DWORD timeout = 10000;
     DWORD minQuality = 50;
     err = sgfplib->GetImageEx(imageBuffer, timeout, NULL, minQuality);
 
+    sgfplib->SetLedOn(false);
+
     if (err != SGFDX_ERROR_NONE)
     {
-        sgfplib->SetLedOn(false);
         free(imageBuffer);
         sgfplib->CloseDevice();
         DestroySGFPMObject(sgfplib);
         return 1;
     }
-
-    sgfplib->SetLedOn(false);
 
     err = sgfplib->GetImageQuality(deviceInfo.ImageWidth, deviceInfo.ImageHeight, imageBuffer, &quality);
     if (err != SGFDX_ERROR_NONE)
@@ -138,7 +142,6 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    // Output raw template to stdout
     fwrite(templateBuffer, 1, templateSize, stdout);
 
     free(templateBuffer);
