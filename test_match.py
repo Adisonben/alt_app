@@ -24,7 +24,7 @@ def main():
     check(sgfplib.Create(), "CreateSGFPMObject")
 
     # 2) Init device (auto detect)
-    check(sgfplib.Init(SGFDxDeviceName.SG_DEV_AUTO), "Init")
+    check(sgfplib.Init(SGFDxDeviceName.SG_DEV_FDU05), "Init")
 
     # 3) Open device
     check(sgfplib.OpenDevice(0), "OpenDevice")
