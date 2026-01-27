@@ -19,13 +19,18 @@ class PYSGFPLib:
 
   slib   = '/usr/local/lib/libpysgfplib.so'
   hlib   = CDLL(slib)
-  self.hlib.PY_SGFPM_InitEx.argtypes = [c_ulong, c_ulong, c_ulong]
-  self.hlib.PY_SGFPM_InitEx.restype = c_long
-
 
 
   def __init__(self):
     self.data = []
+
+    # InitEx
+    self.hlib.PY_SGFPM_InitEx.argtypes = [c_ulong, c_ulong, c_ulong]
+    self.hlib.PY_SGFPM_InitEx.restype  = c_long
+
+    # GetImage
+    self.hlib.PY_SGFPM_GetImage.argtypes = [POINTER(c_ubyte)]
+    self.hlib.PY_SGFPM_GetImage.restype  = c_long
 
   def Create(self):
     return self.hlib.PY_SGFPM_Create()
