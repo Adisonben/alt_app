@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-from pysgfplib import *
+from .pysgfplib import *
 from ctypes import *
 
 # main application routine.

@@ -8,9 +8,12 @@
 '''
 
 from ctypes import *
-from sgfdxerrorcode import *
-from sgfdxdevicename import *
-from sgfdxsecuritylevel import *
+# from sgfdxerrorcode import *
+# from sgfdxdevicename import *
+# from sgfdxsecuritylevel import *
+from .sgfdxerrorcode import *
+from .sgfdxdevicename import *
+from .sgfdxsecuritylevel import *
 
 class PYSGFPLib:
 
