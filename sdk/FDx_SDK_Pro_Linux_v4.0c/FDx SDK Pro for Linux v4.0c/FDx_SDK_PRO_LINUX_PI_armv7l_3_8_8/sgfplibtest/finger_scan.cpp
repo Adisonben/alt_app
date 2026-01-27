@@ -54,6 +54,8 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    sgfplib->SetLedOn(true);
+
     deviceInfo.DeviceID = 0;
     err = sgfplib->GetDeviceInfo(&deviceInfo);
     if (err != SGFDX_ERROR_NONE)
@@ -70,8 +72,6 @@ int main(int argc, char **argv)
         DestroySGFPMObject(sgfplib);
         return 1;
     }
-
-    sgfplib->SetLedOn(true);
 
     DWORD minQuality = 50;
     err = sgfplib->GetImageEx(imageBuffer, timeout, NULL, minQuality);
