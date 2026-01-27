@@ -19,6 +19,9 @@ class PYSGFPLib:
 
   slib   = '/usr/local/lib/libpysgfplib.so'
   hlib   = CDLL(slib)
+  # self.hlib.PY_SGFPM_GetImage.argtypes = [POINTER(c_ubyte)]
+  # self.hlib.PY_SGFPM_GetImage.restype = c_long
+
 
   def __init__(self):
     self.data = []

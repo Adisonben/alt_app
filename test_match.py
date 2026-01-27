@@ -4,6 +4,7 @@ import time
 from fingerprint_sdk.pysgfplib import PYSGFPLib
 from fingerprint_sdk.sgfdxdevicename import SGFDxDeviceName
 from fingerprint_sdk.sgfdxerrorcode import SGFDxErrorCode
+from ctypes import c_ubyte
 
 
 def check(result, step):
@@ -26,7 +27,8 @@ def main():
     sgfplib.SetLedOn(True)
 
     width, height = 260, 300
-    image = bytearray(width * height)
+    # image = bytearray(width * height)
+    image = (c_ubyte * (width * height))()
 
     print("👉 Place finger on sensor")
     time.sleep(2)
