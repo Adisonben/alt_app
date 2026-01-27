@@ -1,7 +1,7 @@
 #*************************************************************
 #*
 #* Makefile for finger_scan and match_template
-#* Device: Hamster Pro 20 (U20-A, U20-AP) - FDU08
+#* Device: Hamster Pro 20 (U20-A, U20-AP) - FDU05
 #*
 #*************************************************************
 
@@ -11,9 +11,9 @@ CPP = g++
 INCPATH = -I./ -I../include
 LIBS = -L../lib/$(PORT)
 
-# SecuGen SDK libraries for Hamster Pro 20 (FDU08)
+# SecuGen SDK libraries for Hamster Pro 20 (FDU05)
 # Note: SDK uses legacy libusb-0.1 API, install with: sudo apt install libusb-dev
-SGLIBS = -lsgfplib -lsgnfiq -lsgimage -lsgfpamx -lsgfdu08 -lusb -lpthread
+SGLIBS = -lsgfplib -lsgnfiq -lsgimage -lsgfpamx -lsgfdu05 -lusb -lpthread
 
 # Output directory
 BINDIR = ../bin/$(PORT)
