@@ -3,7 +3,6 @@ import time
 from ctypes import c_ubyte
 
 from fingerprint_sdk.pysgfplib import PYSGFPLib
-from fingerprint_sdk.sgfdxdevicename import SGFDxDeviceName
 from fingerprint_sdk.sgfdxerrorcode import SGFDxErrorCode
 
 
@@ -23,33 +22,28 @@ def main():
     # 1) Create
     check(sgfplib.Create(), "CreateSGFPMObject")
 
-    # 2) Init (ระบุรุ่นตรง ๆ)
-    check(sgfplib.Init(SGFDxDeviceName.SG_DEV_AUTO), "Init")
+    # 2) InitEx (สำคัญที่สุด)
+    check(sgfplib.InitEx(260, 300, 500), "InitEx")
 
-    # 3) OpenDevice (ห้ามลืม)
+    # 3) OpenDevice
     check(sgfplib.OpenDevice(0), "OpenDevice")
 
     # 4) LED ON
-    check(sgfplib.SetLedOn(True), "LED ON")
+    sgfplib.SetLedOn(True)
 
-    # Hamster Pro 20 = 260x300
-    width, height = 260, 300
-    image = (c_ubyte * (width * height))()
+    image = (c_ubyte * (260 * 300))()
 
     print("👉 Place finger on sensor")
     time.sleep(2)
 
-    # 5) Get Image
     check(sgfplib.GetImage(image), "GetImage")
 
-    # 6) LED OFF
     sgfplib.SetLedOn(False)
 
-    # 7) Close
     check(sgfplib.CloseDevice(), "CloseDevice")
     check(sgfplib.Terminate(), "DestroySGFPMObject")
 
-    print("=========== DONE ============")
+    print("=========== DONE ===========")
 
 
 if __name__ == "__main__":

@@ -19,8 +19,9 @@ class PYSGFPLib:
 
   slib   = '/usr/local/lib/libpysgfplib.so'
   hlib   = CDLL(slib)
-  # self.hlib.PY_SGFPM_GetImage.argtypes = [POINTER(c_ubyte)]
-  # self.hlib.PY_SGFPM_GetImage.restype = c_long
+  self.hlib.PY_SGFPM_InitEx.argtypes = [c_ulong, c_ulong, c_ulong]
+  self.hlib.PY_SGFPM_InitEx.restype = c_long
+
 
 
   def __init__(self):
@@ -37,6 +38,14 @@ class PYSGFPLib:
 
   def Init(self, devName):
     return self.hlib.PY_SGFPM_Init(c_long(devName))
+
+  def InitEx(self, width, height, dpi):
+    return self.hlib.PY_SGFPM_InitEx(
+        c_ulong(width),
+        c_ulong(height),
+        c_ulong(dpi)
+    )
+
 
   #virtual DWORD WINAPI  InitEx(DWORD width, DWORD height, DWORD dpi) = 0;
   #virtual DWORD WINAPI  SetTemplateFormat(WORD format) = 0; // default is SG400
