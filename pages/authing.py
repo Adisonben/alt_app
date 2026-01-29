@@ -9,8 +9,11 @@ from functions.fingerprint import scan_fingerprint, compare_fingerprints
 
 
 class Authing(MDScreen):
+    failed_attempts = 0
+
     def on_enter(self):
-        print("Start fingerprint scan...")
+        self.failed_attempts = 0
+        print(f"Start fingerprint scan... (Attempt {self.failed_attempts + 1})")
         scan_fingerprint(self.on_fingerprint_done)
 
     def on_fingerprint_done(self, success, b64_data):
@@ -55,6 +58,9 @@ class Authing(MDScreen):
         self.ids.result_box_fail.opacity = 0
         self.ids.result_box_fail.disabled = True
         
+        print("Restarting fingerprint scan...")
+        scan_fingerprint(self.on_fingerprint_done)
+
         # wait 10 seconds then call show_auth_result
         # Clock.schedule_once(self.show_result, 5)
 
@@ -70,7 +76,19 @@ class Authing(MDScreen):
         else:
             self.ids.result_box_fail.opacity = 1
             self.ids.result_box_fail.disabled = False
-            Clock.schedule_once(self.start_timer, 4)
+            
+            self.failed_attempts += 1
+            print(f"Failed attempts: {self.failed_attempts}")
+            
+            if self.failed_attempts >= 4:
+                print("Max attempts reached. Going home.")
+                Clock.schedule_once(self.go_home, 4)
+            else:
+                Clock.schedule_once(self.start_timer, 4)
+
+    def go_home(self, dt):
+        # Clear state handles by on_leave automatically or we can force it here
+        self.manager.current = "home"
         # # show result box
         # self.ids.result_box.opacity = 1
         # self.ids.result_box.disabled = False
