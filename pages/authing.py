@@ -13,11 +13,17 @@ class Authing(MDScreen):
         print("Start fingerprint scan...")
         scan_fingerprint(self.on_fingerprint_done)
 
-    def on_fingerprint_done(self, success):
+    def on_fingerprint_done(self, success, raw_data):
         if success:
-            self.manager.current = "breathing"
+            print(f"Fingerprint scan successful. Raw data size: {len(raw_data)}")
+            # Print raw data in hex for inspection as requested
+            # import binascii
+            # print(f"Raw data: {binascii.hexlify(raw_data).decode()}")
+            
+            self.show_result("Pass")
         else:
-            self.manager.current = "home"
+            print("Fingerprint scan failed or timed out.")
+            self.show_result("Fail")
 
 
 
