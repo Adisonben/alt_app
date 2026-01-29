@@ -80,7 +80,7 @@ class Authing(MDScreen):
             self.failed_attempts += 1
             print(f"Failed attempts: {self.failed_attempts}")
             
-            if self.failed_attempts >= 4:
+            if self.failed_attempts >= 3:
                 print("Max attempts reached. Going home.")
                 Clock.schedule_once(self.go_home, 4)
             else:
