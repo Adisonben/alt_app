@@ -13,13 +13,11 @@ class Authing(MDScreen):
         print("Start fingerprint scan...")
         scan_fingerprint(self.on_fingerprint_done)
 
-    def on_fingerprint_done(self, success, raw_data):
+    def on_fingerprint_done(self, success, b64_data):
         if success:
-            print(f"Fingerprint scan successful. Raw data size: {len(raw_data)}")
-            print(f"Raw data: {raw_data}")
-            # Print raw data in hex for inspection as requested
-            # import binascii
-            # print(f"Raw data: {binascii.hexlify(raw_data).decode()}")
+            print(f"Fingerprint scan successful. Data length: {len(b64_data)}")
+            print(f"Raw data: {b64_data}")
+            # The data is now a Base64 string
             
             self.show_result("Pass")
         else:
