@@ -16,6 +16,7 @@ class Authing(MDScreen):
     def on_fingerprint_done(self, success, raw_data):
         if success:
             print(f"Fingerprint scan successful. Raw data size: {len(raw_data)}")
+            print(f"Raw data: {raw_data}")
             # Print raw data in hex for inspection as requested
             # import binascii
             # print(f"Raw data: {binascii.hexlify(raw_data).decode()}")
