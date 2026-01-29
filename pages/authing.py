@@ -1,7 +1,7 @@
 from kivymd.uix.screen import MDScreen
 from kivy.animation import Animation
 from kivy.clock import Clock
-from functions.fingerprint import scan_fingerprint
+from functions.fingerprint import scan_fingerprint, compare_fingerprints
 
 # def scan_fingerprint(callback):
 #     # จำลอง hardware ใช้เวลา 2 วิ
@@ -18,11 +18,19 @@ class Authing(MDScreen):
             print(f"Fingerprint scan successful. Data length: {len(b64_data)}")
             print(f"Raw data: {b64_data}")
             # The data is now a Base64 string
-            
-            self.show_result("Pass")
+            finger_data = "ndQ5w65P0//V9Qlh8JGN9xL/oiYwkBcJAhmCrh+1eC5XlQ6aPVed9MWf0L9EgQqZU6M0IwDC29RoW0T3fXFpvfeMpJzw6DOxLTpoeFahM20Da7pEzashVTzz2P850JuCA0P22s1KBnanZdv4T9encQOHf05BO3EAR1XKLXikYTUbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fA=="
+            print("Comparing with stored finger data...")
+            compare_fingerprints(b64_data, finger_data, self.on_match_done)
         else:
             print("Fingerprint scan failed or timed out.")
             self.show_result("Fail")
+
+    def on_match_done(self, match, msg):
+        print(f"Match Result: {match} ({msg})")
+        if match:
+             self.show_result("Pass")
+        else:
+             self.show_result("Fail")
 
 
 
