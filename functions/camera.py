@@ -104,12 +104,34 @@ class CameraManager:
             # Capture frame as numpy array
             frame = self._camera.capture_array("lores")
             
-            # Convert to texture
+            # picamera2 returns XRGB or XBGR format, need to handle properly
             h, w = frame.shape[:2]
-            texture = Texture.create(size=(w, h), colorfmt='rgb')
-            # Flip vertically for Kivy coordinate system
-            texture.blit_buffer(frame.tobytes(), colorfmt='rgb', bufferfmt='ubyte')
-            texture.flip_vertical()
+            
+            # Check if frame has alpha channel (RGBA/BGRA)
+            if len(frame.shape) == 3 and frame.shape[2] == 4:
+                # Convert BGRA to RGBA if needed (picamera2 typically outputs XBGR)
+                import numpy as np
+                # Swap BGR to RGB: take only RGB channels and flip
+                frame_rgb = frame[:, :, :3]  # Take first 3 channels
+                frame_rgb = frame_rgb[:, :, ::-1]  # BGR to RGB
+                colorfmt = 'rgb'
+                texture = Texture.create(size=(w, h), colorfmt=colorfmt)
+                # Flip vertically for Kivy coordinate system
+                frame_flipped = np.flipud(frame_rgb)
+                texture.blit_buffer(frame_flipped.tobytes(), colorfmt=colorfmt, bufferfmt='ubyte')
+            elif len(frame.shape) == 3 and frame.shape[2] == 3:
+                # Already RGB format
+                import numpy as np
+                colorfmt = 'rgb'
+                texture = Texture.create(size=(w, h), colorfmt=colorfmt)
+                frame_flipped = np.flipud(frame)
+                texture.blit_buffer(frame_flipped.tobytes(), colorfmt=colorfmt, bufferfmt='ubyte')
+            else:
+                # Grayscale
+                colorfmt = 'luminance'
+                texture = Texture.create(size=(w, h), colorfmt=colorfmt)
+                texture.blit_buffer(frame.tobytes(), colorfmt=colorfmt, bufferfmt='ubyte')
+                texture.flip_vertical()
             
             # Update widget
             self._preview_widget.texture = texture
