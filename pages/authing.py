@@ -10,13 +10,28 @@ from functions.fingerprint import scan_fingerprint, compare_fingerprints
 
 class Authing(MDScreen):
     failed_attempts = 0
+    is_active = False
+    _scheduled_events = []
 
     def on_enter(self):
+        self.is_active = True
         self.failed_attempts = 0
+        self._scheduled_events = []
         print(f"Start fingerprint scan... (Attempt {self.failed_attempts + 1})")
         scan_fingerprint(self.on_fingerprint_done)
 
+    def _schedule_once(self, callback, timeout):
+        if not self.is_active:
+            return
+        event = Clock.schedule_once(callback, timeout)
+        self._scheduled_events.append(event)
+        return event
+
     def on_fingerprint_done(self, success, b64_data):
+        if not self.is_active:
+            print("Authing: on_fingerprint_done called but screen not active. Ignoring.")
+            return
+
         if success:
             print(f"Fingerprint scan successful. Data length: {len(b64_data)}")
             print(f"Raw data: {b64_data}")
@@ -29,6 +44,10 @@ class Authing(MDScreen):
             self.show_result("Fail")
 
     def on_match_done(self, match, msg):
+        if not self.is_active:
+            print("Authing: on_match_done called but screen not active. Ignoring.")
+            return
+
         print(f"Match Result: {match} ({msg})")
         if match:
              self.show_result("Pass")
@@ -48,6 +67,9 @@ class Authing(MDScreen):
         anim.start(widget)
     
     def start_timer(self, *args):
+        if not self.is_active:
+            return
+
         # show fingerprint box
         self.ids.fingerprint_box.opacity = 1
         self.ids.fingerprint_box.disabled = False
@@ -65,14 +87,20 @@ class Authing(MDScreen):
         # Clock.schedule_once(self.show_result, 5)
 
     def show_result(self, *args):
+        if not self.is_active:
+            return
+
         # hide fingerprint box
         self.ids.fingerprint_box.opacity = 0
         self.ids.fingerprint_box.disabled = True
-        print(args[0])
-        if args and args[0] == "Pass":
+        
+        result = args[0] if args else "Fail"
+        print(f"Showing result: {result}")
+        
+        if result == "Pass":
             self.ids.result_box_pass.opacity = 1
             self.ids.result_box_pass.disabled = False
-            Clock.schedule_once(lambda dt: setattr(self.manager, "current", "breathing"), 1)
+            self._schedule_once(lambda dt: setattr(self.manager, "current", "breathing"), 1)
         else:
             self.ids.result_box_fail.opacity = 1
             self.ids.result_box_fail.disabled = False
@@ -82,18 +110,22 @@ class Authing(MDScreen):
             
             if self.failed_attempts >= 3:
                 print("Max attempts reached. Going home.")
-                Clock.schedule_once(self.go_home, 4)
+                self._schedule_once(self.go_home, 4)
             else:
-                Clock.schedule_once(self.start_timer, 4)
+                self._schedule_once(self.start_timer, 4)
 
     def go_home(self, dt):
-        # Clear state handles by on_leave automatically or we can force it here
-        self.manager.current = "home"
-        # # show result box
-        # self.ids.result_box.opacity = 1
-        # self.ids.result_box.disabled = False
+        if self.is_active:
+            self.manager.current = "home"
 
     def on_leave(self):
+        # Mark as inactive immediately
+        self.is_active = False
+
+        # Cancel all scheduled events
+        for event in self._scheduled_events:
+            Clock.unschedule(event)
+        self._scheduled_events = []
         # Reset the state when leaving the screen
         # Hide result boxes
         self.ids.result_box_pass.opacity = 0

@@ -11,7 +11,9 @@ import time
 def measure_alcohol(callback):
     """
     ฟังก์ชันวัดค่าแอลกอฮอล์
-    - จำลองว่าใช้เวลา 3 วิแล้วส่งค่า 0.33
+    - callback(success: bool, value: float)
+    - success: True if measurement succeeded, False on error
+    - value: Alcohol level (0.0 or higher), or -1.0 on error
     """
     port = "COM3"
     baudrate = 4800
@@ -24,8 +26,8 @@ def measure_alcohol(callback):
     #     else:
     #         print("Cannot prepare alcolhol.")
     # else:
-    #     print("Serial open unsuccess!!!")
-    Clock.schedule_once(lambda dt: callback(0.00), 3)
+    #     print("Serial open unsuccess!!!") 
+    Clock.schedule_once(lambda dt: callback(True, 0.00), 5)
 
 def prepare(ser):
     try:
@@ -60,11 +62,11 @@ def worker(ser, callback):
         print(f"[worker] : Result value is: {value}")
         send_command(ser, "$RESET")
         # ส่งกลับไป callback ใน main thread
-        Clock.schedule_once(lambda dt: callback(0.33), 3)
+        Clock.schedule_once(lambda dt: callback(True, value), 0)
 
     except Exception as e:
         print("[worker] : Error reading alcohol sensor:", e)
-        Clock.schedule_once(lambda dt: callback(-1.0), 0)
+        Clock.schedule_once(lambda dt: callback(False, -1.0), 0)
 
 def send_command(ser, cmd):
         """ส่งคำสั่งไปยังเครื่องเป่า"""
