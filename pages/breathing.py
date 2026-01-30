@@ -49,7 +49,7 @@ class Breathing(MDScreen):
         else:
             print("Snapshot failed or camera unavailable.")
         # Navigate regardless of snapshot success
-        # self._navigate_to_result(self._last_value)
+        self._navigate_to_result(self._last_value)
     
     def _navigate_to_result(self, value):
         result_screen = self.manager.get_screen("testresult")

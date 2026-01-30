@@ -41,10 +41,10 @@ class CameraManager:
         
         try:
             self._camera = Picamera2()
-            # Explicitly request RGB format to avoid YUV conversion issues
-            config = self._camera.create_preview_configuration(
-                main={"size": (640, 480), "format": "RGB888"},
-                lores={"size": (320, 240), "format": "RGB888"},
+            # Use still configuration like test_camera.py for better quality
+            config = self._camera.create_still_configuration(
+                main={"size": (1920, 1080)},
+                lores={"size": (640, 480)},
                 display="lores"
             )
             self._camera.configure(config)
