@@ -29,26 +29,14 @@
                 style: "outlined"
                 line_color: 0, 0, 0, 1
                 line_width: 2
-                padding: "5dp"
-                
-                FloatLayout:
+
+                Image:
+                    id: camera_image
                     size_hint: 1, 1
-                    
-                    Image:
-                        id: camera_image
-                        size_hint: 1, 1
-                        pos: self.parent.pos
-                        size: self.parent.size
-                        allow_stretch: True
-                        keep_ratio: True
-                    
-                    MDLabel:
-                        id: camera_status
-                        text: "Camera not available"
-                        halign: "center"
-                        valign: "center"
-                        theme_text_color: "Hint"
-                        size_hint: 1, 1
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    allow_stretch: True
+                    keep_ratio: False
 
         # Right Column: Instructions
         MDBoxLayout:
