@@ -44,6 +44,10 @@ class Authing(MDScreen):
             self.show_result("Fail")
 
     def on_match_done(self, match, msg):
+        if not self.is_active:
+            print("Authing: on_match_done called but screen not active. Ignoring.")
+            return
+
         print(f"Match Result: {match} ({msg})")
         if match:
              self.show_result("Pass")
