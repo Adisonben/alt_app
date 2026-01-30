@@ -27,7 +27,7 @@ def measure_alcohol(callback):
     #         print("Cannot prepare alcolhol.")
     # else:
     #     print("Serial open unsuccess!!!") 
-    Clock.schedule_once(lambda dt: callback(True, 0.00), 5)
+    Clock.schedule_once(lambda dt: callback(True, 0.00), 3)
 
 def prepare(ser):
     try:

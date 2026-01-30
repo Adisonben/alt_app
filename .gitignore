@@ -2,6 +2,7 @@
 /KivyMD
 __pycache__/
 **/__pycache__/
+*.pyc
 .env
 .vscode/
 .idea/

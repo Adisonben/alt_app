@@ -1,9 +1,10 @@
 from kivymd.uix.screen import MDScreen
 from kivy.clock import Clock
-from kivy.properties import NumericProperty
+from kivy.properties import NumericProperty, StringProperty
 
 class TestResult(MDScreen):
     result_value = NumericProperty(0.00)
+    snapshot_path = StringProperty("")
 
     def on_enter(self):
         print(f"Result = {self.result_value}")
