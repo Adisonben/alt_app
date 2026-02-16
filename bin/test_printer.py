@@ -2,7 +2,7 @@ from escpos.printer import Usb
 from datetime import datetime
 
 def print_result(user_name, result, value):
-    p = Usb(0x04b8, 0x0e15)
+    p = Usb(0x04b8, 0x0e28)
 
     p.set(align='center', bold=True, width=2, height=2)
     p.text("ALCOHOL TEST RESULT\n")
