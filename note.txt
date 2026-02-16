@@ -1,0 +1,70 @@
+ok i got test result is "============================================================
+
+Select [0-4]: 1
+
+============================================================
+ EBS-010 Start Measurement
+============================================================
+ Flow: $START -> device warms up -> $STANBY -> blow ->
+       $BREATH -> $TRIGGER -> $RESULT -> $END
+============================================================
+
+[TX] >> $START  (start warm-up)
+
+[*] Listening for device responses... (Ctrl+C to stop)
+[10:48:23] [RX] << $END
+         -> Measurement cycle complete.
+[10:48:23] [RX] << $END
+         -> Measurement cycle complete.
+[10:48:23] [RX] << $END
+         -> Measurement cycle complete.
+[10:48:23] [RX] << $WAIT
+         -> Device is warming up...
+[10:48:24] [RX] << $WAIT
+         -> Device is warming up...
+[10:48:25] [RX] << $WAIT
+         -> Device is warming up...
+[10:48:26] [RX] << $WAIT
+         -> Device is warming up...
+[10:48:27] [RX] << $STANBY
+         -> Device ready! Please BLOW into sensor.
+[10:48:28] [RX] << $STANBY
+         -> Device ready! Please BLOW into sensor.
+[10:48:29] [RX] << $STANBY
+         -> Device ready! Please BLOW into sensor.
+[10:48:30] [RX] << $STANBY
+         -> Device ready! Please BLOW into sensor.
+[10:48:31] [RX] << $STANBY
+         -> Device ready! Please BLOW into sensor.
+[10:48:32] [RX] << $STANBY
+         -> Device ready! Please BLOW into sensor.
+[10:48:33] [RX] << $TRIGGER
+         -> Breath detected, analyzing...
+[10:48:33] [RX] << $FLOW,ERR
+         -> [!] FLOW ERROR: incorrect breath, try again.
+[10:48:37] [RX] << $WAIT
+         -> Device is warming up...
+[10:48:38] [RX] << $WAIT
+         -> Device is warming up...
+[10:48:39] [RX] << $WAIT
+         -> Device is warming up...
+[10:48:40] [RX] << $STANBY
+         -> Device ready! Please BLOW into sensor.
+[10:48:41] [RX] << $STANBY
+         -> Device ready! Please BLOW into sensor.
+[10:48:42] [RX] << $STANBY
+         -> Device ready! Please BLOW into sensor.
+[10:48:43] [RX] << $TRIGGER
+         -> Breath detected, analyzing...
+[10:48:43] [RX] << $BREATH
+         -> Sampling breath...
+[10:48:45] [RX] << $RESULT,0.000-OK
+
+========================================
+  ALCOHOL MEASUREMENT RESULT
+  Value  : 0.0
+  Status : OK
+========================================
+[10:48:46] [RX] << $END
+         -> Measurement cycle complete.
+", ทำการปรับปรุงส่วน alcohol breathing ให้เชื่อมต่อกับอุปกรณ์นี้ โดยใช้ไฟล์ @alcohol.py สำหรับเป็น function เชื่อมต่อ อ้างอิงตาม @test_alcohol_sensor.py และนำไปใช้ในหน้า breathing โดยให้จัดการ error handing ให้ครอบคลุม และแจ้งเตือนกับ user ให้ชัดเจน หากได้ผลการทดสอบแล้ว ไปเก็นไว้ใน session 
