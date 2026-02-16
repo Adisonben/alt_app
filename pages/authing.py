@@ -1,7 +1,9 @@
 from kivymd.uix.screen import MDScreen
+from kivymd.app import MDApp
 from kivy.animation import Animation
 from kivy.clock import Clock
 from functions.fingerprint import scan_fingerprint, compare_fingerprints
+from functions.api import get_user_by_id
 
 # def scan_fingerprint(callback):
 #     # จำลอง hardware ใช้เวลา 2 วิ
@@ -17,8 +19,28 @@ class Authing(MDScreen):
         self.is_active = True
         self.failed_attempts = 0
         self._scheduled_events = []
-        print(f"Start fingerprint scan... (Attempt {self.failed_attempts + 1})")
-        scan_fingerprint(self.on_fingerprint_done)
+        
+        # Check if we have a candidate user from EmployeeID screen
+        app = MDApp.get_running_app()
+        candidate = getattr(app.session, 'candidate_user', None)
+        
+        if not candidate:
+            print("No candidate user found. Redirecting to EmployeeID.")
+            # Verify if this redirection is appropriate or if should go home
+            # For now, let's redirect to employee_id input
+            self.manager.current = "employeeid"
+            return
+
+        # Start Fingerprint Scan Immediately
+        # Show fingerprint box (it should be visible by default now in KV, but let's ensure)
+        self.ids.fingerprint_box.opacity = 1
+        self.ids.fingerprint_box.disabled = False
+        self.ids.result_box_pass.opacity = 0
+        self.ids.result_box_pass.disabled = True
+        self.ids.result_box_fail.opacity = 0
+        self.ids.result_box_fail.disabled = True
+        
+        self.start_fingerprint_scan()
 
     def _schedule_once(self, callback, timeout):
         if not self.is_active:
@@ -35,8 +57,16 @@ class Authing(MDScreen):
         if success:
             print(f"Fingerprint scan successful. Data length: {len(b64_data)}")
             print(f"Raw data: {b64_data}")
-            # The data is now a Base64 string
-            finger_data = "ndQ5w65P0//V9Qlh8JGN9xL/oiYwkBcJAhmCrh+1eC5XlQ6aPVed9MWf0L9EgQqZU6M0IwDC29RoW0T3fXFpvfeMpJzw6DOxLTpoeFahM20Da7pEzashVTzz2P850JuCA0P22s1KBnanZdv4T9encQOHf05BO3EAR1XKLXikYTUbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fA=="
+            
+            app = MDApp.get_running_app()
+            candidate = getattr(app.session, 'candidate_user', None)
+            
+            if not candidate or not candidate.get('finger_data'):
+                 print("Error: No candidate user or finger data found in session.")
+                 self.show_result("Fail")
+                 return
+
+            finger_data = candidate.get('finger_data')
             print("Comparing with stored finger data...")
             compare_fingerprints(b64_data, finger_data, self.on_match_done)
         else:
@@ -50,11 +80,17 @@ class Authing(MDScreen):
 
         print(f"Match Result: {match} ({msg})")
         if match:
+             # Succcessful Match - Start Session
+             app = MDApp.get_running_app()
+             candidate = getattr(app.session, 'candidate_user', None)
+             if candidate:
+                 app.session.start(candidate)
+                 # Clear temp candidate
+                 app.session.candidate_user = None
+                 
              self.show_result("Pass")
         else:
              self.show_result("Fail")
-
-
 
     def start_heartbeat(self, widget):
         # Scale up
@@ -66,25 +102,28 @@ class Authing(MDScreen):
         anim.repeat = True
         anim.start(widget)
     
+    def start_fingerprint_scan(self):
+        print(f"Start fingerprint scan... (Attempt {self.failed_attempts + 1})")
+        scan_fingerprint(self.on_fingerprint_done)
+
     def start_timer(self, *args):
         if not self.is_active:
             return
 
-        # show fingerprint box
-        self.ids.fingerprint_box.opacity = 1
-        self.ids.fingerprint_box.disabled = False
-
-        # hide result box
+        print("Restarting auth flow...")
+        # Since we are already on Authing page with a candidate, we just restart scan
+        
+        # Hide result boxes
         self.ids.result_box_pass.opacity = 0
         self.ids.result_box_pass.disabled = True
         self.ids.result_box_fail.opacity = 0
         self.ids.result_box_fail.disabled = True
         
-        print("Restarting fingerprint scan...")
-        scan_fingerprint(self.on_fingerprint_done)
-
-        # wait 10 seconds then call show_auth_result
-        # Clock.schedule_once(self.show_result, 5)
+        # Show fingerprint box
+        self.ids.fingerprint_box.opacity = 1
+        self.ids.fingerprint_box.disabled = False
+        
+        self.start_fingerprint_scan()
 
     def show_result(self, *args):
         if not self.is_active:
@@ -98,8 +137,17 @@ class Authing(MDScreen):
         print(f"Showing result: {result}")
         
         if result == "Pass":
+            # Ensure session is started if this was triggered manually (debug)
+            app = MDApp.get_running_app()
+            if not app.session.is_authenticated:
+                 candidate = getattr(app.session, 'candidate_user', None)
+                 if candidate:
+                     print("Debug: Starting session from manual Pass")
+                     app.session.start(candidate)
+            
             self.ids.result_box_pass.opacity = 1
             self.ids.result_box_pass.disabled = False
+            # No need to set user_id on next screen, session handles it
             self._schedule_once(lambda dt: setattr(self.manager, "current", "breathing"), 1)
         else:
             self.ids.result_box_fail.opacity = 1
@@ -133,6 +181,6 @@ class Authing(MDScreen):
         self.ids.result_box_fail.opacity = 0
         self.ids.result_box_fail.disabled = True
         
-        # Show fingerprint box (initial state)
-        self.ids.fingerprint_box.opacity = 1
-        self.ids.fingerprint_box.disabled = False
+        # Hide fingerprint box (initial state)
+        self.ids.fingerprint_box.opacity = 0
+        self.ids.fingerprint_box.disabled = True

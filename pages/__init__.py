@@ -4,6 +4,7 @@ from .prepare_result import PrepareResult
 from .breathing import Breathing
 from .test_result import TestResult
 from .show_error import ShowError
+from .employee_id import EmployeeID
 
 __all__ = [
     "Home",
@@ -11,5 +12,6 @@ __all__ = [
     "PrepareResult",
     "Breathing",
     "TestResult",
-    "ShowError"
+    "ShowError",
+    "EmployeeID"
 ]

@@ -1,12 +1,14 @@
 from kivy.lang import Builder
 from kivymd.app import MDApp
-from kivymd.uix.button import MDButton, MDButtonText
+from session_manager import KioskSession
+from kivymd.uix.button import MDButton, MDButtonText, MDButtonIcon
 from kivy.core.text import LabelBase
 from kivy.uix.screenmanager import ScreenManager
 import pages  # ensure custom screen classes (Home, Authing, ...) are imported and registered for KV
 
 class MainApp(MDApp):
     def build(self):
+        self.session = KioskSession()
         LabelBase.register(
             name="Sarabun",
             fn_regular="fonts/THSarabunNew.ttf"
@@ -16,6 +18,7 @@ class MainApp(MDApp):
 
         # Load all KV files from kv/ folder
         Builder.load_file("styles/home.kv")
+        Builder.load_file("styles/employee_id.kv")
         Builder.load_file("styles/prepare_result.kv")
         Builder.load_file("styles/authing.kv")
         Builder.load_file("styles/breathing.kv")

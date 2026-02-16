@@ -1,92 +1,173 @@
 #:import get_color_from_hex kivy.utils.get_color_from_hex
 
 <Home>:
-    
     md_bg_color: get_color_from_hex("#e8fffeff")
 
-    FloatLayout:
-        orientation: "vertical"
-        size: root.width, root.height
+    MDSwiper:
+        size_hint_y: None
+        height: root.height - dp(40)
+        y: root.height - self.height - dp(20)
+        # pos_hint: {'center_x': .5, 'center_y': .5}
+        # width_mult: 2
+        items_spacing: dp(10)
+        # swipe_distance: 10
+        # items_padding: 0
         
-        MDBoxLayout:
-            orientation: "vertical"
-            #md_bg_color: get_color_from_hex("#b1b1b1ff")
-            pos_hint: {"center_x": .5, "center_y": .5}
-            size_hint_y: None
-            height: 280
-            spacing: 10
 
-            MDBoxLayout:
-                orientation: "vertical"
-                padding: 0,0,0,20
-                spacing: 30
-                adaptive_height: True
+        # ----------------------
+        # Card 1: Normal Mode
+        # ----------------------
+        MDSwiperItem:
+            # radius: [20, 20, 20, 20]
+            # md_bg_color: get_color_from_hex("#ffffff")
 
-                Label:
-                    markup: True
-                    text: '[b]พร้อมสำหรับการทดสอบ[/b]'
-                    halign: "center"
-                    font_name: "Sarabun"
-                    font_size: 50
-                    color: (0,0,0,1)
-
-                MDLabel:
-                    text: "Ready for Alcohol Breath Test"
-                    font_style: "Title"
-                    font_name: "Sarabun"
-                    adaptive_height: True
-                    font_size: 32
-                    halign: "center"
-    
-            MDBoxLayout:
-                orientation: "vertical"
-                padding: 5,20,0,0
-                spacing: 15
-                size: root.width, 100
-                adaptive_height: True
-
-                MDButton:
-                    style: "filled"
-                    size_hint: None, None
-                    size: root.width/2, 100
-                    pos_hint: {"center_x": .5}
+            RelativeLayout:
+                
+                MDCard:
+                    radius: [20,]
                     theme_bg_color: "Custom"
-                    md_bg_color: get_color_from_hex("#0e6effff")
-                    on_release: 
-                        app.root.ids.screen_manager.current = "authing"
-                        root.manager.transition.direction = "left"
+                    md_bg_color: get_color_from_hex("#E3F2FD") # Light Blue
+                    elevation: 4
+                    padding: 20
+                    spacing: 20
+                    orientation: "vertical"
+                    # size_hint: None, None
+                    # size: "280dp", "400dp"
+                    pos_hint: {"center_x": .5, "center_y": .5}
 
-                    # MDButtonIcon:
-                    #     icon: "plus"
-                    #     pos_hint: {"center_x": .3, "center_y": .5}
-                    #     font_size: 40
-                    
-                    MDButtonText:
-                        text: "Start Test"
-                        font_style: "Headline"
-                        role: "medium"
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        adaptive_height: True
+                        spacing: 20
                         pos_hint: {"center_x": .5, "center_y": .5}
-                    
-            MDBoxLayout:
-                orientation: "vertical"
-                padding: 5,20,0,0
-                spacing: 15
-                adaptive_height: True
 
-                Label:
-                    text: 'กดปุ่มเพื่อเริ่มการทดสอบแอลกอฮอล์'
-                    halign: "center"
-                    font_style: "Headline"
-                    font_name: "Sarabun"
-                    font_size: 25
-                    color: (0,0,0,.5)
+                        MDIconButton:
+                            icon: "fingerprint"
+                            style: "tonal"
+                            theme_font_size: "Custom"
+                            font_size: "100sp"
+                            radius: [20,]
+                            size_hint: None, None
+                            size: "140dp", "140dp"
+                            pos_hint: {"center_x": .5}
+                            theme_bg_color: "Custom"
+                            md_bg_color: get_color_from_hex("#0e6effff")
+                            theme_icon_color: "Custom"
+                            icon_color: "white"
 
-                MDLabel:
-                    text: "Touch the button to start alcohol breath test"
-                    font_style: "Label"
-                    font_name: "Sarabun"
-                    adaptive_height: True
-                    font_size: 25
-                    halign: "center"
-                    theme_text_color: "Custom"
-                    text_color: (0,0,0,.5)
+                        Label:
+                            markup: True
+                            text: '[b]โหมดปกติ[/b]\n[size=24]Normal Mode[/size]'
+                            halign: "center"
+                            font_name: "Sarabun"
+                            font_size: 48
+                            color: (0, 0, 0, 1)
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                        Label:
+                            text: "ต้องยืนยันตัวตนก่อนเริ่มทดสอบ\nscan fingerprint required"
+                            font_name: "Sarabun"
+                            font_size: 22
+                            halign: "center"
+                            color: (0, 0, 0, 0.6)
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                        Widget:
+                            # Spacer
+                            size_hint_y: 1
+
+                        MDButton:
+                            style: "filled"
+                            # size_hint_x: 1
+                            pos_hint: {"center_x": .5}
+                            theme_bg_color: "Custom"
+                            md_bg_color: get_color_from_hex("#0e6effff")
+                            on_release: 
+                                app.root.ids.screen_manager.current = "employeeid"
+                                root.manager.transition.direction = "left"
+                            
+                            MDButtonText:
+                                text: "Start"
+                                font_style: "Headline"
+                                font_name: "Sarabun"
+                                pos_hint: {"center_x": .5, "center_y": .5}
+
+
+        # ----------------------
+        # Card 2: Free Mode
+        # ----------------------
+        MDSwiperItem:
+            # radius: [20, 20, 20, 20]
+            
+            RelativeLayout:
+                
+                MDCard:
+                    radius: [20,]
+                    theme_bg_color: "Custom"
+                    md_bg_color: get_color_from_hex("#FFF3E0") # Light Orange
+                    elevation: 4
+                    padding: 20
+                    spacing: 20
+                    orientation: "vertical"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        adaptive_height: True
+                        spacing: 20
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        
+                        MDIconButton:
+                            icon: "run-fast"
+                            style: "tonal"
+                            theme_font_size: "Custom"
+                            font_size: "100sp"
+                            radius: [20,]
+                            size_hint: None, None
+                            size: "140dp", "140dp"
+                            pos_hint: {"center_x": .5}
+                            theme_bg_color: "Custom"
+                            md_bg_color: get_color_from_hex("#FF9800")
+                            theme_icon_color: "Custom"
+                            icon_color: "white"
+
+                        Label:
+                            markup: True
+                            text: '[b]โหมดอิสระ[/b]\n[size=24]Free Mode[/size]'
+                            halign: "center"
+                            font_name: "Sarabun"
+                            font_size: 48
+                            color: get_color_from_hex("#E65100")
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                        Label:
+                            text: "เริ่มทดสอบได้ทันที\nNo authentication"
+                            font_name: "Sarabun"
+                            font_size: 22
+                            halign: "center"
+                            color: get_color_from_hex("#E65100")
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                        Widget:
+                            # Spacer
+                            size_hint_y: 1
+
+                        MDButton:
+                            style: "filled"
+                            # size_hint_x: 1
+                            pos_hint: {"center_x": .5}
+                            theme_bg_color: "Custom"
+                            md_bg_color: get_color_from_hex("#FF9800")
+                            on_release: 
+                                app.root.ids.screen_manager.current = "breathing"
+                                root.manager.transition.direction = "left"
+
+                            MDButtonText:
+                                text: "Start"
+                                font_style: "Headline"
+                                font_name: "Sarabun"
+                                pos_hint: {"center_x": .5, "center_y": .5}
