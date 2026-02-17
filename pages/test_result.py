@@ -20,7 +20,7 @@ class TestResult(MDScreen):
         print(f"Result = {session.alcohol_value}, Status = {alcohol_status}")
         
         # Print Receipt with delay to allow previous resources to clear
-        Clock.schedule_once(self.do_print, 1.0)
+        Clock.schedule_once(self.do_print, 5.0)
 
     def do_print(self, dt):
         print("Starting scheduled print...")
