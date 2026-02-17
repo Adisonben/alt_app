@@ -2,7 +2,7 @@ from kivymd.uix.screen import MDScreen
 from kivymd.app import MDApp
 from kivy.clock import Clock
 from functions.api import send_test_result
-from functions.printer import print_receipt
+from functions.printer import print_result
 from kivy.properties import StringProperty
 
 class TestResult(MDScreen):
@@ -22,12 +22,10 @@ class TestResult(MDScreen):
         # Print Receipt
         # Device ID is hardcoded for now as it's not in session
         try:
-             print_receipt(
-                user_id=session.user_id,
-                user_name=session.user_name,
-                value=session.alcohol_value,
-                status=alcohol_status,
-                device_id="Kiosk-001" 
+             print_result(
+                user_name=session.user_name or "ไม่ระบุ",
+                status=alcohol_status or "ไม่ระบุ",
+                value=session.alcohol_value or "0.00",
              )
         except Exception as e:
             print(f"Error printing receipt: {e}")
