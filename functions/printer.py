@@ -11,9 +11,9 @@ def print_result(user_name, status, value):
         p = Usb(0x04b8, 0x0e28)
         
         # 2. Print Content
-        p.set(align='center', bold=True, width=2, height=2)
+        p.set(align='center', bold=True, width=3, height=3)
         p.text("ALCOHOL TEST RESULT\n")
-        p.set(align='left', bold=False, width=1, height=1)
+        p.set(align='left', bold=False, width=2, height=2)
 
         p.text("--------------------------------\n")
         p.text(f"Name : {user_name}\n")
@@ -24,10 +24,10 @@ def print_result(user_name, status, value):
         p.text("--------------------------------\n")
 
         if status == "PASS":
-            p.set(align='center', bold=True)
+            p.set(align='center', bold=True, width=2, height=2)
             p.text("\n*** PASS ***\n")
         else:
-            p.set(align='center', bold=True)
+            p.set(align='center', bold=True, width=2, height=2)
             p.text("\n*** FAIL ***\n")
 
         p.text("\n\n")
