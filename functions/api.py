@@ -9,7 +9,7 @@ def get_user_by_id(employee_id):
     # Mock data for testing
     if employee_id == "123456":
          # Use the sample finger data from the original authing.py for testing success
-        finger_data = "ndQ5w65P0//V9Qlh8JGN9xL/oiYwkBcJAhmCrh+1eC5XlQ6aPVed9MWf0L9EgQqZU6M0IwDC29RoW0T3fXFpvfeMpJzw6DOxLTpoeFahM20Da7pEzashVTzz2P850JuCA0P22s1KBnanZdv4T9encQOHf05BO3EAR1XKLXikYTUbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fA=="
+        finger_data = "504DKWpUIR7u4ZKlo5WCwPZlIE44j6GSx16/lufg3nYu/3valgrlPFO/yK+xQVSXuHAt+ocT5IKHh28XeO0sJdwivF06WnNP9RjMOzDhuLJfvV7Md1p1K2Eb6ielz94R2Bf/WKe8ctQ5E6ALGLQlnyx5K+pBFPAlKSxIY8zF0xEbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fBstyeuvDV9gKmT/R/Bs+XwbLcnrrw1fYCpk/0fwbPl8Gy3J668NX2AqZP9H8Gz5fA=="
         return {
             "user_id": "123456",
             "name": "Test User",
