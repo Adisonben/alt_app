@@ -1,7 +1,6 @@
 from escpos.printer import Usb
 from datetime import datetime
 import os
-from PIL import Image
 
 def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
     try:
@@ -13,14 +12,18 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
 
     try:
         # 1. Logo
-        # current_dir = os.path.dirname(os.path.abspath(__file__))
-        # logo_path = os.path.join(current_dir, '..', 'assets', 'logo.png')
+        # Assuming run from root or adapting path. 
+        # Using absolute path logic or relative to project root is safer.
+        # This file is in functions/, so logo is in ../assets/logo.png
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        logo_path = os.path.join(current_dir, '..', 'assets', 'logo.png')
         
-        # if not os.path.exists(logo_path):
-        #     print(f"Error: Logo not found at {logo_path}")
-        # else:
-        #     img = Image.open(logo_path).convert("1")
-        #     p.image(img, impl="graphics")
+        if os.path.exists(logo_path):
+            p.set(align='center')
+            # p.image(logo_path)
+            p.text("[Logo]\n")
+        else:
+            print("Logo not found at:", logo_path)
 
         # 2. Header "ALT Iddrives"
         p.set(align='center', bold=True, width=2, height=2)
