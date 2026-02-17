@@ -1,5 +1,8 @@
-from functions.printer import print_receipt
 import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from functions.printer import print_receipt
 
 # Call the function exactly as the app does
 print("Testing functions.printer.print_receipt...")
