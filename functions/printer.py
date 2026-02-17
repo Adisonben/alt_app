@@ -20,7 +20,7 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
             print(f"Error: Logo not found at {logo_path}")
         else:
             img = Image.open(logo_path).convert("1")
-            p.image(img, impl="graphics")
+            # p.image(img, impl="graphics")
 
         # 2. Header "ALT Iddrives"
         p.set(align='center', bold=True, width=2, height=2)
