@@ -28,27 +28,8 @@ def process_image(image_path, max_width=384):
 import threading
 import time
 
-import threading
-import time
-
 # Create a lock for the printer
 printer_lock = threading.Lock()
-# Global singleton for printer instance
-_printer_instance = None
-
-def get_printer():
-    global _printer_instance
-    if _printer_instance:
-        return _printer_instance
-        
-    try:
-        # Vendor ID and Product ID from bin/test_printer.py
-        # Try to initialize only once
-        _printer_instance = Usb(0x04b8, 0x0e28)
-        return _printer_instance
-    except Exception as e:
-        print(f"Error initializing printer: {e}")
-        return None
 
 def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
     # Attempt to acquire lock to ensure only one print job at a time
@@ -62,10 +43,8 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
         # Small delay to let UI or other USB ops settle
         time.sleep(0.5)
         
-        p = get_printer()
-        if not p:
-            print("Could not get printer instance.")
-            return False
+        # Vendor ID and Product ID from bin/test_printer.py
+        p = Usb(0x04b8, 0x0e28)
         
         # 1. Logo
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -78,7 +57,6 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
             p.set(align='center')
             try:
                 # impl="graphics" worked in the minimal test
-                p.text("\n") # Add newline before image for safety
                 p.image(bw_logo, impl="graphics")
             except Exception as img_err:
                  print(f"Printing image failed, skipping: {img_err}")
@@ -120,11 +98,14 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
 
     except Exception as e:
         print(f"Printing failed: {e}")
-        # If printing fails, maybe the connection is bad. Reset singleton?
-        # global _printer_instance
-        # _printer_instance = None
         return False
     finally:
-        # Do not close the printer connection, keep it alive for singleton reuse
+        if p:
+            try:
+                p.close()
+                print("Printer connection closed.")
+            except Exception as close_err:
+                print(f"Error closing printer: {close_err}")
+        
         printer_lock.release()
         print("Released printer lock.")
