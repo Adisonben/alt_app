@@ -25,24 +25,9 @@ def process_image(image_path, max_width=384):
     img = img.convert("1")
     return img
 
-import threading
-import time
-
-# Create a lock for the printer
-printer_lock = threading.Lock()
-
 def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
-    # Attempt to acquire lock to ensure only one print job at a time
-    if not printer_lock.acquire(blocking=False):
-        print("Printer is busy. Skipping this print request.")
-        return False
-
     p = None
     try:
-        print("Acquired printer lock. Starting print job...")
-        # Small delay to let UI or other USB ops settle
-        time.sleep(0.5)
-        
         # Vendor ID and Product ID from bin/test_printer.py
         p = Usb(0x04b8, 0x0e28)
         
@@ -106,6 +91,3 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
                 print("Printer connection closed.")
             except Exception as close_err:
                 print(f"Error closing printer: {close_err}")
-        
-        printer_lock.release()
-        print("Released printer lock.")
