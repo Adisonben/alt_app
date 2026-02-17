@@ -1,46 +1,43 @@
-
-import subprocess
-import sys
-import os
+from escpos.printer import Usb
+from datetime import datetime
 
 def print_result(user_name, status, value):
     """
-    Calls the external printer script using subprocess to avoid USB conflicting
-    with the main application process.
+    Directly prints receipt using python-escpos.
+    Should be called ONLY when alcohol sensor is inactive.
     """
     try:
-        # Resolve the path to the script
-        # Assuming this file is in functions/ and script is in bin/
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        script_path = os.path.join(base_dir, 'bin', 'printer_script.py')
+        # 1. Connect (Vendor ID 0x04b8, Product ID 0x0e28)
+        p = Usb(0x04b8, 0x0e28)
         
-        # Prepare the command
-        # python bin/printer_script.py "User Name" "PASS" "0.00"
-        # Use sys.executable to ensure we use the same python interpreter
-        cmd = [sys.executable, script_path, str(user_name), str(status), str(value)]
-        
-        print(f"Executing printer command: {cmd}")
-        
-        # Run subprocess
-        result = subprocess.run(
-            cmd, 
-            capture_output=True, 
-            text=True,
-            timeout=15 # Timeout to prevent hanging
-        )
-        
-        if result.returncode == 0:
-            print(f"Print success: {result.stdout}")
-            return True
+        # 2. Print Content
+        p.set(align='center', bold=True, width=2, height=2)
+        p.text("ALCOHOL TEST RESULT\n")
+        p.set(align='left', bold=False, width=1, height=1)
+
+        p.text("--------------------------------\n")
+        p.text(f"Name : {user_name}\n")
+        p.text(f"Result : {status}\n")
+        p.text(f"Value : {value} mg%\n")
+        dt_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        p.text(f"Date : {dt_str}\n")
+        p.text("--------------------------------\n")
+
+        if status == "PASS":
+            p.set(align='center', bold=True)
+            p.text("\n*** PASS ***\n")
         else:
-            print(f"Print script failed with code {result.returncode}")
-            print(f"Stderr: {result.stderr}")
-            print(f"Stdout: {result.stdout}")
-            return False
-            
-    except subprocess.TimeoutExpired:
-        print("Print script timed out")
-        return False
+            p.set(align='center', bold=True)
+            p.text("\n*** FAIL ***\n")
+
+        p.text("\n\n")
+        
+        # 3. Cut & Close
+        p.cut()
+        p.close() # Explicitly close
+        print("[printer] Print success.")
+        return True
+        
     except Exception as e:
-        print(f"Error calling print subprocess: {e}")
+        print(f"[printer] Error: {e}")
         return False
