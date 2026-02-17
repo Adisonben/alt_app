@@ -3,26 +3,6 @@ from datetime import datetime
 import os
 from PIL import Image
 
-def process_image(image_path, max_width=384):
-    if not os.path.exists(image_path):
-        return None
-        
-    img = Image.open(image_path)
-
-    # resize
-    if img.width > max_width:
-        ratio = max_width / float(img.width)
-        new_height = int(float(img.height) * ratio)
-        img = img.resize(
-            (max_width, new_height),
-            Image.Resampling.LANCZOS
-        )
-
-    # convert to 1-bit monochrome (using standard dithering as in test script)
-    img = img.convert("1")
-
-    return img
-
 def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
     try:
         # Vendor ID and Product ID from bin/test_printer.py
@@ -36,20 +16,11 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
         current_dir = os.path.dirname(os.path.abspath(__file__))
         logo_path = os.path.join(current_dir, '..', 'assets', 'logo.png')
         
-        # Process image before printing
-        bw_logo = process_image(logo_path)
-        
-        if bw_logo:
-            p.set(align='center')
-            # Use 'graphics' implementation for better compatibility with bit images
-            # or try standard image()
-            try:
-                p.image(bw_logo, impl="graphics")
-            except Exception as img_err:
-                 print(f"Printing image failed, skipping: {img_err}")
-                 p.text("[LOGO]\n")
+        if not os.path.exists(logo_path):
+            print(f"Error: Logo not found at {logo_path}")
         else:
-            print("Logo not found or processing failed at:", logo_path)
+            img = Image.open(logo_path).convert("1")
+            p.image(img, impl="graphics")
 
         # 2. Header "ALT Iddrives"
         p.set(align='center', bold=True, width=2, height=2)
