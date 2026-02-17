@@ -13,14 +13,14 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
 
     try:
         # 1. Logo
-        # current_dir = os.path.dirname(os.path.abspath(__file__))
-        # logo_path = os.path.join(current_dir, '..', 'assets', 'logo.png')
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        logo_path = os.path.join(current_dir, '..', 'assets', 'logo.png')
         
-        # if not os.path.exists(logo_path):
-        #     print(f"Error: Logo not found at {logo_path}")
-        # else:
-        #     img = Image.open(logo_path).convert("1")
-        #     p.image(img, impl="graphics")
+        if not os.path.exists(logo_path):
+            print(f"Error: Logo not found at {logo_path}")
+        else:
+            img = Image.open(logo_path).convert("1")
+            # p.image(img, impl="graphics")
 
         # 2. Header "ALT Iddrives"
         p.set(align='center', bold=True, width=2, height=2)
