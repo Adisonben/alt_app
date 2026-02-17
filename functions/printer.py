@@ -1,7 +1,7 @@
 from escpos.printer import Usb
 from datetime import datetime
 
-def print_result(user_name, result, value):
+def print_result(user_name, status, value):
     p = Usb(0x04b8, 0x0e28)
 
     p.set(align='center', bold=True, width=2, height=2)
@@ -10,12 +10,12 @@ def print_result(user_name, result, value):
 
     p.text("--------------------------------\n")
     p.text(f"Name : {user_name}\n")
-    p.text(f"Result : {result}\n")
+    p.text(f"Result : {status}\n")
     p.text(f"Value : {value} mg%\n")
     p.text(f"Date : {datetime.now()}\n")
     p.text("--------------------------------\n")
 
-    if result == "PASS":
+    if status == "PASS":
         p.set(align='center', bold=True)
         p.text("\n*** PASS ***\n")
     else:
