@@ -42,6 +42,8 @@ class TestResult(MDScreen):
         try:
              print_result(
                 user_name=session.user_name or "ไม่ระบุ",
+                user_id=session.user_id or "-",
+                device_id="ALT-001",
                 status=alcohol_status or "ไม่ระบุ",
                 value=session.alcohol_value or "0.00",
              )

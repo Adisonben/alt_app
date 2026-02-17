@@ -3,7 +3,7 @@ from datetime import datetime
 import os
 from PIL import Image
 
-def print_result(user_name, status, value):
+def print_result(user_name, user_id, device_id, status, value):
     """
     Directly prints receipt using python-escpos.
     Should be called ONLY when alcohol sensor is inactive.
@@ -29,7 +29,9 @@ def print_result(user_name, status, value):
         p.set(align='left', bold=False, width=2, height=2)
 
         p.text("--------------------------------\n")
-        p.text(f"Name : {user_name}\n")
+        p.text(f"Device ID : {device_id}\n")
+        p.text(f"User ID   : {user_id}\n")
+        p.text(f"Name      : {user_name}\n")
         p.text(f"Result : {status}\n")
         p.text(f"Value : {value} mg%\n")
         dt_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -38,12 +40,13 @@ def print_result(user_name, status, value):
 
         if status == "PASS":
             p.set(align='center', bold=True, width=2, height=2)
-            p.text("\n*** PASS ***\n")
+            p.text("*** PASS ***")
+        elif status == "FAIL":
+            p.set(align='center', bold=True, width=2, height=2)
+            p.text("*** FAIL ***")
         else:
             p.set(align='center', bold=True, width=2, height=2)
-            p.text("\n*** FAIL ***\n")
-
-        p.text("\n\n")
+            p.text("*** ERROR ***")
         
         # 3. Cut & Close
         p.cut()

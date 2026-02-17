@@ -77,7 +77,10 @@ def _parse_result(line):
     """Return dict {value: float, status: str} or None."""
     m = re.match(r"\$RESULT,(\d+\.\d+)-(OK|HIGH)", line)
     if m:
-        return {"value": float(m.group(1)), "status": m.group(2)}
+        val = float(m.group(1))
+        raw_status = m.group(2)
+        status = "PASS" if raw_status == "OK" else "FAIL"
+        return {"value": val, "status": status}
     return None
 
 
@@ -119,14 +122,14 @@ def _measurement_worker(on_status, on_result):
         if port is None:
             print("[alcohol] No serial port found.")
             _fire_status(on_status, "error")
-            _fire_result(on_result, False, -1.0, "NO_PORT")
+            _fire_result(on_result, False, -1.0, "ERROR")
             return
 
         # 2. Open serial
         if serial is None:
             print("[alcohol] pyserial not installed.")
             _fire_status(on_status, "error")
-            _fire_result(on_result, False, -1.0, "NO_PYSERIAL")
+            _fire_result(on_result, False, -1.0, "ERROR")
             return
 
         ser = serial.Serial(
@@ -200,7 +203,7 @@ def _measurement_worker(on_status, on_result):
         if not result_found and not _stop_event.is_set():
             print("[alcohol] Timeout — no result in time.")
             _fire_status(on_status, "timeout")
-            _fire_result(on_result, False, -1.0, "TIMEOUT")
+            _fire_result(on_result, False, -1.0, "ERROR")
 
     except Exception as e:
         print(f"[alcohol] Error: {e}")
