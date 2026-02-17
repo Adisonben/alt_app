@@ -38,12 +38,12 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
         p.text(f"Date: {now}\n")
 
         # 4. User ID and User Name
-        # p.text(f"User ID: {user_id}\n")
-        # p.text(f"Name: {user_name}\n")
+        p.text(f"User ID: {user_id}\n")
+        p.text(f"Name: {user_name}\n")
 
         # 5. Value & Status
-        # p.text(f"Value: {value} mg%\n")
-        # p.text(f"Status: {status}\n")
+        p.text(f"Value: {value} mg%\n")
+        p.text(f"Status: {status}\n")
 
         # 6. Device ID
         p.text(f"Device ID: {device_id}\n")
