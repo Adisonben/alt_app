@@ -28,6 +28,9 @@ def process_image(image_path, max_width=384):
 import threading
 import time
 
+import threading
+import time
+
 # Create a lock for the printer
 printer_lock = threading.Lock()
 # Global singleton for printer instance
@@ -117,14 +120,9 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
 
     except Exception as e:
         print(f"Printing failed: {e}")
-        # If printing fails, connection might be bad. Reset singleton to force reconnect next time.
-        global _printer_instance
-        try:
-             if _printer_instance:
-                 _printer_instance.close()
-        except:
-            pass
-        _printer_instance = None
+        # If printing fails, maybe the connection is bad. Reset singleton?
+        # global _printer_instance
+        # _printer_instance = None
         return False
     finally:
         # Do not close the printer connection, keep it alive for singleton reuse
