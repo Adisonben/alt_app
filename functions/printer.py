@@ -4,21 +4,22 @@ import os
 from PIL import Image
 
 def process_image(image_path, max_width=384):
+    if not os.path.exists(image_path):
+        return None
+        
     img = Image.open(image_path)
 
     # resize
     if img.width > max_width:
-        ratio = max_width / img.width
+        ratio = max_width / float(img.width)
+        new_height = int(float(img.height) * ratio)
         img = img.resize(
-            (max_width, int(img.height * ratio)),
+            (max_width, new_height),
             Image.Resampling.LANCZOS
         )
 
-    # convert grayscale ก่อน
-    img = img.convert("L")
-
-    # threshold เอง (ไม่ใช้ dithering)
-    img = img.point(lambda x: 0 if x < 128 else 255, '1')
+    # convert to 1-bit monochrome (using standard dithering as in test script)
+    img = img.convert("1")
 
     return img
 
@@ -43,7 +44,7 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
             # Use 'graphics' implementation for better compatibility with bit images
             # or try standard image()
             try:
-                p.image(bw_logo, impl="graphics", fragment_height=256)
+                p.image(bw_logo, impl="graphics")
             except Exception as img_err:
                  print(f"Printing image failed, skipping: {img_err}")
                  p.text("[LOGO]\n")
