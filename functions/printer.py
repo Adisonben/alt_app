@@ -4,36 +4,23 @@ import os
 from PIL import Image
 
 def process_image(image_path, max_width=384):
-    """
-    Resizes and converts image to 1-bit black and white.
-    Returns path to processed image or None if failed.
-    """
-    try:
-        if not os.path.exists(image_path):
-            return None
-            
-        img = Image.open(image_path)
-        
-        # 1. Resize if wider than max_width (standard 58mm printer ~384px)
-        if img.width > max_width:
-            ratio = max_width / float(img.width)
-            new_height = int(float(img.height) * ratio)
-            img = img.resize((max_width, new_height), Image.Resampling.LANCZOS)
-            
-        # 2. Convert to 1-bit monochrome (dithered)
-        # method=Image.Dither.FLOYDSTEINBERG is default for convert('1')
-        img = img.convert("1")
-        
-        # Save to a temporary file
-        # In a real app, might want to cache this
-        base, ext = os.path.splitext(image_path)
-        new_path = f"{base}_bw{ext}"
-        img.save(new_path)
-        return new_path
-        
-    except Exception as e:
-        print(f"Image processing error: {e}")
-        return None
+    img = Image.open(image_path)
+
+    # resize
+    if img.width > max_width:
+        ratio = max_width / img.width
+        img = img.resize(
+            (max_width, int(img.height * ratio)),
+            Image.Resampling.LANCZOS
+        )
+
+    # convert grayscale ก่อน
+    img = img.convert("L")
+
+    # threshold เอง (ไม่ใช้ dithering)
+    img = img.point(lambda x: 0 if x < 128 else 255, '1')
+
+    return img
 
 def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
     try:
@@ -49,14 +36,14 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
         logo_path = os.path.join(current_dir, '..', 'assets', 'logo.png')
         
         # Process image before printing
-        bw_logo_path = process_image(logo_path)
+        bw_logo = process_image(logo_path)
         
-        if bw_logo_path and os.path.exists(bw_logo_path):
+        if bw_logo:
             p.set(align='center')
             # Use 'graphics' implementation for better compatibility with bit images
             # or try standard image()
             try:
-                p.image(bw_logo_path)
+                p.image(bw_logo, impl="graphics", fragment_height=256)
             except Exception as img_err:
                  print(f"Printing image failed, skipping: {img_err}")
                  p.text("[LOGO]\n")
