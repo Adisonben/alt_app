@@ -1,106 +1,123 @@
-from escpos.printer import Usb
-from datetime import datetime
 import os
-from PIL import Image
+import sys
+from datetime import datetime
+from PIL import Image, ImageFont, ImageDraw, ImageOps
+from escpos.printer import Usb
 
-def process_image(image_path, max_width=384):
-    """
-    Resizes and converts image to 1-bit black and white.
-    """
-    if not os.path.exists(image_path):
-        return None
-        
+def get_font_path():
+    # Check common locations
+    candidates = [
+        "fonts/THSarabunNew.ttf",
+        "resources/fonts/Loma.ttf",
+        "Loma.ttf",
+        "THSarabunNew.ttf"
+    ]
+    for path in candidates:
+        if os.path.exists(path):
+            return path
+    
+    # Try looking in project root if we are in functions subdirectory
+    # (Assuming script runs from root, but just in case)
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    for path in candidates:
+        full_path = os.path.join(base_dir, path)
+        if os.path.exists(full_path):
+            return full_path
+            
+    return None
+
+def img_font(text, font_size=28, line_height=5):
+    font_path = get_font_path()
     try:
-        img = Image.open(image_path)
+        if font_path:
+            font = ImageFont.truetype(font_path, font_size)
+        else:
+            font = ImageFont.load_default()
+    except Exception:
+        font = ImageFont.load_default()
 
-        # resize
-        if img.width > max_width:
-            ratio = max_width / float(img.width)
-            new_height = int(float(img.height) * ratio)
-            img = img.resize(
-                (max_width, new_height),
-                Image.Resampling.LANCZOS
-            )
+    # Calculate text size
+    # Handle getsize vs getbbox (newer Pillow)
+    if hasattr(font, 'getbbox'):
+        bbox = font.getbbox(text)
+        width = bbox[2] - bbox[0]
+        height = bbox[3] - bbox[1]
+        # Adjust for baseline
+        height += 4 
+    else:
+        width, height = font.getsize(text)
 
-        # convert to 1-bit monochrome (standard)
-        img = img.convert("1")
-        return img
-    except Exception as e:
-        print(f"Image processing error: {e}")
-        return None
+    # Create image (Black background, White text -> Invert) to match pure_printer style
+    # Or just White background, Black text.
+    # pure_printer: Image.new('RGB', ..., (0,0,0) implicitly) -> draw white -> invert -> black on white.
+    # simpler: White background, Black text.
+    
+    image = Image.new('RGB', (width, height + line_height), (255, 255, 255))
+    draw = ImageDraw.Draw(image)
+    draw.text((0, 0), text, font=font, fill=(0, 0, 0))
+    
+    return image
 
-def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
-    p = None
+def print_receipt(user_id, user_name, value, status, device_id):
+    """
+    Prints the test result receipt.
+    
+    Args:
+        user_id (str): The ID of the user.
+        user_name (str): The name of the user.
+        value (float/str): The alcohol test value.
+        status (str): The result status (e.g., PASS, FAIL).
+        device_id (str): The ID of the device.
+    
+    Returns:
+        bool: True if successful, False otherwise.
+    """
     try:
-        # Vendor ID and Product ID
-        # 0x04b8 (Epson), 0x0e28 (TM-T20II or similar)
+        # Vendor ID 0x04b8, Product ID 0x0e28 per user instructions
         p = Usb(0x04b8, 0x0e28)
         
-        # 1. Logo
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        logo_path = os.path.join(current_dir, '..', 'assets', 'logo.png')
+        # Center alignment
+        p.set(align='center')
         
-        bw_logo = process_image(logo_path)
+        # Header "ALT Iddrives"
+        # Using image for consistency across potential language inputs
+        p.image(img_font("ALT Iddrives", font_size=34))
+        p.text("\n")
         
-        if bw_logo:
-            p.set(align='center')
-            try:
-                # impl="graphics" provides better compatibility/quality for images
-                p.image(bw_logo, impl="graphics")
-            except Exception as img_err:
-                 print(f"Printing image failed: {img_err}")
-                 p.text("[LOGO]\n")
-        else:
-            print("Logo not found or invalid at:", logo_path)
-
-        # 2. Header "ALT Iddrives"
-        p.set(align='center', bold=True, width=2, height=2)
-        p.text("ALT Iddrives\n")
+        # Reset to left align for details? Or keep center?
+        # User requirement format:
+        # - "ALT Iddrives" (Header)
+        # - date and time
+        # - user id
+        # - user name
+        # - value & status
+        # - device id
         
-        # Reset font settings
-        p.set(align='left', bold=False, width=1, height=1)
-        p.text("--------------------------------\n")
-
-        # 3. Date and Time
-        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        p.text(f"Date: {now}\n")
-
-        # 4. User ID and User Name
-        # Handle cases where data might be None
-        u_id = user_id if user_id else "-"
-        u_name = user_name if user_name else "-"
+        # Let's align left for details
+        p.set(align='left')
         
-        p.text(f"User ID: {u_id}\n")
-        p.text(f"Name: {u_name}\n")
-
-        # 5. Value & Status
-        val = value if value is not None else 0.0
-        stat = status if status else "-"
+        dt_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        p.image(img_font(f"Date: {dt_str}"))
         
-        p.text(f"Value: {val} mg%\n")
-        p.text(f"Status: {stat}\n")
-
-        # 6. Device ID
-        p.text(f"Device ID: {device_id}\n")
-        p.text("--------------------------------\n")
+        p.image(img_font(f"User ID: {user_id}"))
+        p.image(img_font(f"Name: {user_name}"))
         
-        # 7. Space top and bottom for cut
+        # Value & Status
+        p.image(img_font(f"Value: {value} mg%"))
+        p.image(img_font(f"Result: {status}"))
+        
+        p.image(img_font(f"Device ID: {device_id}"))
+        
+        # Space bottom for cut
         p.text("\n\n\n")
         p.cut()
         
-        print("Receipt printed successfully.")
+        # Close connection implicitly handled or explicitly if needed?
+        # escpos Usb usually handles it.
+        
         return True
-
+        
     except Exception as e:
-        print(f"Printing failed: {e}")
+        print(f"Print Error: {e}")
+        # In production, we might want to log this but not crash
         return False
-    finally:
-        # CRITICAL: Always close the connection to release the USB resource.
-        # If not closed, subsequent attempts (or other apps) will get "Input/Output Error"
-        # or "Resource Busy".
-        if p:
-            try:
-                p.close()
-                print("Printer connection closed.")
-            except Exception as close_err:
-                print(f"Error closing printer: {close_err}")
