@@ -20,7 +20,8 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
         
         if os.path.exists(logo_path):
             p.set(align='center')
-            p.image(logo_path)
+            # p.image(logo_path)  # Disabling image to debug I/O error
+            p.text("[IMAGE Placeholder]\n")
         else:
             print("Logo not found at:", logo_path)
 
