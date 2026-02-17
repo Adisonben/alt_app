@@ -4,7 +4,7 @@ import sys
 import base64
 import binascii
 
-SCAN_CMD = ["sudo", "./finger_scan", "5000"]
+SCAN_CMD = ["sudo", "./finger_scan2", "5000"]
 MATCH_CMD_BASE = ["sudo", "./match_template"]
 
 def scan_finger(label="Finger"):

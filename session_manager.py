@@ -10,6 +10,7 @@ class KioskSession:
         self.finger_data = None
         self.is_authenticated = False
         self.alcohol_value = 0.0
+        self.alcohol_status = ""   # "OK", "HIGH", or error code
         self.snapshot_path = ""
         self.start_time = None
         print("KioskSession: Reset completed.")

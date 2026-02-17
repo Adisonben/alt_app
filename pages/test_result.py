@@ -15,12 +15,14 @@ class TestResult(MDScreen):
         self.result_value = str(session.alcohol_value)
         self.snapshot_path = session.snapshot_path if session.snapshot_path else ""
         
-        print(f"Result = {session.alcohol_value}")
+        alcohol_status = getattr(session, "alcohol_status", "")
+        print(f"Result = {session.alcohol_value}, Status = {alcohol_status}")
         
         if session.is_authenticated:
             # Prepare data array to send
             data_to_send = [
-                session.alcohol_value, 
+                session.alcohol_value,
+                alcohol_status,
                 session.snapshot_path,
                 session.user_id
             ]
