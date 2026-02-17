@@ -38,7 +38,7 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
         # Process image before printing
         bw_logo = process_image(logo_path)
         
-        if bw_logo:
+        if bw_logo and False:
             p.set(align='center')
             try:
                 # impl="graphics" worked in the minimal test
