@@ -1,54 +1,29 @@
 from escpos.printer import Usb
 from datetime import datetime
 import os
-from PIL import Image
-
-def process_image(image_path, max_width=384):
-    """
-    Resizes and converts image to 1-bit black and white.
-    """
-    if not os.path.exists(image_path):
-        return None
-        
-    img = Image.open(image_path)
-
-    # resize
-    if img.width > max_width:
-        ratio = max_width / float(img.width)
-        new_height = int(float(img.height) * ratio)
-        img = img.resize(
-            (max_width, new_height),
-            Image.Resampling.LANCZOS
-        )
-
-    # convert to 1-bit monochrome (standard)
-    img = img.convert("1")
-    return img
 
 def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
-    p = None
     try:
         # Vendor ID and Product ID from bin/test_printer.py
         p = Usb(0x04b8, 0x0e28)
-        
+    except Exception as e:
+        print(f"Printer error: {e}")
+        return False
+
+    try:
         # 1. Logo
+        # Assuming run from root or adapting path. 
+        # Using absolute path logic or relative to project root is safer.
+        # This file is in functions/, so logo is in ../assets/logo.png
         current_dir = os.path.dirname(os.path.abspath(__file__))
         logo_path = os.path.join(current_dir, '..', 'assets', 'logo.png')
         
-        # Process image before printing
-        bw_logo = process_image(logo_path)
-        
-        if bw_logo and False:
+        if os.path.exists(logo_path):
             p.set(align='center')
-            try:
-                # impl="graphics" worked in the minimal test
-                p.image(bw_logo, impl="graphics")
-            except Exception as img_err:
-                 print(f"Printing image failed, skipping: {img_err}")
-                 p.text("[LOGO]\n")
+            # p.image(logo_path)
+            p.text("[logo]\n")
         else:
             print("Logo not found at:", logo_path)
-            p.text("[LOGO Placeholder]\n")
 
         # 2. Header "ALT Iddrives"
         p.set(align='center', bold=True, width=2, height=2)
@@ -84,10 +59,3 @@ def print_receipt(user_id, user_name, value, status, device_id="Kiosk-001"):
     except Exception as e:
         print(f"Printing failed: {e}")
         return False
-    finally:
-        if p:
-            try:
-                p.close()
-                print("Printer connection closed.")
-            except Exception as close_err:
-                print(f"Error closing printer: {close_err}")
