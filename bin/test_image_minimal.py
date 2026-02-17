@@ -1,11 +1,12 @@
 from escpos.printer import File
 from PIL import Image
 import os
+from escpos.printer import Usb
 
 try:
-    # Note: /dev/usb/lp0 is a Linux device path. 
-    # This will likely fail on Windows unless running in WSL with device passthrough.
-    p = File("/dev/usb/lp0")
+    # Use USB driver as verified in test_printer.py
+    # p = File("/dev/usb/lp0") 
+    p = Usb(0x04b8, 0x0e28)
     
     # Locate basics/logo.png relative to this script
     current_dir = os.path.dirname(os.path.abspath(__file__))
