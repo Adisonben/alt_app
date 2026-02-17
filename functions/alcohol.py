@@ -34,8 +34,14 @@ CMD_START = b"$START" + CR_LF
 CMD_RESET = b"$RESET" + CR_LF
 
 # ── Module-level state (thread control) ───────────────────────
+# ── Module-level state (thread control) ───────────────────────
 _worker_thread = None
 _stop_event = threading.Event()
+_is_sensor_active = False  # True when serial port is open/busy
+
+def is_sensor_active():
+    """Returns True if the alcohol sensor thread is holding the serial port."""
+    return _is_sensor_active
 
 
 # ── Port detection ────────────────────────────────────────────
@@ -103,8 +109,10 @@ def _fire_result(on_result, success, value, status):
 # ── Background worker ────────────────────────────────────────
 def _measurement_worker(on_status, on_result):
     """Run the full $START → listen → $RESULT cycle."""
+    global _is_sensor_active
     ser = None
     try:
+        _is_sensor_active = True
         # 1. Detect port
         _fire_status(on_status, "connecting")
         port = _auto_detect_port()
@@ -206,6 +214,7 @@ def _measurement_worker(on_status, on_result):
                 print("[alcohol] Serial port closed.")
             except Exception:
                 pass
+        _is_sensor_active = False
 
 
 # ── Public API ────────────────────────────────────────────────

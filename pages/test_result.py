@@ -2,6 +2,7 @@ from kivymd.uix.screen import MDScreen
 from kivymd.app import MDApp
 from kivy.clock import Clock
 from functions.api import send_test_result
+from functions.alcohol import is_sensor_active
 from functions.printer import print_result
 from kivy.properties import StringProperty
 
@@ -19,10 +20,19 @@ class TestResult(MDScreen):
         alcohol_status = getattr(session, "alcohol_status", "")
         print(f"Result = {session.alcohol_value}, Status = {alcohol_status}")
         
-        # Print Receipt with delay to allow previous resources to clear
-        Clock.schedule_once(self.do_print, 5.0)
+        # Print Receipt with polling check
+        # We need to wait until alcohol sensor releases the port
+        self.check_sensor_and_print()
 
-    def do_print(self, dt):
+    def check_sensor_and_print(self, dt=None):
+        if is_sensor_active():
+            print("Sensor is still active, waiting...")
+            Clock.schedule_once(self.check_sensor_and_print, 0.5)
+        else:
+            print("Sensor is free. Printing now.")
+            self.do_print()
+
+    def do_print(self):
         print("Starting scheduled print...")
         app = MDApp.get_running_app()
         session = app.session
