@@ -19,7 +19,15 @@ class TestResult(MDScreen):
         alcohol_status = getattr(session, "alcohol_status", "")
         print(f"Result = {session.alcohol_value}, Status = {alcohol_status}")
         
-        # Print Receipt
+        # Print Receipt with delay to allow previous resources to clear
+        Clock.schedule_once(self.do_print, 1.0)
+
+    def do_print(self, dt):
+        print("Starting scheduled print...")
+        app = MDApp.get_running_app()
+        session = app.session
+        alcohol_status = getattr(session, "alcohol_status", "")
+        
         # Device ID is hardcoded for now as it's not in session
         try:
              print_result(

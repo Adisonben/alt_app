@@ -26,9 +26,9 @@ BAUDRATE = 4800
 DATA_BITS = 8          # serial.EIGHTBITS
 STOP_BITS = 1          # serial.STOPBITS_ONE
 PARITY = "N"           # serial.PARITY_NONE
-TIMEOUT = 2            # read timeout (seconds)
-CR_LF = b"\x0D\x0A"
 MEASUREMENT_TIMEOUT = 120  # seconds max for entire cycle
+READ_TIMEOUT = 0.1         # short timeout for responsive loop
+CR_LF = b"\x0D\x0A"
 
 CMD_START = b"$START" + CR_LF
 CMD_RESET = b"$RESET" + CR_LF
@@ -127,7 +127,7 @@ def _measurement_worker(on_status, on_result):
             bytesize=DATA_BITS,
             stopbits=STOP_BITS,
             parity=PARITY,
-            timeout=TIMEOUT,
+            timeout=READ_TIMEOUT,
         )
         print(f"[alcohol] Serial opened: {port} @ {BAUDRATE}")
 
@@ -142,7 +142,14 @@ def _measurement_worker(on_status, on_result):
         result_found = False
 
         while time.time() < deadline and not _stop_event.is_set():
-            raw = ser.readline()
+            # Loop with short timeout to allow quick exit
+            try:
+                raw = ser.readline()
+            except serial.SerialException:
+                 break
+                 
+            if _stop_event.is_set():
+                break
             if not raw:
                 continue
 
