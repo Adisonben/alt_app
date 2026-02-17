@@ -1,11 +1,9 @@
-from escpos.printer import File
 from PIL import Image
 import os
 from escpos.printer import Usb
 
 try:
     # Use USB driver as verified in test_printer.py
-    # p = File("/dev/usb/lp0") 
     p = Usb(0x04b8, 0x0e28)
     
     # Locate basics/logo.png relative to this script

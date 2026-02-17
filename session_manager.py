@@ -5,8 +5,8 @@ class KioskSession:
         self.reset()
     
     def reset(self):
-        self.user_id = None
-        self.user_name = None
+        self.user_id = "ไม่ระบุ"
+        self.user_name = "ไม่ระบุ"
         self.finger_data = None
         self.is_authenticated = False
         self.alcohol_value = 0.0
