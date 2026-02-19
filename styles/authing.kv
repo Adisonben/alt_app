@@ -3,20 +3,18 @@
 <Authing>:
     md_bg_color: get_color_from_hex("#e8fffeff")
 
-    FloatLayout:
+    MDBoxLayout:
+        orientation: "horizontal"
         size: root.width, root.height
+        spacing: "0dp"
+        padding: "24dp"
 
-        # ── Fingerprint scan state ──
+        # ── Left Column: Fingerprint icon + title (always visible) ──
         MDBoxLayout:
-            id: fingerprint_box
             orientation: "vertical"
-            opacity: 1
-            disabled: False
-            pos_hint: {"center_x": .5, "center_y": .5}
-            size_hint: None, None
-            size: root.width, root.height
+            size_hint_x: .45
             spacing: "20dp"
-            padding: "40dp"
+            padding: [0, 0, "20dp", 0]
 
             Widget:
                 size_hint_y: 1
@@ -32,24 +30,25 @@
                 text: 'กรุณาแสกนลายนิ้วมือ'
                 halign: "center"
                 font_name: "Sarabun"
-                font_size: 72
+                font_size: 56
                 color: (0, 0, 0, 1)
                 size_hint_y: None
                 height: self.texture_size[1]
 
-            MDLabel:
+            Label:
                 text: "Please scan your fingerprint"
-                font_style: "Title"
-                font_name: "Sarabun"
-                adaptive_height: True
-                font_size: 40
                 halign: "center"
+                font_name: "Sarabun"
+                font_size: 32
+                color: (0, 0, 0, 0.7)
+                size_hint_y: None
+                height: self.texture_size[1]
 
             Label:
                 text: 'วางนิ้วบนเครื่องสแกนเพื่อตรวจสอบสิทธิ์'
                 halign: "center"
                 font_name: "Sarabun"
-                font_size: 28
+                font_size: 26
                 color: (0, 0, 0, .5)
                 size_hint_y: None
                 height: self.texture_size[1]
@@ -57,115 +56,163 @@
             Widget:
                 size_hint_y: 1
 
-        # ── Fail state ──
-        MDBoxLayout:
-            id: result_box_fail
+        # ── Right Column: State panels (scan / fail / pass) ──
+        MDCard:
+            style: "elevated"
+            padding: "28dp"
+            size_hint_x: .55
             orientation: "vertical"
-            opacity: 0
-            disabled: True
-            pos_hint: {"center_x": .5, "center_y": .5}
-            size_hint: None, None
-            size: root.width, root.height
-            spacing: "20dp"
-            padding: "40dp"
+            spacing: "0dp"
 
-            Widget:
-                size_hint_y: 1
+            # ── Scanning state ──
+            MDBoxLayout:
+                id: fingerprint_box
+                orientation: "vertical"
+                opacity: 1
+                disabled: False
+                spacing: "20dp"
 
-            MDButton:
-                style: "tonal"
-                radius: [self.height / 2, ]
-                size_hint: None, None
-                size: "120dp", "120dp"
-                pos_hint: {"center_x": .5}
-                theme_bg_color: "Custom"
-                md_bg_color: get_color_from_hex("#ff0000ff")
+                Widget:
+                    size_hint_y: 1
 
-                MDButtonIcon:
-                    icon: "alpha-x-circle"
+                MDIconButton:
+                    icon: "fingerprint"
+                    style: "tonal"
                     theme_font_size: "Custom"
                     font_size: "120sp"
+                    radius: [20,]
+                    size_hint: None, None
+                    size: "160dp", "160dp"
+                    pos_hint: {"center_x": .5}
+                    theme_bg_color: "Custom"
+                    md_bg_color: get_color_from_hex("#0e6effff")
                     theme_icon_color: "Custom"
                     icon_color: "white"
-                    pos_hint: {"center_x": .5, "center_y": .5}
 
-            Label:
-                text: 'ไม่สามารถตรวจสอบได้'
-                halign: "center"
-                font_name: "Sarabun"
-                font_size: 72
-                color: (0, 0, 0, 1)
-                size_hint_y: None
-                height: self.texture_size[1]
+                Label:
+                    text: 'รอการสแกน...'
+                    halign: "center"
+                    font_name: "Sarabun"
+                    font_size: 48
+                    color: (0, 0, 0, 1)
+                    size_hint_y: None
+                    height: self.texture_size[1]
 
-            MDLabel:
-                text: "Authentication failed"
-                font_style: "Title"
-                font_name: "Sarabun"
-                adaptive_height: True
-                font_size: 40
-                halign: "center"
+                Label:
+                    text: "Waiting for scan..."
+                    halign: "center"
+                    font_name: "Sarabun"
+                    font_size: 30
+                    color: (0, 0, 0, 0.6)
+                    size_hint_y: None
+                    height: self.texture_size[1]
 
-            Label:
-                text: 'กรุณาแสกนลายนิ้วมือใหม่อีกครั้ง'
-                halign: "center"
-                font_name: "Sarabun"
-                font_size: 28
-                color: (0, 0, 0, .5)
-                size_hint_y: None
-                height: self.texture_size[1]
+                Widget:
+                    size_hint_y: 1
 
-            Widget:
-                size_hint_y: 1
+            # ── Fail state ──
+            MDBoxLayout:
+                id: result_box_fail
+                orientation: "vertical"
+                opacity: 0
+                disabled: True
+                spacing: "20dp"
 
-        # ── Pass state ──
-        MDBoxLayout:
-            id: result_box_pass
-            orientation: "vertical"
-            opacity: 0
-            disabled: True
-            pos_hint: {"center_x": .5, "center_y": .5}
-            size_hint: None, None
-            size: root.width, root.height
-            spacing: "20dp"
-            padding: "40dp"
+                Widget:
+                    size_hint_y: 1
 
-            Widget:
-                size_hint_y: 1
+                MDButton:
+                    style: "tonal"
+                    radius: [self.height / 2, ]
+                    size_hint: None, None
+                    size: "120dp", "120dp"
+                    pos_hint: {"center_x": .5}
+                    theme_bg_color: "Custom"
+                    md_bg_color: get_color_from_hex("#ff0000ff")
 
-            MDButton:
-                style: "tonal"
-                radius: [self.height / 2, ]
-                size_hint: None, None
-                size: "120dp", "120dp"
-                pos_hint: {"center_x": .5}
-                theme_bg_color: "Custom"
-                md_bg_color: get_color_from_hex("#09ff00ff")
+                    MDButtonIcon:
+                        icon: "alpha-x-circle"
+                        theme_font_size: "Custom"
+                        font_size: "120sp"
+                        theme_icon_color: "Custom"
+                        icon_color: "white"
+                        pos_hint: {"center_x": .5, "center_y": .5}
 
-                MDButtonIcon:
-                    icon: "check-circle"
-                    theme_font_size: "Custom"
-                    font_size: "120sp"
-                    theme_icon_color: "Custom"
-                    icon_color: "white"
-                    pos_hint: {"center_x": .5, "center_y": .5}
+                Label:
+                    text: 'ไม่สามารถตรวจสอบได้'
+                    halign: "center"
+                    font_name: "Sarabun"
+                    font_size: 56
+                    color: (0, 0, 0, 1)
+                    size_hint_y: None
+                    height: self.texture_size[1]
 
-            Label:
-                text: 'ยืนยันตัวตนสำเร็จ'
-                halign: "center"
-                font_name: "Sarabun"
-                font_size: 72
-                color: (0, 0, 0, 1)
-                size_hint_y: None
-                height: self.texture_size[1]
+                Label:
+                    text: "Authentication failed"
+                    halign: "center"
+                    font_name: "Sarabun"
+                    font_size: 32
+                    color: (0, 0, 0, 0.7)
+                    size_hint_y: None
+                    height: self.texture_size[1]
 
-            MDLabel:
-                text: "Authentication successful"
-                font_style: "Title"
-                font_name: "Sarabun"
-                adaptive_height: True
-                font_size: 40
-                halign: "center"
+                Label:
+                    text: 'กรุณาแสกนลายนิ้วมือใหม่อีกครั้ง'
+                    halign: "center"
+                    font_name: "Sarabun"
+                    font_size: 26
+                    color: (0, 0, 0, .5)
+                    size_hint_y: None
+                    height: self.texture_size[1]
 
-            Widget:
-                size_hint_y: 1
+                Widget:
+                    size_hint_y: 1
+
+            # ── Pass state ──
+            MDBoxLayout:
+                id: result_box_pass
+                orientation: "vertical"
+                opacity: 0
+                disabled: True
+                spacing: "20dp"
+
+                Widget:
+                    size_hint_y: 1
+
+                MDButton:
+                    style: "tonal"
+                    radius: [self.height / 2, ]
+                    size_hint: None, None
+                    size: "120dp", "120dp"
+                    pos_hint: {"center_x": .5}
+                    theme_bg_color: "Custom"
+                    md_bg_color: get_color_from_hex("#09ff00ff")
+
+                    MDButtonIcon:
+                        icon: "check-circle"
+                        theme_font_size: "Custom"
+                        font_size: "120sp"
+                        theme_icon_color: "Custom"
+                        icon_color: "white"
+                        pos_hint: {"center_x": .5, "center_y": .5}
+
+                Label:
+                    text: 'ยืนยันตัวตนสำเร็จ'
+                    halign: "center"
+                    font_name: "Sarabun"
+                    font_size: 56
+                    color: (0, 0, 0, 1)
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                Label:
+                    text: "Authentication successful"
+                    halign: "center"
+                    font_name: "Sarabun"
+                    font_size: 32
+                    color: (0, 0, 0, 0.7)
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                Widget:
+                    size_hint_y: 1
