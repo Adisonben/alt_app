@@ -26,7 +26,8 @@ BAUDRATE = 4800
 DATA_BITS = 8          # serial.EIGHTBITS
 STOP_BITS = 1          # serial.STOPBITS_ONE
 PARITY = "N"           # serial.PARITY_NONE
-MEASUREMENT_TIMEOUT = 120  # seconds max for entire cycle
+MEASUREMENT_TIMEOUT = 90  # seconds max for entire cycle
+WARMUP_TIMEOUT = 20        # seconds max waiting for $STANBY (ready) state
 READ_TIMEOUT = 0.1         # short timeout for responsive loop
 CR_LF = b"\x0D\x0A"
 
@@ -161,7 +162,12 @@ def _measurement_worker(on_status, on_result):
         )
         print(f"[alcohol] Serial opened: {port} @ {BAUDRATE}")
 
-        # 3. Send $START
+        # 3. Send $RESET to clear any previous state, then $START
+        ser.write(CMD_RESET)
+        ser.flush()
+        print("[alcohol] Sent $RESET")
+        time.sleep(0.5)  # brief pause for device to process reset
+        ser.reset_input_buffer()  # discard any stale data
         ser.write(CMD_START)
         ser.flush()
         print("[alcohol] Sent $START")
@@ -169,15 +175,24 @@ def _measurement_worker(on_status, on_result):
 
         # 4. Listen for state transitions
         deadline = time.time() + MEASUREMENT_TIMEOUT
+        warmup_deadline = time.time() + WARMUP_TIMEOUT
+        device_ready = False  # True once $STANBY received
         result_found = False
 
         while time.time() < deadline and not _stop_event.is_set():
+            # Warmup timeout: $STANBY never arrived
+            if not device_ready and time.time() > warmup_deadline:
+                print("[alcohol] Warmup timeout — device never became ready ($STANBY not received)")
+                _fire_status(on_status, "timeout")
+                _fire_result(on_result, False, -1.0, "WARMUP_TIMEOUT")
+                return
+
             # Loop with short timeout to allow quick exit
             try:
                 raw = ser.readline()
             except serial.SerialException:
-                 break
-                 
+                break
+
             if _stop_event.is_set():
                 break
             if not raw:
@@ -203,6 +218,7 @@ def _measurement_worker(on_status, on_result):
             if state == "$WAIT":
                 _fire_status(on_status, "warming_up")
             elif state == "$STANBY":
+                device_ready = True
                 _fire_status(on_status, "ready")
             elif state == "$TRIGGER":
                 _fire_status(on_status, "breath_detected")
