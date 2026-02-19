@@ -1,7 +1,7 @@
 #:import get_color_from_hex kivy.utils.get_color_from_hex
 
 <NumpadButton@Button>:
-    font_size: "28sp"
+    font_size: "40sp"
     font_name: "Sarabun"
     background_normal: ""
     background_color: 0, 0, 0, 0
@@ -14,15 +14,15 @@
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: [12,]
+            radius: [16,]
         Color:
             rgba: get_color_from_hex("#BBDEFB")
         Line:
-            rounded_rectangle: self.x, self.y, self.width, self.height, 12
-            width: 1.2
+            rounded_rectangle: self.x, self.y, self.width, self.height, 16
+            width: 1.5
 
 <NumpadActionButton@Button>:
-    font_size: "20sp"
+    font_size: "32sp"
     font_name: "Sarabun"
     background_normal: ""
     background_color: 0, 0, 0, 0
@@ -33,58 +33,53 @@
 <EmployeeID>:
     md_bg_color: get_color_from_hex("#e8fffeff")
 
-    FloatLayout:
+    MDBoxLayout:
+        orientation: "horizontal"
         size: root.width, root.height
+        spacing: "0dp"
+        padding: "24dp"
 
-        MDCard:
-            radius: [20,]
-            theme_bg_color: "Custom"
-            md_bg_color: get_color_from_hex("#E3F2FD")
-            elevation: 4
-            padding: "20dp"
-            spacing: "12dp"
+        # ---------- Left: Title + Input ----------
+        MDBoxLayout:
             orientation: "vertical"
-            size_hint: None, None
-            size: "440dp", "580dp"
-            pos_hint: {"center_x": .5, "center_y": .5}
+            size_hint_x: .45
+            spacing: "20dp"
+            padding: [0, 0, "20dp", 0]
+            pos_hint: {"center_y": .5}
 
-            # ---------- Title Section ----------
-            MDBoxLayout:
-                orientation: "vertical"
-                adaptive_height: True
-                spacing: "4dp"
-                padding: [0, 0, 0, "4dp"]
+            Widget:
+                size_hint_y: 1
 
-                MDIconButton:
-                    icon: "card-account-details-outline"
-                    style: "tonal"
-                    theme_font_size: "Custom"
-                    font_size: "48sp"
-                    radius: [16,]
-                    size_hint: None, None
-                    size: "80dp", "80dp"
-                    pos_hint: {"center_x": .5}
-                    theme_bg_color: "Custom"
-                    md_bg_color: get_color_from_hex("#0e6effff")
-                    theme_icon_color: "Custom"
-                    icon_color: "white"
+            MDIconButton:
+                icon: "card-account-details-outline"
+                style: "tonal"
+                theme_font_size: "Custom"
+                font_size: "80sp"
+                radius: [20,]
+                size_hint: None, None
+                size: "120dp", "120dp"
+                pos_hint: {"center_x": .5}
+                theme_bg_color: "Custom"
+                md_bg_color: get_color_from_hex("#0e6effff")
+                theme_icon_color: "Custom"
+                icon_color: "white"
 
-                Label:
-                    markup: True
-                    text: '[b]กรอกรหัสพนักงาน[/b]\n[size=20]Enter Employee ID[/size]'
-                    halign: "center"
-                    font_name: "Sarabun"
-                    font_size: 32
-                    color: get_color_from_hex("#1A237E")
-                    size_hint_y: None
-                    height: self.texture_size[1]
+            Label:
+                markup: True
+                text: '[b]กรอกรหัสพนักงาน[/b]\n[size=26]Enter Employee ID[/size]'
+                halign: "center"
+                font_name: "Sarabun"
+                font_size: 40
+                color: get_color_from_hex("#1A237E")
+                size_hint_y: None
+                height: self.texture_size[1]
 
             # ---------- Input Display ----------
             BoxLayout:
                 orientation: "vertical"
                 size_hint: 1, None
-                height: "56dp"
-                padding: ["16dp", "8dp", "16dp", "8dp"]
+                height: "80dp"
+                padding: ["16dp", "12dp", "16dp", "12dp"]
 
                 canvas.before:
                     Color:
@@ -92,18 +87,18 @@
                     RoundedRectangle:
                         pos: self.x - 2, self.y - 2
                         size: self.width + 4, self.height + 4
-                        radius: [14,]
+                        radius: [16,]
                     Color:
                         rgba: get_color_from_hex("#ffffff")
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
-                        radius: [12,]
+                        radius: [14,]
 
                 Label:
                     id: input_display
                     text: ""
-                    font_size: "32sp"
+                    font_size: "48sp"
                     font_name: "Sarabun"
                     bold: True
                     halign: "center"
@@ -111,10 +106,42 @@
                     text_size: self.size
                     color: get_color_from_hex("#1A237E")
 
-            # ---------- Numpad ----------
+            Widget:
+                size_hint_y: 1
+
+            # ---------- Back button ----------
+            MDButton:
+                style: "outlined"
+                size_hint: 1, None
+                height: "56dp"
+                pos_hint: {"center_x": .5}
+                on_release:
+                    app.root.ids.screen_manager.current = "home"
+                    root.manager.transition.direction = "right"
+                MDButtonText:
+                    text: "< ย้อนกลับ / Back"
+                    font_name: "Sarabun"
+                    font_size: "22sp"
+                    theme_text_color: "Custom"
+                    text_color: get_color_from_hex("#1565C0")
+
+            Widget:
+                size_hint_y: 1
+
+        # ---------- Right: Numpad ----------
+        MDCard:
+            radius: [20,]
+            theme_bg_color: "Custom"
+            md_bg_color: get_color_from_hex("#E3F2FD")
+            elevation: 4
+            padding: "16dp"
+            spacing: "0dp"
+            orientation: "vertical"
+            size_hint_x: .55
+
             GridLayout:
                 cols: 3
-                spacing: "8dp"
+                spacing: "10dp"
                 size_hint: 1, 1
 
                 # Row 1
@@ -152,7 +179,7 @@
 
                 # Row 4: Clear - 0 - OK
                 NumpadActionButton:
-                    text: "Clear"
+                    text: "ลบ"
                     on_release: root.clear_digits()
                     canvas.before:
                         Color:
@@ -160,7 +187,7 @@
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
-                            radius: [12,]
+                            radius: [16,]
 
                 NumpadButton:
                     text: "0"
@@ -168,7 +195,6 @@
 
                 NumpadActionButton:
                     text: "OK"
-                    font_size: "24sp"
                     on_release: root.submit_id()
                     canvas.before:
                         Color:
@@ -176,20 +202,4 @@
                         RoundedRectangle:
                             pos: self.pos
                             size: self.size
-                            radius: [12,]
-
-            # ---------- Back button ----------
-            MDButton:
-                style: "text"
-                pos_hint: {"center_x": .5}
-                size_hint_y: None
-                height: "36dp"
-                on_release:
-                    app.root.ids.screen_manager.current = "home"
-                    root.manager.transition.direction = "right"
-                MDButtonText:
-                    text: "< Back"
-                    font_name: "Sarabun"
-                    font_size: "16sp"
-                    theme_text_color: "Custom"
-                    text_color: get_color_from_hex("#1565C0")
+                            radius: [16,]

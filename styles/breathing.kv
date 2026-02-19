@@ -3,153 +3,150 @@
 <Breathing>:
     md_bg_color: get_color_from_hex("#e8fffeff")
 
-    FloatLayout:
+    MDBoxLayout:
         orientation: "vertical"
         size: root.width, root.height
+        spacing: "20dp"
+        padding: "40dp"
 
-        MDBoxLayout:
-            orientation: "vertical"
-            pos_hint: {"center_x": .5, "center_y": .35}
+        Widget:
+            size_hint_y: 1
+
+        MDIconButton:
+            id: status_icon
+            icon: 'weather-windy'
+            style: "filled"
+            theme_font_size: "Custom"
+            font_size: "100sp"
+            radius: [self.height / 2, ]
+            size_hint: None, None
+            size: "140dp", "140dp"
+            pos_hint: {'center_x': .5}
+            theme_bg_color: "Custom"
+            md_bg_color: "blue"
+            theme_icon_color: "Custom"
+            icon_color: "white"
+
+        Label:
+            text: 'กรุณาเป่าลมหายใจ'
+            halign: "center"
+            font_name: "Sarabun"
+            font_size: 60
+            color: (0, 0, 0, 1)
             size_hint_y: None
-            height: 500
-            spacing: 10
+            height: self.texture_size[1]
 
-            MDBoxLayout:
-                orientation: "vertical"
-                padding: 0,0,0,20
-                spacing: 20
+        MDLabel:
+            text: "Please blow into the device"
+            font_style: "Title"
+            font_name: "Sarabun"
+            adaptive_height: True
+            font_size: 36
+            halign: "center"
+
+        # ── Dynamic status label ──
+        MDLabel:
+            id: status_label
+            text: "กำลังเชื่อมต่ออุปกรณ์... / Connecting..."
+            font_style: "Title"
+            font_name: "Sarabun"
+            adaptive_height: True
+            font_size: 28
+            halign: "center"
+            theme_text_color: "Custom"
+            text_color: 0.2, 0.4, 1, 1
+
+        MDCard:
+            style: "elevated"
+            padding: "24dp"
+            size_hint: .9, None
+            height: "220dp"
+            pos_hint: {'center_x': .5}
+            orientation: "vertical"
+            spacing: "8dp"
+
+            Label:
+                text: 'คำแนะนำ / Instructions'
+                halign: "center"
+                font_name: "Sarabun"
+                font_size: 24
+                color: (0, 0, 0, 1)
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            Label:
+                text: '1. หยิบหลอดจากช่องเก็บหลอด (Pick up the straw.)'
+                halign: "left"
+                valign: "middle"
+                font_name: "Sarabun"
+                size_hint_x: 1
+                font_size: 24
+                color: (0, 0, 0, 1)
+                text_size: self.width, None
+            Label:
+                text: '2. เป่าลมออกอย่างแรงและต่อเนื่อง (Blow hard and continuously)'
+                halign: "left"
+                valign: "middle"
+                font_name: "Sarabun"
+                size_hint_x: 1
+                font_size: 24
+                color: (0, 0, 0, 1)
+                text_size: self.width, None
+            Label:
+                text: "3. อย่าหยุดจนกว่าจะได้ยินเสียงสัญญาณ (Don't stop until you hear the beep)"
+                halign: "left"
+                valign: "middle"
+                font_name: "Sarabun"
+                size_hint_x: 1
+                font_size: 24
+                color: (0, 0, 0, 1)
+                text_size: self.width, None
+
+        # ── Error box (hidden by default) ──
+        MDBoxLayout:
+            id: error_box
+            orientation: "vertical"
+            spacing: "16dp"
+            adaptive_height: True
+            opacity: 0
+            disabled: True
+            padding: "20dp", "10dp"
+
+            MDLabel:
+                id: error_label
+                text: ""
+                font_name: "Sarabun"
+                font_size: 28
+                halign: "center"
+                theme_text_color: "Custom"
+                text_color: 0.9, 0.2, 0.2, 1
                 adaptive_height: True
 
-                MDIconButton:
-                    id: status_icon
-                    icon: 'weather-windy'
-                    style: "filled"
-                    theme_font_size: "Custom"
-                    font_size: "60sp"
-                    radius: [self.height / 2, ]
-                    size_hint: None, None
-                    size: "100dp", "100dp"
-                    pos_hint: {'center_x': .5}
-                    theme_bg_color: "Custom"
-                    md_bg_color: "blue"
-                    theme_icon_color: "Custom"
-                    icon_color: "white"
-
             MDBoxLayout:
-                orientation: "vertical"
-                spacing: 15
+                orientation: "horizontal"
+                spacing: "20dp"
                 adaptive_height: True
+                pos_hint: {'center_x': .5}
+                size_hint_x: None
+                width: "500dp"
 
-                Label:
-                    markup: True
-                    text: 'กรุณาเป่าลมหายใจ '
-                    halign: "center"
-                    font_name: "Sarabun"
-                    font_size: 50
-                    color: (0,0,0,1)
-
-                MDLabel:
-                    text: "Please blow into the device"
-                    font_style: "Title"
-                    font_name: "Sarabun"
-                    adaptive_height: True
-                    font_size: 32
-                    halign: "center"
-
-                # ── Dynamic status label ──
-                MDLabel:
-                    id: status_label
-                    text: "กำลังเชื่อมต่ออุปกรณ์... / Connecting..."
-                    font_style: "Title"
-                    font_name: "Sarabun"
-                    adaptive_height: True
-                    font_size: 26
-                    halign: "center"
-                    theme_text_color: "Custom"
-                    text_color: 0.2, 0.4, 1, 1
-
-                MDCard:
-                    style: "elevated"
-                    padding: 20
-                    size_hint: None, None
-                    size: "500dp", "200dp"
-                    pos_hint: {'center_x': .5}
-                    orientation: "vertical"
-
-                    Label:
-                        text: 'คำแนะนำ Instructions'
-                        halign: "center"
-                        font_style: "Headline"
+                MDButton:
+                    on_release: root.retry_measurement()
+                    size_hint: 1, None
+                    height: "64dp"
+                    MDButtonText:
+                        text: "ลองใหม่ / Retry"
                         font_name: "Sarabun"
-                        font_size: 20
-                        color: (0,0,0,1)
+                        font_size: "24sp"
 
-                    Label:
-                        text: '1. หยิบหลอดจากช่องเก็บหลอด (Pick up the straw.)'
-                        halign: "left"
-                        valign: "middle"
+                MDButton:
+                    on_release: root.cancel_measurement()
+                    size_hint: 1, None
+                    height: "64dp"
+                    MDButtonText:
+                        text: "ยกเลิก / Cancel"
                         font_name: "Sarabun"
-                        size_hint_x: 1
-                        font_size: 20
-                        color: (0,0,0,1)
-                        text_size: self.width, None
-                    Label:
-                        text: '2. เป่าลมออกอย่างแรงและต่อเนื่อง (Blow hard and continuously)'
-                        halign: "left"
-                        valign: "middle"
-                        font_name: "Sarabun"
-                        size_hint_x: 1
-                        font_size: 20
-                        color: (0,0,0,1)
-                        text_size: self.width, None
-                    Label:
-                        text: "3. อย่าหยุดจนกว่าจะได้ยินเสียงสัญญาณ (Don't stop until you hear the beep)"
-                        halign: "left"
-                        valign: "middle"
-                        font_name: "Sarabun"
-                        size_hint_x: 1
-                        font_size: 20
-                        color: (0,0,0,1)
-                        text_size: self.width, None
+                        font_size: "24sp"
 
-                # ── Error box (hidden by default) ──
-                MDBoxLayout:
-                    id: error_box
-                    orientation: "vertical"
-                    spacing: 10
-                    adaptive_height: True
-                    opacity: 0
-                    disabled: True
-                    padding: 20, 10
-
-                    MDLabel:
-                        id: error_label
-                        text: ""
-                        font_name: "Sarabun"
-                        font_size: 22
-                        halign: "center"
-                        theme_text_color: "Custom"
-                        text_color: 0.9, 0.2, 0.2, 1
-                        adaptive_height: True
-
-                    MDBoxLayout:
-                        orientation: "horizontal"
-                        spacing: 20
-                        adaptive_height: True
-                        pos_hint: {'center_x': .5}
-                        size_hint_x: None
-                        width: "350dp"
-
-                        MDButton:
-                            on_release: root.retry_measurement()
-                            size_hint_x: 1
-                            MDButtonText:
-                                text: "ลองใหม่ / Retry"
-                                font_name: "Sarabun"
-
-                        MDButton:
-                            on_release: root.cancel_measurement()
-                            size_hint_x: 1
-                            MDButtonText:
-                                text: "ยกเลิก / Cancel"
-                                font_name: "Sarabun"
+        Widget:
+            size_hint_y: 1

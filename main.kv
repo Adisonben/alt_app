@@ -5,8 +5,8 @@ MDScreen:
         BoxLayout:
             orientation: "horizontal"
             size_hint_y: None
-            height: 50
-            padding: 10, 5, 10, 5
+            height: 70
+            padding: 16, 8, 16, 8
 
             canvas.before:
                 Color:
@@ -22,10 +22,10 @@ MDScreen:
 
                 MDLabel:
                     text: "IP Address"
-                    role: "small"
+                    role: "medium"
                 MDLabel:
                     text: "192.168.1.0"
-                    role: "small"
+                    role: "medium"
                     theme_text_color: "Custom"
                     text_color: "green"
                     
@@ -33,7 +33,8 @@ MDScreen:
             MDLabel:
                 text: "ALT Iddrives"
                 halign: "center"
-                font_style: "Title"
+                font_style: "Headline"
+                bold: True
                 
 
             BoxLayout:
@@ -42,12 +43,12 @@ MDScreen:
 
                 MDLabel:
                     text: "Status"
-                    role: "small"
+                    role: "medium"
                     halign: "right"
 
                 MDLabel:
                     text: "Online"
-                    role: "small"
+                    role: "medium"
                     halign: "right"
                     theme_text_color: "Custom"
                     text_color: "green"
