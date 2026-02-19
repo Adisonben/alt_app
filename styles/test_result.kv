@@ -19,10 +19,10 @@
                 text: "Snapshot"
                 halign: "center"
                 font_name: "Sarabun"
-                font_size: 40
+                font_size: 52
                 color: (0, 0, 0, 1)
                 size_hint_y: None
-                height: "48dp"
+                height: "64dp"
 
             MDCard:
                 size_hint: 1, 1
@@ -60,10 +60,10 @@
                 icon: 'checkbox-marked-circle-outline'
                 style: "filled"
                 theme_font_size: "Custom"
-                font_size: "100sp"
+                font_size: "130sp"
                 radius: [self.height / 2, ]
                 size_hint: None, None
-                size: "130dp", "130dp"
+                size: "170dp", "170dp"
                 pos_hint: {'center_x': .5}
                 theme_bg_color: "Custom"
                 md_bg_color: get_color_from_hex("#d4fdd6ff")
@@ -75,7 +75,7 @@
                 padding: "24dp"
                 spacing: "16dp"
                 size_hint: 1, None
-                height: "300dp"
+                height: "390dp"
                 pos_hint: {'center_x': .5}
                 orientation: "vertical"
 
@@ -83,7 +83,7 @@
                     text: 'ผลการตรวจ | Test Result'
                     halign: "center"
                     font_name: "Sarabun"
-                    font_size: 44
+                    font_size: 56
                     color: (0, 0, 0, 1)
                     size_hint_y: None
                     height: self.texture_size[1]
@@ -95,12 +95,13 @@
                     role: "large"
                     theme_text_color: "Custom"
                     text_color: "green"
+                    font_size: 52
 
                 Label:
                     text: 'ระดับแอลกอฮอล์ในลมหายใจ\nBlood Alcohol Content (BAC)'
                     halign: "center"
                     font_name: "Sarabun"
-                    font_size: 28
+                    font_size: 36
                     color: (0, 0, 0, .6)
                     size_hint_y: None
                     height: self.texture_size[1]
@@ -108,7 +109,7 @@
             MDButton:
                 style: "filled"
                 size_hint: 1, None
-                height: "80dp"
+                height: "100dp"
                 pos_hint: {"center_x": .5}
                 theme_bg_color: "Custom"
                 md_bg_color: get_color_from_hex("#0e6effff")
@@ -118,8 +119,9 @@
 
                 MDButtonText:
                     text: "เสร็จสิ้น / Done"
-                    font_style: "Headline"
+                    font_style: "Display"
                     font_name: "Sarabun"
+                    font_size: 52
                     pos_hint: {"center_x": .5, "center_y": .5}
 
             Widget:

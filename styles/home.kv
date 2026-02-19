@@ -44,10 +44,10 @@
 
                 Label:
                     markup: True
-                    text: '[b]โหมดปกติ[/b]\n[size=28]Normal Mode[/size]'
+                    text: '[b]โหมดปกติ[/b]\n[size=36]Normal Mode[/size]'
                     halign: "center"
                     font_name: "Sarabun"
-                    font_size: 56
+                    font_size: 72
                     color: (0, 0, 0, 1)
                     size_hint_y: None
                     height: self.texture_size[1]
@@ -55,7 +55,7 @@
                 Label:
                     text: "ต้องยืนยันตัวตนก่อนเริ่มทดสอบ\nScan fingerprint required"
                     font_name: "Sarabun"
-                    font_size: 28
+                    font_size: 36
                     halign: "center"
                     color: (0, 0, 0, 0.6)
                     size_hint_y: None
@@ -67,7 +67,7 @@
             MDButton:
                 style: "filled"
                 size_hint: 1, None
-                height: "80dp"
+                height: "100dp"
                 pos_hint: {"center_x": .5}
                 theme_bg_color: "Custom"
                 md_bg_color: get_color_from_hex("#0e6effff")
@@ -77,7 +77,7 @@
 
                 MDButtonText:
                     text: "เริ่ม / Start"
-                    font_style: "Headline"
+                    font_style: "Display"
                     font_name: "Sarabun"
                     pos_hint: {"center_x": .5, "center_y": .5}
 
@@ -117,10 +117,10 @@
 
                 Label:
                     markup: True
-                    text: '[b]โหมดอิสระ[/b]\n[size=28]Free Mode[/size]'
+                    text: '[b]โหมดอิสระ[/b]\n[size=36]Free Mode[/size]'
                     halign: "center"
                     font_name: "Sarabun"
-                    font_size: 56
+                    font_size: 72
                     color: get_color_from_hex("#E65100")
                     size_hint_y: None
                     height: self.texture_size[1]
@@ -128,7 +128,7 @@
                 Label:
                     text: "เริ่มทดสอบได้ทันที\nNo authentication required"
                     font_name: "Sarabun"
-                    font_size: 28
+                    font_size: 36
                     halign: "center"
                     color: get_color_from_hex("#E65100")
                     size_hint_y: None
@@ -140,7 +140,7 @@
             MDButton:
                 style: "filled"
                 size_hint: 1, None
-                height: "80dp"
+                height: "100dp"
                 pos_hint: {"center_x": .5}
                 theme_bg_color: "Custom"
                 md_bg_color: get_color_from_hex("#FF9800")
@@ -150,6 +150,6 @@
 
                 MDButtonText:
                     text: "เริ่ม / Start"
-                    font_style: "Headline"
+                    font_style: "Display"
                     font_name: "Sarabun"
                     pos_hint: {"center_x": .5, "center_y": .5}

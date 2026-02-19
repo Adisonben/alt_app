@@ -1,7 +1,7 @@
 #:import get_color_from_hex kivy.utils.get_color_from_hex
 
 <NumpadButton@Button>:
-    font_size: "40sp"
+    font_size: "52sp"
     font_name: "Sarabun"
     background_normal: ""
     background_color: 0, 0, 0, 0
@@ -22,7 +22,7 @@
             width: 1.5
 
 <NumpadActionButton@Button>:
-    font_size: "32sp"
+    font_size: "44sp"
     font_name: "Sarabun"
     background_normal: ""
     background_color: 0, 0, 0, 0
@@ -66,10 +66,10 @@
 
             Label:
                 markup: True
-                text: '[b]กรอกรหัสพนักงาน[/b]\n[size=26]Enter Employee ID[/size]'
+                text: '[b]กรอกรหัสพนักงาน[/b]\n[size=34]Enter Employee ID[/size]'
                 halign: "center"
                 font_name: "Sarabun"
-                font_size: 40
+                font_size: 52
                 color: get_color_from_hex("#1A237E")
                 size_hint_y: None
                 height: self.texture_size[1]
@@ -98,7 +98,7 @@
                 Label:
                     id: input_display
                     text: ""
-                    font_size: "48sp"
+                    font_size: "64sp"
                     font_name: "Sarabun"
                     bold: True
                     halign: "center"
@@ -121,7 +121,7 @@
                 MDButtonText:
                     text: "< ย้อนกลับ / Back"
                     font_name: "Sarabun"
-                    font_size: "22sp"
+                    font_size: "30sp"
                     theme_text_color: "Custom"
                     text_color: get_color_from_hex("#1565C0")
 
