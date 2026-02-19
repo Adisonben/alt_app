@@ -12,6 +12,8 @@ SCAN_CMD = ["sudo", BIN_PATH, "10000"] # 10 seconds timeout
 MATCH_BIN_PATH = os.path.join(os.getcwd(), "bin", "match_template")
 MATCH_CMD_BASE = ["sudo", MATCH_BIN_PATH]
 
+SCAN_PROCESS_TIMEOUT = 15  # seconds before killing the scan subprocess
+
 def raw_to_base64(raw_bytes):
     """Convert raw bytes to base64 string"""
     if raw_bytes is None:
@@ -28,6 +30,19 @@ def base64_to_raw(base64_str):
         print(f"[Fingerprint] Base64 decode error: {e}")
         return b""
 
+def check_fingerprint_device():
+    """
+    Quick check: returns True if the fingerprint binary exists.
+    Does NOT open the device — just verifies the binary is present.
+    """
+    exists = os.path.exists(BIN_PATH)
+    if not exists:
+        print(f"[Fingerprint] Device check FAILED: binary not found at {BIN_PATH}")
+    else:
+        print(f"[Fingerprint] Device check OK: binary found at {BIN_PATH}")
+    return exists
+
+
 def scan_fingerprint(callback):
     """
     Real fingerprint scan function
@@ -37,6 +52,7 @@ def scan_fingerprint(callback):
     """
     def _scan_thread():
         print(f"[Fingerprint] Starting scan command: {' '.join(SCAN_CMD)}")
+        proc = None
         try:
             if not os.path.exists(BIN_PATH):
                 print(f"[Fingerprint] ERROR: Binary not found at {BIN_PATH}")
@@ -49,7 +65,14 @@ def scan_fingerprint(callback):
                 stderr=subprocess.PIPE
             )
 
-            stdout, stderr = proc.communicate()
+            try:
+                stdout, stderr = proc.communicate(timeout=SCAN_PROCESS_TIMEOUT)
+            except subprocess.TimeoutExpired:
+                print(f"[Fingerprint] Process timeout after {SCAN_PROCESS_TIMEOUT}s — killing")
+                proc.kill()
+                proc.communicate()
+                Clock.schedule_once(lambda dt: callback(False, None), 0)
+                return
 
             if stderr:
                 print(f"[Fingerprint] STDERR: {stderr.decode(errors='ignore').strip()}")
@@ -72,6 +95,11 @@ def scan_fingerprint(callback):
 
         except Exception as e:
             print(f"[Fingerprint] Thread Error: {e}")
+            if proc:
+                try:
+                    proc.kill()
+                except Exception:
+                    pass
             Clock.schedule_once(lambda dt: callback(False, None), 0)
 
     threading.Thread(target=_scan_thread, daemon=True).start()

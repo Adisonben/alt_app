@@ -34,7 +34,6 @@ CMD_START = b"$START" + CR_LF
 CMD_RESET = b"$RESET" + CR_LF
 
 # ── Module-level state (thread control) ───────────────────────
-# ── Module-level state (thread control) ───────────────────────
 _worker_thread = None
 _stop_event = threading.Event()
 _is_sensor_active = False  # True when serial port is open/busy
@@ -42,6 +41,26 @@ _is_sensor_active = False  # True when serial port is open/busy
 def is_sensor_active():
     """Returns True if the alcohol sensor thread is holding the serial port."""
     return _is_sensor_active
+
+
+def check_alcohol_device():
+    """
+    Quick check: returns True if a USB serial port is available.
+    Does NOT open the port — just verifies one exists.
+    """
+    if serial is None:
+        print("[alcohol] Device check FAILED: pyserial not installed")
+        return False
+    ports = serial.tools.list_ports.comports()
+    for p in ports:
+        if "USB" in p.device.upper() or "ACM" in p.device.upper():
+            print(f"[alcohol] Device check OK: found {p.device} ({p.description})")
+            return True
+    if ports:
+        print(f"[alcohol] Device check OK (fallback): found {ports[0].device}")
+        return True
+    print("[alcohol] Device check FAILED: no serial ports found")
+    return False
 
 
 # ── Port detection ────────────────────────────────────────────

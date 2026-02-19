@@ -216,3 +216,71 @@
 
                 Widget:
                     size_hint_y: 1
+
+            # ── Device error state ──
+            MDBoxLayout:
+                id: device_error_box
+                orientation: "vertical"
+                opacity: 0
+                disabled: True
+                spacing: "20dp"
+
+                Widget:
+                    size_hint_y: 1
+
+                MDButton:
+                    style: "tonal"
+                    radius: [self.height / 2, ]
+                    size_hint: None, None
+                    size: "120dp", "120dp"
+                    pos_hint: {"center_x": .5}
+                    theme_bg_color: "Custom"
+                    md_bg_color: get_color_from_hex("#FF9800")
+
+                    MDButtonIcon:
+                        icon: "alert-circle-outline"
+                        theme_font_size: "Custom"
+                        font_size: "120sp"
+                        theme_icon_color: "Custom"
+                        icon_color: "white"
+                        pos_hint: {"center_x": .5, "center_y": .5}
+
+                Label:
+                    id: device_error_label
+                    text: "ไม่พบเครื่องสแกนลายนิ้วมือ\nFingerprint scanner not found"
+                    halign: "center"
+                    font_name: "Sarabun"
+                    font_size: 40
+                    color: (0.8, 0.3, 0, 1)
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    spacing: "16dp"
+                    size_hint_y: None
+                    height: "72dp"
+                    padding: ["8dp", 0]
+
+                    MDButton:
+                        style: "filled"
+                        size_hint: 1, 1
+                        theme_bg_color: "Custom"
+                        md_bg_color: get_color_from_hex("#0e6effff")
+                        on_release: root.retry_device()
+                        MDButtonText:
+                            text: "ลองใหม่ / Retry"
+                            font_name: "Sarabun"
+                            font_size: "22sp"
+
+                    MDButton:
+                        style: "outlined"
+                        size_hint: 1, 1
+                        on_release: root.go_home_from_error()
+                        MDButtonText:
+                            text: "หน้าหลัก / Home"
+                            font_name: "Sarabun"
+                            font_size: "22sp"
+
+                Widget:
+                    size_hint_y: 1
