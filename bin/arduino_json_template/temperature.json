@@ -1,0 +1,10 @@
+{
+  "session": "54198715",
+  "status": "OK",
+  "cmd": "temperature",
+  "results": [
+    {
+      "value": "25"
+    }
+  ]
+}

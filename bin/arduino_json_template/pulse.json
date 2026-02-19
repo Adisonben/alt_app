@@ -1,0 +1,11 @@
+{
+  "session": "66548564",
+  "status": "OK",
+  "_status_": "OK/FAIL",
+  "cmd": "pulse",
+  "results": [
+    {
+      "value": "120"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "session": "8777441",
+  "status": "OK",
+  "_status_": "OK/FAIL",
+  "cmd": "alcohol",
+  "prox": "EXIST",
+  "_prox_": "STOCK/EXIST",
+  "results": [
+    {
+      "value": "0"
+    }
+  ]
+}

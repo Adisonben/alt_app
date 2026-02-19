@@ -1,0 +1,9 @@
+sudo iptables -F
+sudo iptables -A INPUT -p tcp --dport 80 -i lo -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 80 -i wlan0 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 80 -i tap0 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 80 -s 192.168.137.0/24 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 80 -s 192.168.21.0/24 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 80 -s 192.168.22.0/24 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 80 -j DROP
+sudo iptables -L -n -v

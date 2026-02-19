@@ -1,0 +1,18 @@
+{
+  "session": "0",
+  "status": "SUCCESS",
+  "_status_": "SUCCESS/FAIL",
+  "cmd": "mag",
+  "results": [
+    {
+      "title": "MR.",
+      "firstname": "NOPPONG",
+      "lastname": "NAMWONGSA",
+      "fullname": "MR.Keyon  Mayert",
+      "id": "1429900200262",
+      "birthday": "12/06/2514",
+      "exp": "12/2565",
+      "license": "60007015"
+    }
+  ]
+}
