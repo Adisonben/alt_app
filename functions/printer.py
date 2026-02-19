@@ -29,13 +29,13 @@ def print_result(user_name, user_id, device_id, status, value):
         p.set(align='left', bold=False, width=2, height=2)
 
         p.text("--------------------------------\n")
-        p.text(f"Device ID : {device_id}\n")
-        p.text(f"User ID   : {user_id}\n")
-        p.text(f"Name      : {user_name}\n")
-        p.text(f"Result : {status}\n")
-        p.text(f"Value : {value} mg%\n")
+        p.text(f"เครื่องทดสอบ (Device ID) : {device_id}\n")
+        p.text(f"รหัสผู้ทดสอบ (User ID)   : {user_id}\n")
+        p.text(f"ชื่อผู้ทดสอบ (Name)      : {user_name}\n")
+        p.text(f"ปริมาณแอลกอฮอล์ (Value) : {value} mg/100ml\n")
+        p.text(f"สรุปผลการทดสอบ (Result) : {status}\n")
         dt_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        p.text(f"Date : {dt_str}\n")
+        p.text(f"วันที่ (Date) : {dt_str}\n")
         p.text("--------------------------------\n")
 
         if status == "PASS":
