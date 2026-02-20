@@ -4,125 +4,192 @@
     md_bg_color: get_color_from_hex("#e8fffeff")
 
     MDBoxLayout:
-        orientation: "horizontal"
-        spacing: "20dp"
-        padding: "20dp"
+        orientation: "vertical"
         size: root.width, root.height
 
-        # Left Column: Snapshot Image
+        # ── Main content ──
         MDBoxLayout:
-            orientation: "vertical"
-            size_hint_x: .4
-            spacing: "12dp"
+            orientation: "horizontal"
+            size_hint_y: 1
+            spacing: "20dp"
+            padding: "20dp"
 
-            Label:
-                text: "Snapshot"
-                halign: "center"
-                font_name: "Sarabun"
-                font_size: 52
-                color: (0, 0, 0, 1)
-                size_hint_y: None
-                height: "64dp"
-
-            MDCard:
-                size_hint: 1, 1
-                style: "outlined"
-                line_color: 0, 0, 0, 1
-                line_width: 2
-                padding: "8dp"
-
-                FloatLayout:
-                    Image:
-                        id: snapshot_image
-                        source: root.snapshot_path if root.snapshot_path else ""
-                        fit_mode: "contain"
-                        pos_hint: {'center_x': .5, 'center_y': .5}
-                        opacity: 1 if root.snapshot_path else 0
-
-                    MDLabel:
-                        text: "No Image"
-                        halign: "center"
-                        valign: "center"
-                        theme_text_color: "Hint"
-                        pos_hint: {'center_x': .5, 'center_y': .5}
-                        opacity: 1 if not root.snapshot_path else 0
-
-        # Right Column: Result + Done button
-        MDBoxLayout:
-            orientation: "vertical"
-            size_hint_x: .6
-            spacing: "16dp"
-
-            Widget:
-                size_hint_y: 1
-
-            MDIconButton:
-                icon: 'checkbox-marked-circle-outline'
-                style: "filled"
-                theme_font_size: "Custom"
-                font_size: "130sp"
-                radius: [self.height / 2, ]
-                size_hint: None, None
-                size: "170dp", "170dp"
-                pos_hint: {'center_x': .5}
-                theme_bg_color: "Custom"
-                md_bg_color: get_color_from_hex("#d4fdd6ff")
-                theme_icon_color: "Custom"
-                icon_color: get_color_from_hex("#008000ff")
-
-            MDCard:
-                style: "elevated"
-                padding: "24dp"
-                spacing: "16dp"
-                size_hint: 1, None
-                height: "390dp"
-                pos_hint: {'center_x': .5}
+            # Left Column: Snapshot Image
+            MDBoxLayout:
                 orientation: "vertical"
+                size_hint_x: .4
+                spacing: "12dp"
 
                 Label:
-                    text: 'ผลการตรวจ | Test Result'
+                    text: "Snapshot"
                     halign: "center"
                     font_name: "Sarabun"
-                    font_size: 56
+                    font_size: 72
                     color: (0, 0, 0, 1)
                     size_hint_y: None
-                    height: self.texture_size[1]
+                    height: "64dp"
 
-                MDLabel:
-                    text: str(root.result_value)
-                    halign: "center"
-                    font_style: "Display"
-                    role: "large"
-                    theme_text_color: "Custom"
-                    text_color: "green"
-                    font_size: 52
+                MDCard:
+                    size_hint: 1, 1
+                    style: "outlined"
+                    line_color: 0, 0, 0, 1
+                    line_width: 2
+                    padding: "8dp"
 
-                Label:
-                    text: 'ระดับแอลกอฮอล์ในลมหายใจ\nBlood Alcohol Content (BAC)'
-                    halign: "center"
-                    font_name: "Sarabun"
-                    font_size: 36
-                    color: (0, 0, 0, .6)
-                    size_hint_y: None
-                    height: self.texture_size[1]
+                    FloatLayout:
+                        Image:
+                            id: snapshot_image
+                            source: root.snapshot_path if root.snapshot_path else ""
+                            fit_mode: "contain"
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            opacity: 1 if root.snapshot_path else 0
 
-            MDButton:
-                style: "filled"
-                size_hint: 1, None
-                height: "100dp"
-                pos_hint: {"center_x": .5}
-                theme_bg_color: "Custom"
-                md_bg_color: get_color_from_hex("#0e6effff")
-                on_release:
-                    app.root.ids.screen_manager.current = "home"
-                    root.manager.transition.direction = "right"
+                        MDLabel:
+                            text: "No Image"
+                            halign: "center"
+                            valign: "center"
+                            theme_text_color: "Hint"
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            opacity: 1 if not root.snapshot_path else 0
 
-                MDButtonText:
-                    text: "Done"
-                    font_style: "Display"
-                    font_name: "Sarabun"
-                    font_size: 52
-                    pos_hint: {"center_x": .5, "center_y": .5}
+            # Right Column: Result + Done button
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_x: .6
+                spacing: "16dp"
 
-            Widget:
-                size_hint_y: 1
+                Widget:
+                    size_hint_y: 1
+
+                MDIconButton:
+                    icon: 'checkbox-marked-circle-outline'
+                    style: "filled"
+                    theme_font_size: "Custom"
+                    font_size: "130sp"
+                    radius: [self.height / 2, ]
+                    size_hint: None, None
+                    size: "170dp", "170dp"
+                    pos_hint: {'center_x': .5}
+                    theme_bg_color: "Custom"
+                    md_bg_color: get_color_from_hex("#d4fdd6ff")
+                    theme_icon_color: "Custom"
+                    icon_color: get_color_from_hex("#008000ff")
+
+                MDCard:
+                    style: "elevated"
+                    padding: "24dp"
+                    spacing: "16dp"
+                    size_hint: 1, None
+                    height: "390dp"
+                    pos_hint: {'center_x': .5}
+                    orientation: "vertical"
+
+                    Label:
+                        text: 'ผลการตรวจ | Test Result'
+                        halign: "center"
+                        font_name: "Sarabun"
+                        font_size: 72
+                        color: (0, 0, 0, 1)
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+                    MDLabel:
+                        text: str(root.result_value)
+                        halign: "center"
+                        font_style: "Display"
+                        role: "large"
+                        theme_text_color: "Custom"
+                        text_color: "green"
+                        font_size: 96
+
+                    Label:
+                        text: 'ระดับแอลกอฮอล์ในลมหายใจ\nBlood Alcohol Content (BAC)'
+                        halign: "center"
+                        font_name: "Sarabun"
+                        font_size: 52
+                        color: (0, 0, 0, .6)
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+                MDButton:
+                    style: "filled"
+                    size_hint: 1, None
+                    height: "120dp"
+                    pos_hint: {"center_x": .5}
+                    theme_bg_color: "Custom"
+                    md_bg_color: get_color_from_hex("#0e6effff")
+                    on_release:
+                        app.root.ids.screen_manager.current = "home"
+                        root.manager.transition.direction = "right"
+
+                    MDButtonText:
+                        text: "Done"
+                        font_style: "Display"
+                        font_name: "Sarabun"
+                        font_size: 64
+                        pos_hint: {"center_x": .5, "center_y": .5}
+
+                Widget:
+                    size_hint_y: 1
+
+        # ── Step Indicator ──
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "52dp"
+            padding: "16dp", "8dp"
+            spacing: "8dp"
+
+            canvas.before:
+                Color:
+                    rgba: 0.93, 0.93, 0.93, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Label:
+                text: "1. เลือกโหมด"
+                font_name: "Sarabun"
+                font_size: "26sp"
+                color: 0.6, 0.6, 0.6, 1
+                halign: "center"
+            Label:
+                text: ">"
+                font_size: "26sp"
+                size_hint_x: None
+                width: "24dp"
+                color: 0.6, 0.6, 0.6, 1
+                halign: "center"
+            Label:
+                text: "2. กรอก ID"
+                font_name: "Sarabun"
+                font_size: "26sp"
+                color: 0.6, 0.6, 0.6, 1
+                halign: "center"
+            Label:
+                text: ">"
+                font_size: "26sp"
+                size_hint_x: None
+                width: "24dp"
+                color: 0.6, 0.6, 0.6, 1
+                halign: "center"
+            Label:
+                text: "3. วัดผล"
+                font_name: "Sarabun"
+                font_size: "26sp"
+                color: 0.6, 0.6, 0.6, 1
+                halign: "center"
+            Label:
+                text: ">"
+                font_size: "26sp"
+                size_hint_x: None
+                width: "24dp"
+                color: 0.6, 0.6, 0.6, 1
+                halign: "center"
+            Label:
+                text: "4. ผลลัพธ์"
+                font_name: "Sarabun"
+                font_size: "26sp"
+                bold: True
+                color: get_color_from_hex("#0e6eff")
+                halign: "center"

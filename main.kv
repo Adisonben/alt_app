@@ -1,58 +1,76 @@
 MDScreen:
+    on_touch_down: app.reset_idle_timer()
+
     MDBoxLayout:
         orientation: "vertical"
 
         BoxLayout:
             orientation: "horizontal"
             size_hint_y: None
-            height: 70
+            height: 72
             padding: 16, 8, 16, 8
+            spacing: 8
 
             canvas.before:
                 Color:
-                    rgba: 1, 1, 1, 1
+                    rgba: 0.055, 0.416, 1, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
 
-            
             BoxLayout:
                 orientation: "vertical"
-                size: root.width, root.height
+                size_hint_x: 0.3
 
-                MDLabel:
+                Label:
                     text: "IP Address"
-                    role: "medium"
-                MDLabel:
+                    font_name: "Sarabun"
+                    font_size: "22sp"
+                    color: 1, 1, 1, 0.7
+                    halign: "left"
+                    text_size: self.size
+                    valign: "middle"
+                Label:
+                    id: ip_label
                     text: "192.168.1.0"
-                    role: "medium"
-                    theme_text_color: "Custom"
-                    text_color: "green"
-                    
+                    font_name: "Sarabun"
+                    font_size: "26sp"
+                    color: 0.6, 1, 0.6, 1
+                    halign: "left"
+                    text_size: self.size
+                    valign: "middle"
 
-            MDLabel:
+            Label:
                 text: "ALT Iddrives"
                 halign: "center"
-                font_style: "Headline"
+                font_name: "Sarabun"
+                font_size: "36sp"
                 bold: True
-                
+                color: 1, 1, 1, 1
+                size_hint_x: 0.4
 
             BoxLayout:
                 orientation: "vertical"
-                size: root.width, root.height
+                size_hint_x: 0.3
 
-                MDLabel:
-                    text: "Status"
-                    role: "medium"
+                Label:
+                    id: clock_label
+                    text: "00:00:00"
+                    font_name: "Sarabun"
+                    font_size: "32sp"
+                    color: 1, 1, 1, 1
                     halign: "right"
-
-                MDLabel:
-                    text: "Online"
-                    role: "medium"
+                    text_size: self.size
+                    valign: "middle"
+                Label:
+                    id: date_label
+                    text: ""
+                    font_name: "Sarabun"
+                    font_size: "22sp"
+                    color: 1, 1, 1, 0.7
                     halign: "right"
-                    theme_text_color: "Custom"
-                    text_color: "green"
-
+                    text_size: self.size
+                    valign: "middle"
 
         MDScreenManager:
             # md_bg_color: app.theme_cls.primaryColor
@@ -72,3 +90,5 @@ MDScreen:
                 name: "testresult"
             ShowError:
                 name: "showerror"
+            Idle:
+                name: "idle"

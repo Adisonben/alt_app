@@ -4,162 +4,229 @@
     md_bg_color: get_color_from_hex("#e8fffeff")
 
     MDBoxLayout:
-        orientation: "horizontal"
+        orientation: "vertical"
         size: root.width, root.height
-        spacing: "0dp"
-        padding: "24dp"
 
-        # ── Left Column: Icon + Title + Status ──
+        # ── Main content ──
         MDBoxLayout:
-            orientation: "vertical"
-            size_hint_x: .45
-            spacing: "20dp"
-            padding: [0, 0, "20dp", 0]
+            orientation: "horizontal"
+            size_hint_y: 1
+            spacing: "0dp"
+            padding: "24dp"
 
-            Widget:
-                size_hint_y: 1
-
-            MDIconButton:
-                id: status_icon
-                icon: 'weather-windy'
-                style: "filled"
-                theme_font_size: "Custom"
-                font_size: "100sp"
-                radius: [self.height / 2, ]
-                size_hint: None, None
-                size: "140dp", "140dp"
-                pos_hint: {'center_x': .5}
-                theme_bg_color: "Custom"
-                md_bg_color: "blue"
-                theme_icon_color: "Custom"
-                icon_color: "white"
-
-            Label:
-                text: 'กรุณาเป่าลมหายใจ'
-                halign: "center"
-                font_name: "Sarabun"
-                font_size: 72
-                color: (0, 0, 0, 1)
-                size_hint_y: None
-                height: self.texture_size[1]
-
-            Label:
-                text: "Please blow into the device"
-                font_name: "Sarabun"
-                font_size: 42
-                halign: "center"
-                color: (0, 0, 0, 0.7)
-                size_hint_y: None
-                height: self.texture_size[1]
-
-            # ── Dynamic status label ──
-            Label:
-                id: status_label
-                text: "กำลังเชื่อมต่ออุปกรณ์... / Connecting..."
-                font_name: "Sarabun"
-                font_size: 34
-                halign: "center"
-                color: 0.2, 0.4, 1, 1
-                size_hint_y: None
-                height: self.texture_size[1]
-
-            # ── Error box (hidden by default) ──
+            # ── Left Column: Icon + Title + Status ──
             MDBoxLayout:
-                id: error_box
                 orientation: "vertical"
-                spacing: "16dp"
-                adaptive_height: True
-                opacity: 0
-                disabled: True
+                size_hint_x: .45
+                spacing: "20dp"
+                padding: [0, 0, "20dp", 0]
+
+                Widget:
+                    size_hint_y: 1
+
+                MDIconButton:
+                    id: status_icon
+                    icon: 'weather-windy'
+                    style: "filled"
+                    theme_font_size: "Custom"
+                    font_size: "100sp"
+                    radius: [self.height / 2, ]
+                    size_hint: None, None
+                    size: "140dp", "140dp"
+                    pos_hint: {'center_x': .5}
+                    theme_bg_color: "Custom"
+                    md_bg_color: "blue"
+                    theme_icon_color: "Custom"
+                    icon_color: "white"
 
                 Label:
-                    id: error_label
-                    text: ""
-                    font_name: "Sarabun"
-                    font_size: 34
+                    text: 'กรุณาเป่าลมหายใจ'
                     halign: "center"
-                    color: 0.9, 0.2, 0.2, 1
+                    font_name: "Sarabun"
+                    font_size: 96
+                    color: (0, 0, 0, 1)
                     size_hint_y: None
                     height: self.texture_size[1]
 
-                MDBoxLayout:
-                    orientation: "horizontal"
-                    spacing: "16dp"
+                Label:
+                    text: "Please blow into the device"
+                    font_name: "Sarabun"
+                    font_size: 56
+                    halign: "center"
+                    color: (0, 0, 0, 0.7)
                     size_hint_y: None
-                    height: "64dp"
+                    height: self.texture_size[1]
 
-                    MDButton:
-                        on_release: root.retry_measurement()
-                        size_hint: 1, 1
-                        MDButtonText:
-                            text: "Retry"
-                            font_name: "Sarabun"
-                            font_size: "32sp"
+                # ── Dynamic status label ──
+                Label:
+                    id: status_label
+                    text: "กำลังเชื่อมต่ออุปกรณ์... / Connecting..."
+                    font_name: "Sarabun"
+                    font_size: 48
+                    halign: "center"
+                    color: 0.2, 0.4, 1, 1
+                    size_hint_y: None
+                    height: self.texture_size[1]
 
-                    MDButton:
-                        on_release: root.cancel_measurement()
-                        size_hint: 1, 1
-                        MDButtonText:
-                            text: "Cancel"
-                            font_name: "Sarabun"
-                            font_size: "32sp"
+                # ── Error box (hidden by default) ──
+                MDBoxLayout:
+                    id: error_box
+                    orientation: "vertical"
+                    spacing: "16dp"
+                    adaptive_height: True
+                    opacity: 0
+                    disabled: True
 
-            Widget:
-                size_hint_y: 1
+                    Label:
+                        id: error_label
+                        text: ""
+                        font_name: "Sarabun"
+                        font_size: 48
+                        halign: "center"
+                        color: 0.9, 0.2, 0.2, 1
+                        size_hint_y: None
+                        height: self.texture_size[1]
 
-        # ── Right Column: Instructions Card ──
-        MDCard:
-            style: "elevated"
-            padding: "28dp"
-            size_hint_x: .55
-            orientation: "vertical"
-            spacing: "16dp"
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        spacing: "16dp"
+                        size_hint_y: None
+                        height: "64dp"
 
-            Widget:
-                size_hint_y: 1
+                        MDButton:
+                            on_release: root.retry_measurement()
+                            size_hint: 1, 1
+                            MDButtonText:
+                                text: "Retry"
+                                font_name: "Sarabun"
+                                font_size: "48sp"
+
+                        MDButton:
+                            on_release: root.cancel_measurement()
+                            size_hint: 1, 1
+                            MDButtonText:
+                                text: "Cancel"
+                                font_name: "Sarabun"
+                                font_size: "48sp"
+
+                Widget:
+                    size_hint_y: 1
+
+            # ── Right Column: Instructions Card ──
+            MDCard:
+                style: "elevated"
+                padding: "28dp"
+                size_hint_x: .55
+                orientation: "vertical"
+                spacing: "16dp"
+
+                Widget:
+                    size_hint_y: 1
+
+                Label:
+                    text: 'คำแนะนำ / Instructions'
+                    halign: "center"
+                    font_name: "Sarabun"
+                    font_size: 56
+                    bold: True
+                    color: (0, 0, 0, 1)
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                Label:
+                    text: '1. หยิบหลอดจากช่องเก็บหลอด\n    (Pick up the straw.)'
+                    halign: "left"
+                    valign: "top"
+                    font_name: "Sarabun"
+                    font_size: 48
+                    color: (0, 0, 0, 1)
+                    size_hint_y: None
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+
+                Label:
+                    text: '2. เป่าลมออกอย่างแรงและต่อเนื่อง\n    (Blow hard and continuously)'
+                    halign: "left"
+                    valign: "top"
+                    font_name: "Sarabun"
+                    font_size: 48
+                    color: (0, 0, 0, 1)
+                    size_hint_y: None
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+
+                Label:
+                    text: "3. อย่าหยุดจนกว่าจะได้ยินเสียงสัญญาณ\n    (Don't stop until you hear the beep)"
+                    halign: "left"
+                    valign: "top"
+                    font_name: "Sarabun"
+                    font_size: 48
+                    color: (0, 0, 0, 1)
+                    size_hint_y: None
+                    text_size: self.width, None
+                    height: self.texture_size[1]
+
+                Widget:
+                    size_hint_y: 1
+
+        # ── Step Indicator ──
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "52dp"
+            padding: "16dp", "8dp"
+            spacing: "8dp"
+
+            canvas.before:
+                Color:
+                    rgba: 0.93, 0.93, 0.93, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
 
             Label:
-                text: 'คำแนะนำ / Instructions'
+                text: "1. เลือกโหมด"
+                font_name: "Sarabun"
+                font_size: "26sp"
+                color: 0.6, 0.6, 0.6, 1
                 halign: "center"
+            Label:
+                text: ">"
+                font_size: "26sp"
+                size_hint_x: None
+                width: "24dp"
+                color: 0.6, 0.6, 0.6, 1
+                halign: "center"
+            Label:
+                text: "2. กรอก ID"
                 font_name: "Sarabun"
-                font_size: 42
+                font_size: "26sp"
+                color: 0.6, 0.6, 0.6, 1
+                halign: "center"
+            Label:
+                text: ">"
+                font_size: "26sp"
+                size_hint_x: None
+                width: "24dp"
+                color: 0.6, 0.6, 0.6, 1
+                halign: "center"
+            Label:
+                text: "3. วัดผล"
+                font_name: "Sarabun"
+                font_size: "26sp"
                 bold: True
-                color: (0, 0, 0, 1)
-                size_hint_y: None
-                height: self.texture_size[1]
-
+                color: get_color_from_hex("#0e6eff")
+                halign: "center"
             Label:
-                text: '1. หยิบหลอดจากช่องเก็บหลอด\n    (Pick up the straw.)'
-                halign: "left"
-                valign: "top"
-                font_name: "Sarabun"
-                font_size: 34
-                color: (0, 0, 0, 1)
-                size_hint_y: None
-                text_size: self.width, None
-                height: self.texture_size[1]
-
+                text: ">"
+                font_size: "26sp"
+                size_hint_x: None
+                width: "24dp"
+                color: 0.6, 0.6, 0.6, 1
+                halign: "center"
             Label:
-                text: '2. เป่าลมออกอย่างแรงและต่อเนื่อง\n    (Blow hard and continuously)'
-                halign: "left"
-                valign: "top"
+                text: "4. ผลลัพธ์"
                 font_name: "Sarabun"
-                font_size: 34
-                color: (0, 0, 0, 1)
-                size_hint_y: None
-                text_size: self.width, None
-                height: self.texture_size[1]
-
-            Label:
-                text: "3. อย่าหยุดจนกว่าจะได้ยินเสียงสัญญาณ\n    (Don't stop until you hear the beep)"
-                halign: "left"
-                valign: "top"
-                font_name: "Sarabun"
-                font_size: 34
-                color: (0, 0, 0, 1)
-                size_hint_y: None
-                text_size: self.width, None
-                height: self.texture_size[1]
-
-            Widget:
-                size_hint_y: 1
+                font_size: "26sp"
+                color: 0.6, 0.6, 0.6, 1
+                halign: "center"
