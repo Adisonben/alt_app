@@ -5,6 +5,7 @@ from kivymd.uix.button import MDButton, MDButtonText, MDButtonIcon
 from kivy.core.text import LabelBase
 from kivy.uix.screenmanager import ScreenManager
 from kivy.clock import Clock
+from kivy.core.window import Window
 from datetime import datetime
 import pages  # ensure custom screen classes (Home, Authing, ...) are imported and registered for KV
 
@@ -35,6 +36,7 @@ class MainApp(MDApp):
     def on_start(self):
         Clock.schedule_interval(self._update_clock, 1)
         self._idle_event = Clock.schedule_once(self._trigger_idle, IDLE_TIMEOUT)
+        Window.bind(on_touch_down=self._on_window_touch)
 
     def _update_clock(self, dt):
         now = datetime.now()
@@ -45,23 +47,21 @@ class MainApp(MDApp):
         except Exception:
             pass
 
+    def _on_window_touch(self, window, touch):
+        overlay = self.root.ids.idle_overlay
+        if overlay.opacity > 0:
+            overlay.dismiss_idle()
+        self.reset_idle_timer()
+
     def reset_idle_timer(self):
         if hasattr(self, '_idle_event'):
             self._idle_event.cancel()
         self._idle_event = Clock.schedule_once(self._trigger_idle, IDLE_TIMEOUT)
-        try:
-            idle_screen = self.root.ids.screen_manager.get_screen("idle")
-            if idle_screen.opacity > 0:
-                idle_screen.dismiss_idle()
-        except Exception:
-            pass
 
     def _trigger_idle(self, dt):
-        sm = self.root.ids.screen_manager
-        sm.current = "home"
+        self.root.ids.screen_manager.current = "home"
         try:
-            idle_screen = sm.get_screen("idle")
-            idle_screen.show_idle()
+            self.root.ids.idle_overlay.show_idle()
         except Exception:
             pass
 

@@ -1,8 +1,8 @@
-from kivymd.uix.screen import MDScreen
+from kivy.uix.floatlayout import FloatLayout
 from kivy.animation import Animation
 
 
-class Idle(MDScreen):
+class Idle(FloatLayout):
     _pulse_anim = None
 
     def show_idle(self):

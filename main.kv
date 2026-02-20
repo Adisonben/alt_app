@@ -1,5 +1,8 @@
 MDScreen:
-    on_touch_down: app.reset_idle_timer()
+    Idle:
+        id: idle_overlay
+        size_hint: 1, 1
+        pos_hint: {"x": 0, "y": 0}
 
     MDBoxLayout:
         orientation: "vertical"
@@ -90,5 +93,3 @@ MDScreen:
                 name: "testresult"
             ShowError:
                 name: "showerror"
-            Idle:
-                name: "idle"
