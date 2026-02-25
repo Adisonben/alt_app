@@ -63,7 +63,7 @@ class TestResult(MDScreen):
             print("Free Mode: Skipping API call and data upload.")
         
         # Reset session and go home after delay
-        Clock.schedule_once(self.finish_session, 5)
+        Clock.schedule_once(self.finish_session, 10)
 
     def finish_session(self, dt):
         app = MDApp.get_running_app()
