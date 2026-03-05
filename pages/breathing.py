@@ -69,8 +69,8 @@ class Breathing(MDScreen):
         }
         self._set_icon_color(color_map.get(state, "blue"))
 
-        if state == "ready":
-            play_sound("assets/sounds/voice_breathing.mp3")
+        # if state == "ready":
+        #     play_sound("assets/sounds/voice_breathing.mp3")
 
         # Show error box for terminal error states and start auto-redirect
         if state in ("timeout", "error"):

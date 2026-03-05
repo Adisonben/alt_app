@@ -21,10 +21,10 @@ class TestResult(MDScreen):
         alcohol_status = getattr(session, "alcohol_status", "")
         print(f"Result = {session.alcohol_value}, Status = {alcohol_status}")
 
-        if alcohol_status.upper() == "PASS":
-            play_sound("assets/sounds/voice_result_pass.mp3")
-        else:
-            play_sound("assets/sounds/voice_result_fail.mp3")
+        # if alcohol_status.upper() == "PASS":
+        #     play_sound("assets/sounds/voice_result_pass.mp3")
+        # else:
+        #     play_sound("assets/sounds/voice_result_fail.mp3")
 
         # Print Receipt with polling check
         # We need to wait until alcohol sensor releases the port
