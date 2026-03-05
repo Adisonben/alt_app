@@ -42,6 +42,9 @@ ehthumbs.db
 Thumbs.db
 Desktop.ini
 
+# Environment / Secrets
+.env
+
 # Project Specific
 assets/snapshots/
 bin/finger_scan.o

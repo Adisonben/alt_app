@@ -1,9 +1,4 @@
 MDScreen:
-    Idle:
-        id: idle_overlay
-        size_hint: 1, 1
-        pos_hint: {"x": 0, "y": 0}
-
     MDBoxLayout:
         orientation: "vertical"
 
@@ -76,11 +71,8 @@ MDScreen:
                     valign: "middle"
 
         MDScreenManager:
-            # md_bg_color: app.theme_cls.primaryColor
             id: screen_manager
 
-            # PrepareResult:
-            #     name: "prepareresult"
             Home:
                 name: "home"
             EmployeeID:
@@ -93,3 +85,5 @@ MDScreen:
                 name: "testresult"
             ShowError:
                 name: "showerror"
+            Idle:
+                name: "screensaver"

@@ -3,6 +3,7 @@ from kivymd.app import MDApp
 from kivy.clock import Clock
 from functions.alcohol import measure_alcohol, stop_measurement, check_alcohol_device
 from functions.camera import take_snapshot
+from functions.audio import play_voice
 import os
 from datetime import datetime
 
@@ -17,6 +18,7 @@ class Breathing(MDScreen):
     _countdown_event = None
 
     def on_enter(self):
+        play_voice('voice_breathing.mp3')
         print("Start alcohol test...")
         self._measurement_active = True
         self._cancel_auto_redirect()

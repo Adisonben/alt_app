@@ -1,50 +1,45 @@
 #:import get_color_from_hex kivy.utils.get_color_from_hex
 
 <Idle>:
-    opacity: 0
-    disabled: True
+    md_bg_color: 0.07, 0.07, 0.07, 1
 
-    canvas.before:
-        Color:
-            rgba: 0, 0, 0, 0.88
-        Rectangle:
-            pos: self.pos
-            size: self.size
+    FloatLayout:
 
-    MDBoxLayout:
-        orientation: "vertical"
-        spacing: "32dp"
-        padding: "48dp"
-        pos_hint: {"center_x": .5, "center_y": .5}
-        size_hint: 0.7, None
-        height: self.minimum_height
-
-        MDIconButton:
-            id: pulse_icon
-            icon: "hand-pointing-up"
-            theme_font_size: "Custom"
-            font_size: "160sp"
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: "32dp"
+            padding: "48dp"
+            pos_hint: {"center_x": .5, "center_y": .5}
             size_hint: None, None
-            size: "200dp", "200dp"
-            pos_hint: {"center_x": .5}
-            theme_icon_color: "Custom"
-            icon_color: 1, 1, 1, 1
+            width: "600dp"
+            height: self.minimum_height
 
-        Label:
-            text: "กรุณาแตะหน้าจอเพื่อเริ่มใช้งาน"
-            font_name: "Sarabun"
-            font_size: "72sp"
-            bold: True
-            color: 1, 1, 1, 1
-            halign: "center"
-            size_hint_y: None
-            height: self.texture_size[1]
+            MDIconButton:
+                id: pulse_icon
+                icon: "hand-pointing-up"
+                theme_font_size: "Custom"
+                font_size: "160sp"
+                size_hint: None, None
+                size: "220dp", "220dp"
+                pos_hint: {"center_x": .5}
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
 
-        Label:
-            text: "Touch screen to start"
-            font_name: "Sarabun"
-            font_size: "48sp"
-            color: 1, 1, 1, 0.7
-            halign: "center"
-            size_hint_y: None
-            height: self.texture_size[1]
+            Label:
+                text: "กรุณาแตะหน้าจอเพื่อเริ่มใช้งาน"
+                font_name: "Sarabun"
+                font_size: "72sp"
+                bold: True
+                color: 1, 1, 1, 1
+                halign: "center"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            Label:
+                text: "Touch screen to start"
+                font_name: "Sarabun"
+                font_size: "48sp"
+                color: 1, 1, 1, 0.7
+                halign: "center"
+                size_hint_y: None
+                height: self.texture_size[1]

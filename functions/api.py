@@ -1,5 +1,6 @@
 
 import json
+from config import API_BASE_URL, API_KEY
 
 def get_user_by_id(employee_id):
     """
