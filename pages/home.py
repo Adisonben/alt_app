@@ -3,6 +3,9 @@ from functions.audio import play_sound
 
 class Home(MDScreen):
     def on_enter(self):
+        Clock.schedule_once(self.play_welcome, 0.5)
+
+    def play_welcome(self, dt):
         play_sound("assets/sounds/voice_welcome.wav")
 
     def go_next(self):
