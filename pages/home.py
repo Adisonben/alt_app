@@ -4,7 +4,7 @@ from kivy.clock import Clock
 
 class Home(MDScreen):
     def on_enter(self):
-        Clock.schedule_once(self.play_welcome, 1)
+        Clock.schedule_once(self.play_welcome, 5)
 
     def play_welcome(self, dt):
         play_sound("assets/sounds/voice_welcome.wav")
