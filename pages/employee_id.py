@@ -2,12 +2,10 @@ from kivymd.uix.screen import MDScreen
 from kivymd.app import MDApp
 from kivy.clock import Clock
 from functions.api import get_user_by_id
-from functions.audio import play_voice
 
 class EmployeeID(MDScreen):
     
     def on_enter(self):
-        play_voice('voice_employee_id.mp3')
         self.clear_digits()
         # Ensure session is reset or ready? 
         # Ideally, we are here because we want to start a new auth flow.

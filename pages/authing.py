@@ -4,7 +4,6 @@ from kivy.animation import Animation
 from kivy.clock import Clock
 from functions.fingerprint import scan_fingerprint, compare_fingerprints, check_fingerprint_device
 from functions.api import get_user_by_id
-from functions.audio import play_voice
 
 SCAN_UI_TIMEOUT = 18  # seconds — UI-level guard (slightly longer than subprocess timeout)
 
@@ -16,7 +15,6 @@ class Authing(MDScreen):
     _scan_timeout_event = None
 
     def on_enter(self):
-        play_voice('voice_authing.mp3')
         self.is_active = True
         self.failed_attempts = 0
         self._scheduled_events = []

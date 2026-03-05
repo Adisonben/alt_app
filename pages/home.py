@@ -1,8 +1,7 @@
 from kivymd.uix.screen import MDScreen
-from functions.audio import play_voice
-from config import KIOSK_MODE
 
 class Home(MDScreen):
+<<<<<<< HEAD
     def on_enter(self):
         play_voice('voice_welcome.mp3')
         # self._apply_kiosk_mode()
@@ -38,5 +37,7 @@ class Home(MDScreen):
     #             free_card.size_hint_x = 1
     #             free_card.disabled = False
 
+=======
+>>>>>>> parent of 3b55b55 (Update05032026)
     def go_next(self):
         self.manager.current = "employeeid"

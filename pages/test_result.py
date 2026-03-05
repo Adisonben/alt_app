@@ -4,7 +4,6 @@ from kivy.clock import Clock
 from functions.api import send_test_result
 from functions.alcohol import is_sensor_active
 from functions.printer import print_result
-from functions.audio import play_voice
 from kivy.properties import StringProperty
 
 class TestResult(MDScreen):
@@ -20,12 +19,6 @@ class TestResult(MDScreen):
         
         alcohol_status = getattr(session, "alcohol_status", "")
         print(f"Result = {session.alcohol_value}, Status = {alcohol_status}")
-
-        # Play voice based on result
-        if alcohol_status and alcohol_status.upper() == "PASS":
-            play_voice('voice_result_pass.mp3')
-        else:
-            play_voice('voice_result_fail.mp3')
         
         # Print Receipt with polling check
         # We need to wait until alcohol sensor releases the port
