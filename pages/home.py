@@ -7,7 +7,7 @@ class Home(MDScreen):
         Clock.schedule_once(self.play_welcome, 5)
 
     def play_welcome(self, dt):
-        play_sound("assets/sounds/voice_welcome.wav")
+        play_sound("assets/sounds/voice_welcome.mp3")
 
     def go_next(self):
         self.manager.current = "employeeid"
