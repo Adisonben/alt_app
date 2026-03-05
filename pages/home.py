@@ -1,5 +1,6 @@
 from kivymd.uix.screen import MDScreen
 from functions.audio import play_sound
+from kivy.clock import Clock
 
 class Home(MDScreen):
     def on_enter(self):
