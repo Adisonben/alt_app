@@ -22,7 +22,6 @@ coverage.xml
 .gitkeep
 
 # Kivy
-/KivyMD
 *.spec
 
 # IDEs
