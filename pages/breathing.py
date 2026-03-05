@@ -3,6 +3,7 @@ from kivymd.app import MDApp
 from kivy.clock import Clock
 from functions.alcohol import measure_alcohol, stop_measurement, check_alcohol_device
 from functions.camera import take_snapshot
+from functions.audio import play_sound
 import os
 from datetime import datetime
 
@@ -67,6 +68,9 @@ class Breathing(MDScreen):
             "error":           "red",
         }
         self._set_icon_color(color_map.get(state, "blue"))
+
+        if state == "ready":
+            play_sound("assets/sounds/voice_breathing.mp3")
 
         # Show error box for terminal error states and start auto-redirect
         if state in ("timeout", "error"):
