@@ -4,7 +4,7 @@ from kivy.clock import Clock
 from functions.api import send_test_result
 from functions.alcohol import is_sensor_active
 from functions.printer import print_result
-from functions.audio import play_sound
+from functions.audio import pygame_play
 from kivy.properties import StringProperty
 
 class TestResult(MDScreen):
@@ -18,13 +18,21 @@ class TestResult(MDScreen):
         self.result_value = str(session.alcohol_value)
         self.snapshot_path = session.snapshot_path if session.snapshot_path else ""
         
-        alcohol_status = getattr(session, "alcohol_status", "")
-        print(f"Result = {session.alcohol_value}, Status = {alcohol_status}")
-
-        if alcohol_status.upper() == "PASS":
-            play_sound("assets/sounds/voice_result_pass.mp3")
+        # Determine status based on limit_value
+        if session.alcohol_value > session.limit_value:
+            alcohol_status = "HIGH"
         else:
-            play_sound("assets/sounds/voice_result_fail.mp3")
+            alcohol_status = "PASS"
+        
+        # Update session status
+        session.alcohol_status = alcohol_status
+        
+        print(f"Result = {session.alcohol_value}, Status = {alcohol_status}, Limit = {session.limit_value}")
+
+        if alcohol_status == "PASS":
+            pygame_play("assets/sounds/voice_result_pass.mp3")
+        else:
+            pygame_play("assets/sounds/voice_result_fail.mp3")
 
         # Print Receipt with polling check
         # We need to wait until alcohol sensor releases the port

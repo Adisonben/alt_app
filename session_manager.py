@@ -11,6 +11,7 @@ class KioskSession:
         self.is_authenticated = False
         self.alcohol_value = 0.0
         self.alcohol_status = ""   # "OK", "HIGH", or error code
+        self.limit_value = 0.25
         self.snapshot_path = ""
         self.start_time = None
         print("KioskSession: Reset completed.")

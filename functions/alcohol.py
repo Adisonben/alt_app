@@ -99,8 +99,7 @@ def _parse_result(line):
     if m:
         val = float(m.group(1))
         raw_status = m.group(2)
-        status = "PASS" if raw_status == "OK" else "FAIL"
-        return {"value": val, "status": status}
+        return {"value": val, "status": raw_status}
     return None
 
 
