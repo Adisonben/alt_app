@@ -6,7 +6,7 @@ from kivy.clock import Clock
 
 # Path to the finger_scan binary
 # Based on the project structure, it should be in the 'bin' folder
-BIN_PATH = os.path.join(os.getcwd(), "bin", "finger_scan2")
+BIN_PATH = os.path.join(os.getcwd(), "bin", "finger_scan")
 SCAN_CMD = ["sudo", BIN_PATH, "10000"] # 10 seconds timeout
 # Path to the match_template binary
 MATCH_BIN_PATH = os.path.join(os.getcwd(), "bin", "match_template")

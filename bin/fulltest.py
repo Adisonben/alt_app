@@ -51,7 +51,7 @@ def result_fail(name, detail=""):
 # ── 1. Fingerprint Scanner ───────────────────────────────────
 def test_fingerprint():
     header("1. Fingerprint Scanner")
-    SCAN_CMD = ["sudo", "./finger_scan2", "5000"]
+    SCAN_CMD = ["sudo", "./finger_scan", "5000"]
     print("  กรุณาวางนิ้วบน scanner... (Please place finger on scanner...)")
     try:
         proc = subprocess.Popen(
@@ -73,7 +73,7 @@ def test_fingerprint():
     except subprocess.TimeoutExpired:
         result_fail("Fingerprint", "Process timed out")
     except FileNotFoundError:
-        result_fail("Fingerprint", "finger_scan2 not found")
+        result_fail("Fingerprint", "finger_scan not found")
     except Exception as e:
         result_fail("Fingerprint", str(e))
 

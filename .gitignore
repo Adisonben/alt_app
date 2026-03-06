@@ -47,7 +47,6 @@ assets/snapshots/
 bin/finger_scan.o
 bin/match_template.o
 bin/finger_scan
-bin/finger_scan2
 bin/match_template
 # Keep the bin folder but ignore build artifacts if necessary. 
 # If binaries are part of the repo, comment out the lines above.
