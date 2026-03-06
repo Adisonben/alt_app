@@ -43,6 +43,9 @@ def play_sound(path):
 
 
 def pygame_play(path):
-    thread = threading.Thread(target=_pygame_play, args=(path,))
-    thread.daemon = True
-    thread.start()
+    try:
+        _init_pygame()
+        sound = pygame.mixer.Sound(path)
+        sound.play()
+    except Exception as e:
+        print(f"Pygame playback error: {e}")
