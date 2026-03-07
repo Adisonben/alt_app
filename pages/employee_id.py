@@ -1,20 +1,30 @@
 from kivymd.uix.screen import MDScreen
 from kivymd.app import MDApp
 from kivy.clock import Clock
+from time import monotonic
 from functions.api import get_user_by_id
 
 class EmployeeID(MDScreen):
-    
+
+    input_cooldown = 0.5
+
     def on_enter(self):
         self.clear_digits()
+        self._last_input_at = 0.0
         # Ensure session is reset or ready? 
         # Ideally, we are here because we want to start a new auth flow.
         
     def add_digit(self, digit):
+        now = monotonic()
+        if now - getattr(self, "_last_input_at", 0.0) < self.input_cooldown:
+            return
+
+        self._last_input_at = now
         if len(self.ids.input_display.text) < 6:
             self.ids.input_display.text += digit
 
     def clear_digits(self):
+        self._last_input_at = 0.0
         self.ids.input_display.text = ""
 
     def submit_id(self):

@@ -18,8 +18,8 @@
 # installation
 1. ติดตั้ง dependency
     - `sudo apt install libcairo2-dev pkg-config python3-dev` dependency ของ KivyMD ต้องใช้ pycairo
-    - `sudo apt install build-essential meson ninja-build cmake libusb-0.1-4 libusb-dev` build tools ช่วยลดปัญหา package compile
-2. สร้าง Virtual Environment (venv) ` python -m venv venv ` or `python3 -m venv venv --system-site-packages` และ activate
+    - `sudo apt install build-essential meson ninja-build cmake libusb-0.1-4 libusb-dev python3-picamera2` build tools ช่วยลดปัญหา package compile
+2. สร้าง Virtual Environment (venv) `python3 -m venv venv --system-site-packages` และ activate
     - Linux / macOS / Raspberry Pi	`source venv/bin/activate`
     - Windows cmd `venv\Scripts\activate.bat`
     - freeze lib `pip freeze > requirements.txt`
