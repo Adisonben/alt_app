@@ -6,16 +6,16 @@ PIR_PIN = 17
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(PIR_PIN, GPIO.IN)
 
-print("กำลังเริ่มต้นเซ็นเซอร์...")
+print("starting motion sensor...")
 
 time.sleep(2)
 
 try:
     while True:
         if GPIO.input(PIR_PIN):
-            print("Motion Detected!")
+            print(GPIO.input(PIR_PIN), " :: Motion Detected!")
         else:
-            print("No Motion")
+            print(GPIO.input(PIR_PIN), " :: No Motion")
 
         time.sleep(0.5)
 
