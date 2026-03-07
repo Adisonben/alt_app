@@ -17,7 +17,7 @@ try:
         else:
             print("No Motion")
 
-        time.sleep(1)
+        time.sleep(0.5)
 
 except KeyboardInterrupt:
     GPIO.cleanup()
