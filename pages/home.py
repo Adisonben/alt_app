@@ -13,7 +13,7 @@ class Home(MDScreen):
             print("first enter triggleed")
             self.first_enter = False
             return
-        pygame_play("assets/sounds/voice_welcome.mp3")
+        pygame_play("assets/sounds/voice_welcome.wav")
 
     def go_next(self):
         self.manager.current = "employeeid"
