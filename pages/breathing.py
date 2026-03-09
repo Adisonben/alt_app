@@ -83,6 +83,7 @@ class Breathing(MDScreen):
         """Handle final measurement result."""
         self._measurement_active = False
         print(f"[breathing] result: success={success}, value={value}, status={status}")
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         snapshot_path = os.path.join(
             os.getcwd(), "assets", "snapshots", f"breathing_{timestamp}.jpg"
         )
@@ -100,7 +101,7 @@ class Breathing(MDScreen):
             self._set_icon_color("green")
 
             # Take snapshot then navigate
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            # timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             # snapshot_path = os.path.join(
             #     os.getcwd(), "assets", "snapshots", f"breathing_{timestamp}.jpg"
             # )
