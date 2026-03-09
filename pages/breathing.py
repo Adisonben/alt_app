@@ -83,7 +83,7 @@ class Breathing(MDScreen):
         """Handle final measurement result."""
         self._measurement_active = False
         print(f"[breathing] result: success={success}, value={value}, status={status}")
-
+        take_snapshot(snapshot_path, self._on_snapshot_done)
         app = MDApp.get_running_app()
 
         if success:
@@ -101,7 +101,7 @@ class Breathing(MDScreen):
                 os.getcwd(), "assets", "snapshots", f"breathing_{timestamp}.jpg"
             )
             app.session.snapshot_path = snapshot_path
-            take_snapshot(snapshot_path, self._on_snapshot_done)
+            # take_snapshot(snapshot_path, self._on_snapshot_done)
         else:
             # Save error state to session
             app.session.alcohol_value = -1.0
