@@ -9,6 +9,9 @@ from kivy.core.window import Window
 from datetime import datetime
 import pages  # ensure custom screen classes (Home, Authing, ...) are imported and registered for KV
 
+Window.borderless = True
+Window.fullscreen = "auto"
+
 IDLE_TIMEOUT = 60  # seconds
 
 class MainApp(MDApp):

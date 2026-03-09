@@ -3,153 +3,162 @@
 <Home>:
     md_bg_color: get_color_from_hex("#e8fffeff")
 
-    MDBoxLayout:
-        orientation: "horizontal"
-        size: root.width, root.height
-        spacing: "16dp"
-        padding: "16dp"
-
-        # ----------------------
-        # Card 1: Normal Mode
-        # ----------------------
-        MDCard:
-            radius: [24,]
-            theme_bg_color: "Custom"
-            md_bg_color: get_color_from_hex("#E3F2FD")
-            elevation: 6
-            padding: "32dp"
-            spacing: "24dp"
-            orientation: "vertical"
+    FloatLayout:
+        AsyncImage:
+            source: "assets/images/bg_home.jpg"
+            allow_stretch: False
+            keep_ratio: True
             size_hint: 1, 1
+            pos_hint: {"x": 0, "y": 0}
 
-            MDBoxLayout:
-                orientation: "vertical"
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, 1
+            spacing: "16dp"
+            padding: "16dp"
+            opacity: 0
+
+            # ----------------------
+            # Card 1: Normal Mode
+            # ----------------------
+            MDCard:
+                radius: [24,]
+                theme_bg_color: "Custom"
+                md_bg_color: get_color_from_hex("#E3F2FD")
+                elevation: 6
+                padding: "32dp"
                 spacing: "24dp"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                adaptive_height: True
+                orientation: "vertical"
+                size_hint: 1, 1
 
-                MDIconButton:
-                    icon: "fingerprint"
-                    style: "tonal"
-                    theme_font_size: "Custom"
-                    font_size: "120sp"
-                    radius: [24,]
-                    size_hint: None, None
-                    size: "200dp", "200dp"
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: "24dp"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    adaptive_height: True
+
+                    MDIconButton:
+                        icon: "fingerprint"
+                        style: "tonal"
+                        theme_font_size: "Custom"
+                        font_size: "120sp"
+                        radius: [24,]
+                        size_hint: None, None
+                        size: "200dp", "200dp"
+                        pos_hint: {"center_x": .5}
+                        theme_bg_color: "Custom"
+                        md_bg_color: get_color_from_hex("#0e6effff")
+                        theme_icon_color: "Custom"
+                        icon_color: "white"
+
+                    Label:
+                        markup: True
+                        text: '[b]โหมดปกติ[/b]\n[size=56]Normal Mode[/size]'
+                        halign: "center"
+                        font_name: "Sarabun"
+                        font_size: 96
+                        color: (0, 0, 0, 1)
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+                    Label:
+                        text: "ต้องยืนยันตัวตนก่อนเริ่มทดสอบ\nScan fingerprint required"
+                        font_name: "Sarabun"
+                        font_size: 56
+                        halign: "center"
+                        color: (0, 0, 0, 0.6)
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+                Widget:
+                    size_hint_y: 1
+
+                MDButton:
+                    style: "filled"
+                    size_hint: 1, None
+                    height: "120dp"
                     pos_hint: {"center_x": .5}
                     theme_bg_color: "Custom"
                     md_bg_color: get_color_from_hex("#0e6effff")
-                    theme_icon_color: "Custom"
-                    icon_color: "white"
+                    on_release:
+                        app.root.ids.screen_manager.current = "employeeid"
+                        root.manager.transition.direction = "left"
 
-                Label:
-                    markup: True
-                    text: '[b]โหมดปกติ[/b]\n[size=56]Normal Mode[/size]'
-                    halign: "center"
-                    font_name: "Sarabun"
-                    font_size: 96
-                    color: (0, 0, 0, 1)
-                    size_hint_y: None
-                    height: self.texture_size[1]
+                    MDButtonText:
+                        text: "Start"
+                        font_style: "Display"
+                        font_name: "Sarabun"
+                        pos_hint: {"center_x": .5, "center_y": .5}
 
-                Label:
-                    text: "ต้องยืนยันตัวตนก่อนเริ่มทดสอบ\nScan fingerprint required"
-                    font_name: "Sarabun"
-                    font_size: 56
-                    halign: "center"
-                    color: (0, 0, 0, 0.6)
-                    size_hint_y: None
-                    height: self.texture_size[1]
 
-            Widget:
-                size_hint_y: 1
-
-            MDButton:
-                style: "filled"
-                size_hint: 1, None
-                height: "120dp"
-                pos_hint: {"center_x": .5}
+            # ----------------------
+            # Card 2: Free Mode
+            # ----------------------
+            MDCard:
+                radius: [24,]
                 theme_bg_color: "Custom"
-                md_bg_color: get_color_from_hex("#0e6effff")
-                on_release:
-                    app.root.ids.screen_manager.current = "employeeid"
-                    root.manager.transition.direction = "left"
-
-                MDButtonText:
-                    text: "Start"
-                    font_style: "Display"
-                    font_name: "Sarabun"
-                    pos_hint: {"center_x": .5, "center_y": .5}
-
-
-        # ----------------------
-        # Card 2: Free Mode
-        # ----------------------
-        MDCard:
-            radius: [24,]
-            theme_bg_color: "Custom"
-            md_bg_color: get_color_from_hex("#FFF3E0")
-            elevation: 6
-            padding: "32dp"
-            spacing: "24dp"
-            orientation: "vertical"
-            size_hint: 1, 1
-
-            MDBoxLayout:
-                orientation: "vertical"
+                md_bg_color: get_color_from_hex("#FFF3E0")
+                elevation: 6
+                padding: "32dp"
                 spacing: "24dp"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                adaptive_height: True
+                orientation: "vertical"
+                size_hint: 1, 1
 
-                MDIconButton:
-                    icon: "run-fast"
-                    style: "tonal"
-                    theme_font_size: "Custom"
-                    font_size: "120sp"
-                    radius: [24,]
-                    size_hint: None, None
-                    size: "200dp", "200dp"
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: "24dp"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    adaptive_height: True
+
+                    MDIconButton:
+                        icon: "run-fast"
+                        style: "tonal"
+                        theme_font_size: "Custom"
+                        font_size: "120sp"
+                        radius: [24,]
+                        size_hint: None, None
+                        size: "200dp", "200dp"
+                        pos_hint: {"center_x": .5}
+                        theme_bg_color: "Custom"
+                        md_bg_color: get_color_from_hex("#FF9800")
+                        theme_icon_color: "Custom"
+                        icon_color: "white"
+
+                    Label:
+                        markup: True
+                        text: '[b]โหมดอิสระ[/b]\n[size=56]Free Mode[/size]'
+                        halign: "center"
+                        font_name: "Sarabun"
+                        font_size: 96
+                        color: get_color_from_hex("#E65100")
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+                    Label:
+                        text: "เริ่มทดสอบได้ทันที\nNo authentication required"
+                        font_name: "Sarabun"
+                        font_size: 56
+                        halign: "center"
+                        color: get_color_from_hex("#E65100")
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+                Widget:
+                    size_hint_y: 1
+
+                MDButton:
+                    style: "filled"
+                    size_hint: 1, None
+                    height: "120dp"
                     pos_hint: {"center_x": .5}
                     theme_bg_color: "Custom"
                     md_bg_color: get_color_from_hex("#FF9800")
-                    theme_icon_color: "Custom"
-                    icon_color: "white"
+                    on_release:
+                        app.root.ids.screen_manager.current = "breathing"
+                        root.manager.transition.direction = "left"
 
-                Label:
-                    markup: True
-                    text: '[b]โหมดอิสระ[/b]\n[size=56]Free Mode[/size]'
-                    halign: "center"
-                    font_name: "Sarabun"
-                    font_size: 96
-                    color: get_color_from_hex("#E65100")
-                    size_hint_y: None
-                    height: self.texture_size[1]
-
-                Label:
-                    text: "เริ่มทดสอบได้ทันที\nNo authentication required"
-                    font_name: "Sarabun"
-                    font_size: 56
-                    halign: "center"
-                    color: get_color_from_hex("#E65100")
-                    size_hint_y: None
-                    height: self.texture_size[1]
-
-            Widget:
-                size_hint_y: 1
-
-            MDButton:
-                style: "filled"
-                size_hint: 1, None
-                height: "120dp"
-                pos_hint: {"center_x": .5}
-                theme_bg_color: "Custom"
-                md_bg_color: get_color_from_hex("#FF9800")
-                on_release:
-                    app.root.ids.screen_manager.current = "breathing"
-                    root.manager.transition.direction = "left"
-
-                MDButtonText:
-                    text: "Start"
-                    font_style: "Display"
-                    font_name: "Sarabun"
-                    pos_hint: {"center_x": .5, "center_y": .5}
+                    MDButtonText:
+                        text: "Start"
+                        font_style: "Display"
+                        font_name: "Sarabun"
+                        pos_hint: {"center_x": .5, "center_y": .5}
