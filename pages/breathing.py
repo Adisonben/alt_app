@@ -82,6 +82,7 @@ class Breathing(MDScreen):
     def _on_measurement_result(self, success, value, status):
         """Handle final measurement result."""
         self._measurement_active = False
+        app = MDApp.get_running_app()
         print(f"[breathing] result: success={success}, value={value}, status={status}")
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         snapshot_path = os.path.join(
@@ -89,7 +90,6 @@ class Breathing(MDScreen):
         )
         app.session.snapshot_path = snapshot_path
         take_snapshot(snapshot_path, self._on_snapshot_done)
-        app = MDApp.get_running_app()
 
         if success:
             # Save to session
