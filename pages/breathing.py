@@ -19,6 +19,7 @@ class Breathing(MDScreen):
 
     def on_enter(self):
         print("Start alcohol test...")
+        pygame_play("assets/sounds/voice_breathing.mp3")
         self._measurement_active = True
         self._cancel_auto_redirect()
         # Reset UI state
@@ -69,8 +70,8 @@ class Breathing(MDScreen):
         }
         self._set_icon_color(color_map.get(state, "blue"))
 
-        if state == "ready":
-            pygame_play("assets/sounds/voice_breathing.mp3")
+        # if state == "ready":
+        #     pygame_play("assets/sounds/voice_breathing.mp3")
 
         # Show error box for terminal error states and start auto-redirect
         if state in ("timeout", "error"):
