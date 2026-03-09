@@ -69,3 +69,4 @@ Fix USB permission
 
 # other
 - Check detection: `lsusb`
+- use GPIO `pip install RPi.GPIO`
