@@ -30,9 +30,9 @@ class TestResult(MDScreen):
         print(f"Result = {session.alcohol_value}, Status = {alcohol_status}, Limit = {session.limit_value}")
 
         if alcohol_status == "PASS":
-            pygame_play("assets/sounds/voice_result_pass.mp3")
+            pygame_play("assets/sounds/voice_result_pass.wav")
         else:
-            pygame_play("assets/sounds/voice_result_fail.mp3")
+            pygame_play("assets/sounds/voice_result_fail.wav")
 
         # Print Receipt with polling check
         # We need to wait until alcohol sensor releases the port

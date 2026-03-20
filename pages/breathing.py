@@ -19,7 +19,7 @@ class Breathing(MDScreen):
 
     def on_enter(self):
         print("Start alcohol test...")
-        pygame_play("assets/sounds/voice_breathing.mp3")
+        pygame_play("assets/sounds/voice_breathing.wav")
         self._measurement_active = True
         self._cancel_auto_redirect()
         # Reset UI state
