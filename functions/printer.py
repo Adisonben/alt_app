@@ -11,7 +11,7 @@ def print_result(user_name, user_id, device_id, status, value):
     try:
         # 1. Connect (Vendor ID 0x04b8, Product ID 0x0e28)
         p = Usb(0x04b8, 0x0e28)
-        alcohol_value = value * 1000
+        alcohol_value = float(value) * 1000
         dt_str = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         # Locate basics/logo.png relative to this script
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -33,7 +33,7 @@ def print_result(user_name, user_id, device_id, status, value):
         p.text(f"เครื่องทดสอบ (Device ID) : {device_id}\n")
         p.text(f"รหัสผู้ทดสอบ (User ID)   : {user_id}\n")
         p.text(f"ชื่อผู้ทดสอบ (Name)      : {user_name}\n")
-        p.text(f"ปริมาณแอลกอฮอล์ (Value) : {alcohol_value} mg%\n")
+        p.text(f"ปริมาณแอลกอฮอล์ (Value) :  {alcohol_value:.2f} mg%\n")
         p.text(f"สรุปผลการทดสอบ (Result) : {status}\n")
         p.text(f"วันที่ (Date) : {dt_str}\n")
         p.text("--------------------------------\n")
